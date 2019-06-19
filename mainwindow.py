@@ -220,5 +220,3 @@ class Ui_MainWindow(object):
         self.action_quit.setShortcut(_translate("MainWindow", "Ctrl+Q"))
         self.action_about.setText(_translate("MainWindow", "关于"))
         self.action_about.setShortcut(_translate("MainWindow", "Ctrl+H"))
-
-

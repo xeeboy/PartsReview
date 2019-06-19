@@ -115,6 +115,7 @@ class Ui_Form(object):
                 rst = db.get_rst(sql)
             if rst and rst[0][0] == password:
                 # TODO show mainform
+                mainwin.showMaximized()
                 print('connnect done')
                 self.form.close()
             else:
@@ -126,9 +127,21 @@ class Ui_Form(object):
         eval('QtWidgets.QMessageBox.%s(self.form, win_title, text)' % level)
 
 
+def mainfrm():
+    app = QtWidgets.QApplication(sys.argv)
+    mainwin = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(mainwin)
+    mainwin.showMaximized()
+    sys.exit(app.exec_())
+
+
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     frm_login = QtWidgets.QWidget()
+    mainwin = QtWidgets.QMainWindow()
+    ui_main = Ui_MainWindow()
+    ui_main.setupUi(mainwin)
     ui = Ui_Form()
     ui.setupUi(frm_login)
     frm_login.show()

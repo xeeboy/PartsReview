@@ -2,218 +2,187 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>733</width>
-    <height>584</height>
+    <width>1094</width>
+    <height>779</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>不合格品评审系统</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icons/parameterreview_32px_26157_easyicon.net.ico</normaloff>icons/parameterreview_32px_26157_easyicon.net.ico</iconset>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonIconOnly</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <widget class="QLabel" name="label_18">
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>1</number>
       </property>
-      <property name="text">
-       <string>userinfo</string>
+      <property name="iconSize">
+       <size>
+        <width>20</width>
+        <height>20</height>
+       </size>
       </property>
-     </widget>
-    </item>
-    <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="2">
-         <widget class="QLineEdit" name="ID"/>
-        </item>
-        <item row="0" column="4">
-         <widget class="QLineEdit" name="batch"/>
-        </item>
-        <item row="0" column="3">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>批号</string>
+      <widget class="QWidget" name="tab_ongoing">
+       <attribute name="icon">
+        <iconset>
+         <normaloff>icons/dir.png</normaloff>icons/dir.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>待处理目录</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLineEdit" name="unpasstype"/>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>ID</string>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
           </property>
-         </widget>
-        </item>
-        <item row="0" column="5">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>生产日期</string>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
           </property>
-         </widget>
+         </spacer>
         </item>
-        <item row="1" column="3">
-         <widget class="QLabel" name="label_5">
-          <property name="text">
-           <string>不良品名称</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="4">
-         <widget class="QLineEdit" name="unpassname"/>
-        </item>
-        <item row="0" column="6">
-         <widget class="QLineEdit" name="prodate"/>
-        </item>
-        <item row="1" column="6">
-         <widget class="QLineEdit" name="unpassqty"/>
-        </item>
-        <item row="1" column="5">
-         <widget class="QLabel" name="label_11">
-          <property name="text">
-           <string>数量Kg</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>不良品种类</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QFrame" name="frame">
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Sunken</enum>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
-         <item>
-          <layout class="QFormLayout" name="formLayout">
-           <item row="1" column="0">
-            <layout class="QFormLayout" name="formLayout_2"/>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_14">
-             <property name="text">
-              <string>原因分析</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QTextEdit" name="result"/>
-           </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="label_15">
-             <property name="text">
-              <string>纠正措施</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QTextEdit" name="correctiveaciton"/>
-           </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="label_16">
-             <property name="text">
-              <string>预防措施</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
-            <widget class="QTextEdit" name="precaution"/>
-           </item>
-           <item row="7" column="1">
-            <widget class="QCheckBox" name="check_selfprev">
-             <property name="layoutDirection">
-              <enum>Qt::RightToLeft</enum>
-             </property>
-             <property name="text">
-              <string>自审核</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_13">
-             <property name="text">
-              <string>不良品描述</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QTextEdit" name="describe"/>
-           </item>
-           <item row="6" column="0" colspan="2">
-            <widget class="QLabel" name="lbl_writerinfo">
-             <property name="text">
-              <string>writer_info</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QFrame" name="frame_2">
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Sunken</enum>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
-         <item>
-          <widget class="QFrame" name="frame_3">
-           <property name="frameShape">
-            <enum>QFrame::Box</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Sunken</enum>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <item>
-             <widget class="QLabel" name="label_12">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="1" column="7">
+             <widget class="QLabel" name="label_11">
               <property name="text">
-               <string>模糊查找</string>
+               <string>数量Kg</string>
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QLineEdit" name="lineEdit_11"/>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btn_search">
+            <item row="0" column="1">
+             <widget class="QLabel" name="label">
               <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>icons/search.ico</normaloff>icons/search.ico</iconset>
+               <string>ID</string>
               </property>
              </widget>
             </item>
-            <item>
-             <spacer name="horizontalSpacer">
+            <item row="0" column="6">
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>100</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="5">
+             <widget class="QLineEdit" name="unpassname">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="5">
+             <widget class="QLineEdit" name="batch">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>不良品种类</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>100</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="0" column="9">
+             <widget class="QLineEdit" name="prodate">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>批号</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLineEdit" name="unpasstype">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="7">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>生产日期</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="4">
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>不良品名称</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="9">
+             <widget class="QLineEdit" name="unpassqty">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLineEdit" name="ID">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="10">
+             <spacer name="horizontalSpacer_4">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -225,26 +194,202 @@
               </property>
              </spacer>
             </item>
-            <item>
-             <widget class="QPushButton" name="btn_caseto">
-              <property name="text">
-               <string>Case To</string>
-              </property>
-             </widget>
-            </item>
            </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QTableView" name="tbl_unpass"/>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_3"/>
-         </item>
-        </layout>
-       </widget>
-      </item>
-     </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>30</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QFrame" name="frame">
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Sunken</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <layout class="QFormLayout" name="formLayout">
+               <item row="1" column="0">
+                <layout class="QFormLayout" name="formLayout_2"/>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_14">
+                 <property name="text">
+                  <string>原因分析</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QTextEdit" name="result"/>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_15">
+                 <property name="text">
+                  <string>纠正措施</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QTextEdit" name="correctiveaciton"/>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_16">
+                 <property name="text">
+                  <string>预防措施</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
+                <widget class="QTextEdit" name="precaution"/>
+               </item>
+               <item row="7" column="1">
+                <widget class="QCheckBox" name="check_selfprev">
+                 <property name="layoutDirection">
+                  <enum>Qt::RightToLeft</enum>
+                 </property>
+                 <property name="text">
+                  <string>自审核</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_13">
+                 <property name="text">
+                  <string>不良品描述</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QTextEdit" name="describe">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0" colspan="2">
+                <widget class="QLabel" name="lbl_writerinfo">
+                 <property name="text">
+                  <string>自审信息：</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame_2">
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Sunken</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <widget class="QFrame" name="frame_3">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Sunken</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <item>
+                 <widget class="QLabel" name="label_12">
+                  <property name="text">
+                   <string>模糊查找</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_11"/>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btn_search">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>icons/search.ico</normaloff>icons/search.ico</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btn_caseto">
+                  <property name="text">
+                   <string>Case To</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableView" name="tbl_unpass"/>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_3"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_onpreving">
+       <attribute name="icon">
+        <iconset>
+         <normaloff>icons/find.png</normaloff>icons/find.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>待评审目录</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_following">
+       <attribute name="icon">
+        <iconset>
+         <normaloff>icons/gps_navigation_position_positioning_tracking_32px_1225459_easyicon.net.ico</normaloff>icons/gps_navigation_position_positioning_tracking_32px_1225459_easyicon.net.ico</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>处理跟踪</string>
+       </attribute>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -253,21 +398,22 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>733</width>
+     <width>1094</width>
      <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
     <property name="title">
-     <string>菜单(M)</string>
+     <string>菜单(&amp;M)</string>
     </property>
     <addaction name="act_changepwd"/>
     <addaction name="act_chguser"/>
+    <addaction name="separator"/>
     <addaction name="action_quit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>帮助(&amp;H)</string>
     </property>
     <addaction name="action_about"/>
    </widget>
@@ -324,6 +470,41 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>result</tabstop>
+  <tabstop>correctiveaciton</tabstop>
+  <tabstop>precaution</tabstop>
+  <tabstop>lineEdit_11</tabstop>
+  <tabstop>btn_search</tabstop>
+  <tabstop>btn_caseto</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>check_selfprev</tabstop>
+  <tabstop>describe</tabstop>
+  <tabstop>tbl_unpass</tabstop>
+  <tabstop>unpassname</tabstop>
+  <tabstop>batch</tabstop>
+  <tabstop>prodate</tabstop>
+  <tabstop>unpasstype</tabstop>
+  <tabstop>unpassqty</tabstop>
+  <tabstop>ID</tabstop>
+ </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>action_quit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>509</x>
+     <y>380</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
