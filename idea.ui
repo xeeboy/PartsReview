@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>466</width>
+    <height>446</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>意见输入</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icons/dealidea.ico</normaloff>icons/dealidea.ico</iconset>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>9</y>
+     <width>60</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>技术部意见</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="txt_jsb">
+   <property name="geometry">
+    <rect>
+     <x>99</x>
+     <y>9</y>
+     <width>351</width>
+     <height>74</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>89</y>
+     <width>60</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>工艺部意见</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="txt_gyb">
+   <property name="geometry">
+    <rect>
+     <x>99</x>
+     <y>89</y>
+     <width>351</width>
+     <height>74</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>169</y>
+     <width>60</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>质量部意见</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="txt_zlb">
+   <property name="geometry">
+    <rect>
+     <x>99</x>
+     <y>169</y>
+     <width>351</width>
+     <height>73</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>248</y>
+     <width>84</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>技术支持部意见</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="txt_jszcb">
+   <property name="geometry">
+    <rect>
+     <x>99</x>
+     <y>248</y>
+     <width>351</width>
+     <height>74</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>328</y>
+     <width>60</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>总经理意见</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="txt_zjb">
+   <property name="geometry">
+    <rect>
+     <x>99</x>
+     <y>328</y>
+     <width>351</width>
+     <height>74</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QSplitter" name="splitter">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>410</y>
+     <width>150</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <widget class="QPushButton" name="btn_save">
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string>保存</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_sign">
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string>签名</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
