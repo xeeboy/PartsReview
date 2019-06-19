@@ -115,7 +115,13 @@ class Ui_Form(object):
                 rst = db.get_rst(sql)
             if rst and rst[0][0] == password:
                 # TODO show mainform
+                app = QtWidgets.QApplication(sys.argv)
+                main_window = QtWidgets.QMainWindow()
+                main_ui = Ui_MainWindow()
+                main_ui.setupUi(main_window)
+                main_window.show()
                 self.form.close()
+                sys.exit(app.exec_())
             else:
                 self.show_msg('warning', 'Error', '用户名或密码错误!')
         else:
