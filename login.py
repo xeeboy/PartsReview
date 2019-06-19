@@ -122,7 +122,7 @@ class Ui_Form(object):
         else:
             self.show_msg('information', 'Tips', '用户名密码不能留空!')
 
-    def show_msg(self, level: str, win_title: str, text: str) -> str:
+    def show_msg(self, level, win_title, text):
         eval('QtWidgets.QMessageBox.%s(self.form, win_title, text)' % level)
 
 
