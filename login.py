@@ -115,19 +115,14 @@ class Ui_Form(object):
                 rst = db.get_rst(sql)
             if rst and rst[0][0] == password:
                 # TODO show mainform
-                app = QtWidgets.QApplication(sys.argv)
-                main_window = QtWidgets.QMainWindow()
-                main_ui = Ui_MainWindow()
-                main_ui.setupUi(main_window)
-                main_window.show()
+                print('connnect done')
                 self.form.close()
-                sys.exit(app.exec_())
             else:
                 self.show_msg('warning', 'Error', '用户名或密码错误!')
         else:
             self.show_msg('information', 'Tips', '用户名密码不能留空!')
 
-    def show_msg(self, level, win_title, text):
+    def show_msg(self, level: str, win_title: str, text: str) -> str:
         eval('QtWidgets.QMessageBox.%s(self.form, win_title, text)' % level)
 
 
