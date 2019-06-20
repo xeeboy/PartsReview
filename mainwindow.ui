@@ -18,7 +18,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>icons/parameterreview_32px_26157_easyicon.net.ico</normaloff>icons/parameterreview_32px_26157_easyicon.net.ico</iconset>
+    <normaloff>C:/Users/Administrator/.designer/backup/icons/parameterreview_32px_26157_easyicon.net.ico</normaloff>C:/Users/Administrator/.designer/backup/icons/parameterreview_32px_26157_easyicon.net.ico</iconset>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
@@ -28,7 +28,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -39,10 +39,10 @@
       <widget class="QWidget" name="tab_ongoing">
        <attribute name="icon">
         <iconset>
-         <normaloff>icons/dir.png</normaloff>icons/dir.png</iconset>
+         <normaloff>C:/Users/Administrator/.designer/backup/icons/dir.png</normaloff>C:/Users/Administrator/.designer/backup/icons/dir.png</iconset>
        </attribute>
        <attribute name="title">
-        <string>待处理目录</string>
+        <string>不良品目录</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
@@ -238,7 +238,11 @@
                 </widget>
                </item>
                <item row="3" column="1">
-                <widget class="QTextEdit" name="result"/>
+                <widget class="QTextEdit" name="result">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
                <item row="4" column="0">
                 <widget class="QLabel" name="label_15">
@@ -284,10 +288,17 @@
                  </property>
                 </widget>
                </item>
-               <item row="6" column="0" colspan="2">
-                <widget class="QLabel" name="lbl_writerinfo">
+               <item row="6" column="0">
+                <widget class="QLabel" name="label_17">
                  <property name="text">
                   <string>自审信息：</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="1">
+                <widget class="QLabel" name="lbl_selfpreinfo">
+                 <property name="text">
+                  <string/>
                  </property>
                 </widget>
                </item>
@@ -331,7 +342,7 @@
                   </property>
                   <property name="icon">
                    <iconset>
-                    <normaloff>icons/search.ico</normaloff>icons/search.ico</iconset>
+                    <normaloff>C:/Users/Administrator/.designer/backup/icons/search.ico</normaloff>C:/Users/Administrator/.designer/backup/icons/search.ico</iconset>
                   </property>
                  </widget>
                 </item>
@@ -359,7 +370,11 @@
               </widget>
              </item>
              <item>
-              <widget class="QTableView" name="tbl_unpass"/>
+              <widget class="QTableView" name="tbl_unpass">
+               <property name="statusTip">
+                <string>单击查看详细信息，双击case相关人员</string>
+               </property>
+              </widget>
              </item>
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_3"/>
@@ -371,19 +386,29 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="tab_dealidea">
+       <attribute name="icon">
+        <iconset>
+         <normaloff>C:/Users/Administrator/.designer/backup/icons/dealidea.ico</normaloff>C:/Users/Administrator/.designer/backup/icons/dealidea.ico</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>处理意见</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+      </widget>
       <widget class="QWidget" name="tab_onpreving">
        <attribute name="icon">
         <iconset>
-         <normaloff>icons/find.png</normaloff>icons/find.png</iconset>
+         <normaloff>C:/Users/Administrator/.designer/backup/icons/find.png</normaloff>C:/Users/Administrator/.designer/backup/icons/find.png</iconset>
        </attribute>
        <attribute name="title">
-        <string>待评审目录</string>
+        <string>待评审</string>
        </attribute>
       </widget>
       <widget class="QWidget" name="tab_following">
        <attribute name="icon">
         <iconset>
-         <normaloff>icons/gps_navigation_position_positioning_tracking_32px_1225459_easyicon.net.ico</normaloff>icons/gps_navigation_position_positioning_tracking_32px_1225459_easyicon.net.ico</iconset>
+         <normaloff>C:/Users/Administrator/.designer/backup/icons/gps_navigation_position_positioning_tracking_32px_1225459_easyicon.net.ico</normaloff>C:/Users/Administrator/.designer/backup/icons/gps_navigation_position_positioning_tracking_32px_1225459_easyicon.net.ico</iconset>
        </attribute>
        <attribute name="title">
         <string>处理跟踪</string>
@@ -424,7 +449,7 @@
   <action name="act_changepwd">
    <property name="icon">
     <iconset>
-     <normaloff>icons/password32px.ico</normaloff>icons/password32px.ico</iconset>
+     <normaloff>C:/Users/Administrator/.designer/backup/icons/password32px.ico</normaloff>C:/Users/Administrator/.designer/backup/icons/password32px.ico</iconset>
    </property>
    <property name="text">
     <string>更改密码</string>
@@ -436,7 +461,7 @@
   <action name="act_chguser">
    <property name="icon">
     <iconset>
-     <normaloff>icons/user32px.ico</normaloff>icons/user32px.ico</iconset>
+     <normaloff>C:/Users/Administrator/.designer/backup/icons/user32px.ico</normaloff>C:/Users/Administrator/.designer/backup/icons/user32px.ico</iconset>
    </property>
    <property name="text">
     <string>更换用户</string>
@@ -448,7 +473,7 @@
   <action name="action_quit">
    <property name="icon">
     <iconset>
-     <normaloff>icons/quit128px.ico</normaloff>icons/quit128px.ico</iconset>
+     <normaloff>C:/Users/Administrator/.designer/backup/icons/quit128px.ico</normaloff>C:/Users/Administrator/.designer/backup/icons/quit128px.ico</iconset>
    </property>
    <property name="text">
     <string>退出</string>
@@ -460,7 +485,7 @@
   <action name="action_about">
    <property name="icon">
     <iconset>
-     <normaloff>icons/dir.png</normaloff>icons/dir.png</iconset>
+     <normaloff>C:/Users/Administrator/.designer/backup/icons/dir.png</normaloff>C:/Users/Administrator/.designer/backup/icons/dir.png</iconset>
    </property>
    <property name="text">
     <string>关于</string>

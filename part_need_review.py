@@ -52,7 +52,7 @@ class Ui_parts_need_review(object):
     def parts_need(self):
         check_list =  self.groupBox.findChildren(QCheckBox)
         parts = ','.join([check.objectName() for check in check_list if check.isChecked()])
-        print(parts == '')
+        print(parts)
 
 
 if __name__ == '__main__':
