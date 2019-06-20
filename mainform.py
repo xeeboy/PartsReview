@@ -5,7 +5,6 @@ from getdb import AccDb
 FIELDS_UNPASS = ['ID', '客户', '批号', '不良品种类', '不良品名称', '责任部门']
 
 
-
 class MainForm(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
