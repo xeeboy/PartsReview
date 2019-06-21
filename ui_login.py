@@ -5,20 +5,16 @@
 # Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
-import sys
-import getdb
 from PyQt5 import QtCore, QtGui, QtWidgets
-from mainwindow import Ui_MainWindow
 
 
-class Ui_Form(object):
+class Ui_Login(object):
     def setupUi(self, Form):
         Form.resize(408, 246)
         Form.setMaximumSize(QtCore.QSize(408, 246))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("icons/login.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Form.setWindowIcon(icon)
-        self.form = Form
 
         self.lbl_title = QtWidgets.QLabel(Form)
         self.lbl_title.setGeometry(QtCore.QRect(30, 20, 351, 31))
@@ -103,46 +99,3 @@ class Ui_Form(object):
         self.btn_login.setText(_translate("Form", "登录"))
         self.btn_login.setShortcut(_translate("Form", "Return"))
         self.btn_quit.setText(_translate("Form", "关闭"))
-        self.btn_login.clicked.connect(self.login)
-        self.btn_quit.clicked.connect(sys.exit)
-
-    def login(self):
-        username, password = self.line_username.text(), self.line_password.text()
-        if username and password:
-            db = getdb.AccDb()
-            with db:
-                sql = "select 密码 from 用户 where 用户名='%s'" % username
-                rst = db.get_rst(sql)
-            if rst and rst[0][0] == password:
-                # TODO show mainform
-                mainwin.showMaximized()
-                print('connnect done')
-                self.form.close()
-            else:
-                self.show_msg('warning', 'Error', '用户名或密码错误!')
-        else:
-            self.show_msg('information', 'Tips', '用户名密码不能留空!')
-
-    def show_msg(self, level, win_title, text):
-        eval('QtWidgets.QMessageBox.%s(self.form, win_title, text)' % level)
-
-
-def mainfrm():
-    app = QtWidgets.QApplication(sys.argv)
-    mainwin = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(mainwin)
-    mainwin.showMaximized()
-    sys.exit(app.exec_())
-
-
-if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
-    frm_login = QtWidgets.QWidget()
-    mainwin = QtWidgets.QMainWindow()
-    ui_main = Ui_MainWindow()
-    ui_main.setupUi(mainwin)
-    ui = Ui_Form()
-    ui.setupUi(frm_login)
-    frm_login.show()
-    sys.exit(app.exec_())

@@ -26,3 +26,4 @@ class AccDb:
     def modify_db(self, sql):
         self._cursor.execute(sql)
         self._cursor.commit()
+
