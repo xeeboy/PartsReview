@@ -7,8 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QCheckBox, QPushButton
-import sys
+from PyQt5.QtWidgets import QCheckBox, QPushButton, QDialog
 from getdb import AccDb
 
 db = AccDb()
@@ -49,16 +48,15 @@ class Ui_parts_need_review(object):
         parts_need_review.setWindowTitle(_translate("parts_need_review", "选择需参与的部门"))
         self.groupBox.setTitle(_translate("parts_need_review", "参与部门"))
 
+
+class PartsNeeds(QDialog, Ui_parts_need_review):
+    def __init__(self, parent):  # pass parent then edit controls in parent by this cls()
+        super().__init__(parent)
+        self.parent = parent
+        self.setupUi(self)
+        self.btn_save.clicked.connect(self.parts_need)
+
     def parts_need(self):
         check_list =  self.groupBox.findChildren(QCheckBox)
         parts = ','.join([check.objectName() for check in check_list if check.isChecked()])
-        print(parts)
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ui = Ui_parts_need_review()
-    frm = QtWidgets.QDialog()
-    ui.setupUi(frm)
-    frm.show()
-    sys.exit(app.exec_())
+        self.parent.parts.setText(parts)

@@ -22,8 +22,7 @@ class Login(QMainWindow, Ui_Login):
                 sql = "select 密码 from 用户 where 用户名='%s'" % username
                 rst = db.get_rst(sql)
             if rst and rst[0][0] == password:
-                # login success then transfer to Main Form and close login form
-                main_win.showMaximized()
+                main_win.showMaximized()  # login success then transfer to Main Form and close login form
                 self.close()
             else:
                 self.show_msg('warning', 'Error', '用户名或密码错误!')

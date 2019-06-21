@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1094</width>
-    <height>779</height>
+    <width>1129</width>
+    <height>790</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -219,7 +219,7 @@
           <item>
            <widget class="QFrame" name="frame">
             <property name="frameShape">
-             <enum>QFrame::Box</enum>
+             <enum>QFrame::Panel</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Sunken</enum>
@@ -229,6 +229,20 @@
               <layout class="QFormLayout" name="formLayout">
                <item row="1" column="0">
                 <layout class="QFormLayout" name="formLayout_2"/>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_13">
+                 <property name="text">
+                  <string>不良品描述</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QTextEdit" name="describe">
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
                </item>
                <item row="3" column="0">
                 <widget class="QLabel" name="label_14">
@@ -264,41 +278,54 @@
                <item row="5" column="1">
                 <widget class="QTextEdit" name="precaution"/>
                </item>
-               <item row="7" column="1">
-                <widget class="QCheckBox" name="check_selfprev">
+               <item row="8" column="0">
+                <widget class="QLabel" name="label_17">
+                 <property name="text">
+                  <string>自审人：</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="1">
+                <widget class="QLabel" name="person">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="11" column="1">
+                <widget class="QCheckBox" name="pre_check">
                  <property name="layoutDirection">
                   <enum>Qt::RightToLeft</enum>
                  </property>
                  <property name="text">
                   <string>自审核</string>
                  </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_13">
-                 <property name="text">
-                  <string>不良品描述</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QTextEdit" name="describe">
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="0">
-                <widget class="QLabel" name="label_17">
-                 <property name="text">
-                  <string>自审信息：</string>
+                 <property name="checked">
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
                <item row="6" column="1">
-                <widget class="QLabel" name="lbl_selfpreinfo">
+                <widget class="QLineEdit" name="parts"/>
+               </item>
+               <item row="6" column="0">
+                <widget class="QPushButton" name="btn_slparts">
+                 <property name="text">
+                  <string>添加参与审核部门</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="1">
+                <widget class="QLabel" name="pre_time">
                  <property name="text">
                   <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="0">
+                <widget class="QLabel" name="label_6">
+                 <property name="text">
+                  <string>自审时间：</string>
                  </property>
                 </widget>
                </item>
@@ -310,7 +337,7 @@
           <item>
            <widget class="QFrame" name="frame_2">
             <property name="frameShape">
-             <enum>QFrame::Box</enum>
+             <enum>QFrame::WinPanel</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Sunken</enum>
@@ -423,7 +450,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1094</width>
+     <width>1129</width>
      <height>23</height>
     </rect>
    </property>
@@ -503,7 +530,7 @@
   <tabstop>btn_search</tabstop>
   <tabstop>btn_caseto</tabstop>
   <tabstop>tabWidget</tabstop>
-  <tabstop>check_selfprev</tabstop>
+  <tabstop>pre_check</tabstop>
   <tabstop>describe</tabstop>
   <tabstop>tbl_unpass</tabstop>
   <tabstop>unpassname</tabstop>
@@ -528,6 +555,22 @@
     <hint type="destinationlabel">
      <x>509</x>
      <y>380</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_11</sender>
+   <signal>returnPressed()</signal>
+   <receiver>btn_search</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>692</x>
+     <y>225</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>801</x>
+     <y>222</y>
     </hint>
    </hints>
   </connection>
