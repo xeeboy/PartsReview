@@ -28,7 +28,6 @@ class MainForm(QMainWindow, Ui_MainWindow):
                 if coln == 0:
                     content = '%06d' % content
                 item = QStandardItem(content)
-                # 在模型的指定位置添加数据(item)
                 model.setItem(rown, coln, item)
 
         self.tbl_unpass.setModel(model)
@@ -37,6 +36,6 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.tbl_unpass.resizeColumnsToContents()  # set column width to fit contents (set font first!)
         self.tbl_unpass.setSortingEnabled(True)  # enable sorting
         self.tbl_unpass.verticalHeader().hide()
-        self.tbl_unpass.setEditTriggers(QAbstractItemView.NoEditTriggers)   # set table readonly
+        self.tbl_unpass.setEditTriggers(QAbstractItemView.NoEditTriggers)   # set table ReadOnly
         self.tbl_unpass.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)  # set full show table
         self.tbl_unpass.setSelectionBehavior(QAbstractItemView.SelectRows)  # set select entire row
