@@ -103,6 +103,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
                 elif act.text() == 'Start Preview':
                     sql = "update 状态标记 set b_m_rev=True where ID={}".format(unpass_id)
                 elif act.text() == '输入处理意见':
+                    # TODO show type in idea window
                     pass
                 db.modify_db(sql)
             self.set_tbl_unpass(TBL_UNPASS_SQL)
