@@ -59,4 +59,10 @@ class PartsNeeds(QDialog, Ui_parts_need_review):
     def parts_need(self):
         check_list =  self.groupBox.findChildren(QCheckBox)
         parts = ','.join([check.objectName() for check in check_list if check.isChecked()])
-        self.parent.parts.setText(parts)
+        unpass_id = self.parent.ID.text()
+        if unpass_id:
+            db = AccDb()
+            with db:
+                sql = "update 状态标记 set part_need_review='{}' where ID={}".format(parts, unpass_id)
+                db.modify_db(sql)
+            self.parent.parts.setText(parts)
