@@ -42,9 +42,8 @@ def get_model(fields, sql):
     for rown in range(n):
         for coln in range(len(fields)):
             content = rst[rown][coln]
-            if coln == 0:
-                content = '%06d' % content
-            item = QStandardItem(content)
+            content = '' if content is None else content
+            item = QStandardItem(str(content))
             model.setItem(rown, coln, item)
     return model
 
