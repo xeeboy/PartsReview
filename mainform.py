@@ -1,11 +1,13 @@
+import user_info
+
 from ui_main import *
-from PyQt5.QtWidgets import QMainWindow, QTableView, QHeaderView
-from PyQt5.QtGui import QStandardItemModel, QFont
 from getdb import *
 from ui_part_need_review import *
+from sysrun import *
+from PyQt5.QtWidgets import QMainWindow, QTableView, QHeaderView
+from PyQt5.QtGui import QStandardItemModel, QFont
 
-
-FIELDS_UNPASS = ['ID', '客户', '批号', '不良品种类', '不良品名称', '责任部门']
+FIELDS_UNPASS = ['ID', '客户', '批号', '不良品名称', '责任部门', '技术部意见', '工艺部意见', '质量部意见', '技术支持部意见', '总经办意见']
 FIELDS_IN_TAB1 = {'ID': 'ID',
                   'batch': '批号',
                   'prodate': '生产日期',
@@ -21,13 +23,21 @@ FIELDS_IN_TAB1 = {'ID': 'ID',
                   'pre_check': '责任自审'
                   }
 
+idea = ','.join(("IIF(ISNULL({}) or {}='','待输入','已更新')".format(part_idea, part_idea) for part_idea in
+                 ('技术部意见', '工艺部意见', '质量部意见', '技术支持部意见', '总经办意见')))
+
+TBL_UNPASS_SQL = "SELECT a.ID,客户,批号,不良品名称,caseto_by_QA as 责任部门,{}" \
+                 " FROM 不合格品登记 a LEFT JOIN 状态标记 b ON a.ID=b.ID".format(idea)
+
+CURRENT_USERNAME = user_info.get_value('USERNAME')
+CURRENT_PART = user_info.get_value('PART')
+
 
 class MainForm(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        sql = "SELECT a.ID,客户,批号,不良品种类,不良品名称,caseto_by_QA as 责任部门 FROM 不合格品登记 a LEFT JOIN 状态标记 b ON a.ID=b.ID ORDER BY a.ID DESC"
-        self.set_tbl_unpass(sql)
+        self.set_tbl_unpass(TBL_UNPASS_SQL)
         self.btn_search.clicked.connect(self.fuzzy_search)
         self.lineEdit_11.setPlaceholderText('批号或者不良品名称关键字')
         self.btn_slparts.clicked.connect(self.show_select_parts_frm)
@@ -49,7 +59,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
     def fuzzy_search(self):
         keyword = self.lineEdit_11.text()
         SearchStr = " WHERE a.批号 & a.不良品名称 LIKE '%{}%'".format(keyword) if keyword else ""
-        fuzzy_sql = "SELECT a.ID,客户,批号,不良品种类,不良品名称,caseto_by_QA as 责任部门 FROM 不合格品登记 a LEFT JOIN 状态标记 b ON a.ID=b.ID %s ORDER BY a.ID DESC" % SearchStr
+        fuzzy_sql = TBL_UNPASS_SQL + SearchStr
         self.set_tbl_unpass(fuzzy_sql)
 
     def show_select_parts_frm(self):
@@ -75,6 +85,10 @@ class MainForm(QMainWindow, Ui_MainWindow):
                     exec_str = 'self.{}.setText("%06d" % v)'.format(fd[i])
                 elif fd[i] == 'pre_check':
                     exec_str = 'self.{}.setChecked(v)'.format(fd[i])
+                elif fd[i] == 'prodate':
+                    exec_str = 'self.{}.setText(v.strftime("%Y-%m-%d"))'.format(fd[i])
                 eval(exec_str)
             except:
                 pass
+
+        print(CURRENT_PART, CURRENT_USERNAME)
