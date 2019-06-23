@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>501</width>
-    <height>524</height>
+    <width>627</width>
+    <height>521</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,8 +20,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>29</x>
-     <y>49</y>
+     <x>120</x>
+     <y>51</y>
      <width>60</width>
      <height>16</height>
     </rect>
@@ -33,9 +33,9 @@
   <widget class="QTextEdit" name="txt_tec_part">
    <property name="geometry">
     <rect>
-     <x>119</x>
-     <y>49</y>
-     <width>231</width>
+     <x>210</x>
+     <y>51</y>
+     <width>381</width>
      <height>74</height>
     </rect>
    </property>
@@ -43,8 +43,8 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>29</x>
-     <y>129</y>
+     <x>120</x>
+     <y>131</y>
      <width>60</width>
      <height>16</height>
     </rect>
@@ -56,9 +56,9 @@
   <widget class="QTextEdit" name="txt_pro_part">
    <property name="geometry">
     <rect>
-     <x>119</x>
-     <y>129</y>
-     <width>231</width>
+     <x>210</x>
+     <y>131</y>
+     <width>381</width>
      <height>74</height>
     </rect>
    </property>
@@ -66,8 +66,8 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>29</x>
-     <y>209</y>
+     <x>120</x>
+     <y>211</y>
      <width>60</width>
      <height>16</height>
     </rect>
@@ -79,9 +79,9 @@
   <widget class="QTextEdit" name="txt_qc_part">
    <property name="geometry">
     <rect>
-     <x>119</x>
-     <y>209</y>
-     <width>231</width>
+     <x>210</x>
+     <y>211</y>
+     <width>381</width>
      <height>73</height>
     </rect>
    </property>
@@ -89,8 +89,8 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>29</x>
-     <y>288</y>
+     <x>120</x>
+     <y>290</y>
      <width>84</width>
      <height>16</height>
     </rect>
@@ -102,9 +102,9 @@
   <widget class="QTextEdit" name="txt_tec_support">
    <property name="geometry">
     <rect>
-     <x>119</x>
-     <y>288</y>
-     <width>231</width>
+     <x>210</x>
+     <y>290</y>
+     <width>381</width>
      <height>74</height>
     </rect>
    </property>
@@ -112,8 +112,8 @@
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>29</x>
-     <y>368</y>
+     <x>120</x>
+     <y>370</y>
      <width>60</width>
      <height>16</height>
     </rect>
@@ -125,9 +125,9 @@
   <widget class="QTextEdit" name="txt_general_m">
    <property name="geometry">
     <rect>
-     <x>119</x>
-     <y>368</y>
-     <width>231</width>
+     <x>210</x>
+     <y>370</y>
+     <width>381</width>
      <height>74</height>
     </rect>
    </property>
@@ -135,10 +135,10 @@
   <widget class="QGroupBox" name="gpb_deal">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>40</y>
-     <width>111</width>
-     <height>241</height>
+     <x>10</x>
+     <y>50</y>
+     <width>91</width>
+     <height>261</height>
     </rect>
    </property>
    <property name="title">
@@ -190,7 +190,7 @@
       </property>
       <property name="icon">
        <iconset>
-        <normaloff>icons/pass_to_left.png</normaloff>icons/pass_to_left.png</iconset>
+        <normaloff>icons/pass_to_right.png</normaloff>icons/pass_to_right.png</iconset>
       </property>
      </widget>
     </item>
@@ -199,7 +199,7 @@
   <widget class="QPushButton" name="btn_save_idea">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>520</x>
      <y>470</y>
      <width>72</width>
      <height>23</height>
@@ -222,7 +222,7 @@
   <widget class="QPushButton" name="btn_sign_name">
    <property name="geometry">
     <rect>
-     <x>290</x>
+     <x>440</x>
      <y>470</y>
      <width>72</width>
      <height>23</height>

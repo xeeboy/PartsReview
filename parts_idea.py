@@ -1,7 +1,7 @@
 from getdb import AccDb
 from datetime import datetime
 from ui_parts_idea import Ui_partidea
-from PyQt5.QtWidgets import QDialog, QTextEdit
+from PyQt5.QtWidgets import QDialog, QTextEdit, QMessageBox, QCheckBox
 
 
 class IdeaDialog(QDialog, Ui_partidea):
@@ -16,11 +16,8 @@ class IdeaDialog(QDialog, Ui_partidea):
         self.department = department
         self._unpass_id = _unpass_id
         self.parent = parent
-        self.deal_id = _unpass_id
-        self.ctl = self.findChild(QTextEdit, dict(zip(self.ctlname_zh.values(), self.ctlname_zh.keys()))[self.department])
-        self.contents = self.ctl.toPlainText()
         self.setupUi(self)
-
+        self.ctl = self.findChild(QTextEdit, dict(zip(self.ctlname_zh.values(), self.ctlname_zh.keys()))[self.department])
         db = AccDb()
         with db:
             sql = 'select {} from 不合格品登记 where ID={}'.format(
@@ -44,20 +41,25 @@ class IdeaDialog(QDialog, Ui_partidea):
                     self.btn_sign_name.setEnabled(False)
                     self.btn_save_idea.setEnabled(False)
                 ctl.setReadOnly(True)
-        self.btn_save_idea.clicked.connect(self.saveidea)
+        self.btn_save_idea.clicked.connect(self.save_idea)
         self.btn_sign_name.clicked.connect(self.sign)
-        self.btn_deal_method.clicked.connect(self.addmethods)
+        self.btn_deal_method.clicked.connect(self.add_methods)
 
-    def saveidea(self):
+    def save_idea(self):
+        contents = self.ctl.toPlainText()
         db = AccDb()
         with db:
-            sql = "update 不合格品登记 set {}意见='{}' where ID={}".format(self.department, self.contents, self._unpass_id)
+            sql = "update 不合格品登记 set {}意见='{}' where ID={}".format(self.department, contents, self._unpass_id)
             db.modify_db(sql)
+        QMessageBox.information(self, 'Update success', '本次更新完成！')
 
     def sign(self):
-        # sign_info = ">>>填写人:{},  填写日期：{}".format(self.username, datetime.now().strftime("%Y-%m-%d %H:%M"))
-        # self.ctl.setPlainText(self.contents + '\n\t' + sign_info)
-        pass
+        old_cont = self.ctl.toPlainText()
+        sign_info = "\t\t>>>填写人:{}\n\t\t>>>填写日期：{}".format(self._username, datetime.now().strftime("%Y-%m-%d %H:%M"))
+        self.ctl.setPlainText(old_cont + '\n' + sign_info)
 
-    def addmethods(self):
-        pass
+    def add_methods(self):
+        old_cont = self.ctl.toPlainText()
+        check_list = self.gpb_deal.findChildren(QCheckBox)
+        deal_methods = ','.join([check.text() for check in check_list if check.isChecked()])
+        self.ctl.setPlainText("处置方式>>> {}\n{}".format(deal_methods, old_cont))
