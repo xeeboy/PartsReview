@@ -1,15 +1,17 @@
 import user_info
 
-from datetime import datetime
 from ui_main import *
 from getdb import *
 from ui_part_need_review import *
 from sysrun import *
+
+from datetime import datetime
+from parts_idea import IdeaDialog
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow, QTableView, QHeaderView, QMenu, QAction
 from PyQt5.QtGui import QStandardItemModel, QFont, QCursor, QIcon
 
-FIELDS_UNPASS = ['ID', '客户', '批号', '不良品名称', '责任部门', 'StartReview', '技术部意见', '工艺部意见', '质量部意见', '技术支持部意见', '总经办意见']
+FIELDS_UNPASS = ['ID', '客户', '批号', '不良品名称', '责任部门', '送部门评审', '送总经理评审', '技术部意见', '工艺部意见', '质量部意见', '技术支持部意见', '总经办意见']
 FIELDS_IN_TAB1 = {'ID': 'ID',
                   'batch': '批号',
                   'prodate': '生产日期',
@@ -29,8 +31,8 @@ FIELDS_IN_TAB1 = {'ID': 'ID',
 idea = ','.join(("IIF(ISNULL({}) or {}='','待输入','已更新')".format(part_idea, part_idea) for part_idea in
                  ('技术部意见', '工艺部意见', '质量部意见', '技术支持部意见', '总经办意见')))
 
-TBL_UNPASS_SQL = "SELECT a.ID,客户,批号,不良品名称,caseto_by_QA,IIF(b.b_m_rev=TRUE,'YES','NO'),{} " \
-                 "FROM 不合格品登记 a LEFT JOIN 状态标记 b ON a.ID=b.ID".format(idea)
+TBL_UNPASS_SQL = "SELECT a.ID,客户,批号,不良品名称,caseto_by_QA,IIF(b.b_m_rev=TRUE,'YES','NO')," \
+                 "IIF(b.g_m_rev=TRUE,'YES','NO'),{} FROM 不合格品登记 a LEFT JOIN 状态标记 b ON a.ID=b.ID".format(idea)
 
 
 class MainForm(QMainWindow, Ui_MainWindow):
@@ -71,18 +73,21 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
         action_del = QAction('Delete', self)
         action_del.setIcon(QIcon('icons/delete_file_32px.ico'))
-        action_preview = QAction('Start Preview', self)
-        action_preview.setIcon(QIcon('icons/parameterreview_32px.ico'))
+        action_part_preview = QAction('Start Department Preview', self)
+        action_part_preview.setIcon(QIcon('icons/parameterreview_32px.ico'))
+        action_general_preview = QAction('Start General Preview', self)
+        action_general_preview.setIcon(QIcon('icons/general_manager_128px.ico'))
         action_typeidea = QAction('输入处理意见', self)
         action_typeidea.setIcon(QIcon('icons/input_tablet_32px.ico'))
 
         if user_info.get_value('PART') != '质量部':
-            for ctl in [action_del, action_preview, submenu_caseto]:
+            for ctl in [action_del, action_part_preview, action_general_preview, submenu_caseto]:
                 ctl.setEnabled(False)
 
         popMenu.addMenu(submenu_caseto)
         popMenu.addAction(action_del)
-        popMenu.addAction(action_preview)
+        popMenu.addAction(action_part_preview)
+        popMenu.addAction(action_general_preview)
         popMenu.addAction(action_typeidea)
         popMenu.triggered.connect(self.processtrigger)
         popMenu.exec_(QCursor.pos())
@@ -91,6 +96,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
         row = self.tbl_unpass.currentIndex().row()
         unpass_id = int(self.model.item(row, 0).text())
         to_parts = user_info.get_value('PARTS')[:-1]
+        sql = ''
         try:
             db = AccDb()
             with db:
@@ -100,11 +106,14 @@ class MainForm(QMainWindow, Ui_MainWindow):
                         sql = "insert into 状态标记(ID, caseto_by_QA) values({},'{}')".format(unpass_id, act.text())
                 elif act.text() == 'Delete':
                     sql = 'delete * from 不合格品登记 where ID = %d' % unpass_id
-                elif act.text() == 'Start Preview':
+                elif act.text() == 'Start Department Preview':
                     sql = "update 状态标记 set b_m_rev=True where ID={}".format(unpass_id)
+                elif act.text() == 'Start General Preview':
+                    sql = "update 状态标记 set g_m_rev=True where ID={}".format(unpass_id)
                 elif act.text() == '输入处理意见':
                     # TODO show type in idea window
-                    pass
+                    idea_dia = IdeaDialog(self, user_info.get_value('USERNAME'), user_info.get_value('PART'), unpass_id)
+                    idea_dia.show()
                 db.modify_db(sql)
             self.set_tbl_unpass(TBL_UNPASS_SQL)
         except:
@@ -118,7 +127,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
     def show_select_parts_frm(self):
         frm = PartsNeeds(self)
-        frm.move(QCursor.pos().x(), QCursor.pos().y() - 304)
+        frm.move(QCursor.pos().x(), QCursor.pos().y() - 350)  # form pos follow to the cursor
         frm.show()
 
     def show_unpass_item_info(self):
@@ -128,8 +137,8 @@ class MainForm(QMainWindow, Ui_MainWindow):
         with db:
             fd = ','.join(list(FIELDS_IN_TAB1.values())[1:])
             sql = "select a.ID,{0} from 不合格品登记 a left join 状态标记 b on a.ID=b.ID where a.ID={1}".format(fd, unpass_id)
-            rst = db.get_rst(sql)
-        values = rst[0]
+            _rst = db.get_rst(sql)
+        values = _rst[0]
         fd = list(FIELDS_IN_TAB1.keys())
         for i in range(len(fd)):
             try:

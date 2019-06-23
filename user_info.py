@@ -1,4 +1,10 @@
-"""global variant"""
+"""global variant
+USERNAME
+PART
+EMAIL
+PARTS
+usage: user_info.get_value('USERNAME')
+"""
 
 
 def _init():

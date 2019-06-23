@@ -13,13 +13,13 @@ from getdb import AccDb
 db = AccDb()
 with db:
     rst = db.get_rst('SELECT 部门 from 部门')
-PARTS = [item[0] for item in rst]
+PARTS = [p[0] for p in rst]
 
 
 class Ui_parts_need_review(object):
     def setupUi(self, parts_need_review):
         parts_need_review.setObjectName("parts_need_review")
-        parts_need_review.resize(262, 304)
+        parts_need_review.resize(200, 304)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("icons/user.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         parts_need_review.setWindowIcon(icon)
@@ -57,7 +57,7 @@ class PartsNeeds(QDialog, Ui_parts_need_review):
         self.btn_save.clicked.connect(self.parts_need)
 
     def parts_need(self):
-        check_list =  self.groupBox.findChildren(QCheckBox)
+        check_list = self.groupBox.findChildren(QCheckBox)
         parts = ','.join([check.objectName() for check in check_list if check.isChecked()])
         unpass_id = self.parent.ID.text()
         if unpass_id:

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>partidea</class>
+ <widget class="QDialog" name="partidea">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>466</width>
-    <height>446</height>
+    <width>501</width>
+    <height>524</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,13 +15,13 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>icons/dealidea.ico</normaloff>icons/dealidea.ico</iconset>
+    <normaloff>icons/input_tablet_32px.ico</normaloff>icons/input_tablet_32px.ico</iconset>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>9</y>
+     <x>29</x>
+     <y>49</y>
      <width>60</width>
      <height>16</height>
     </rect>
@@ -30,12 +30,12 @@
     <string>技术部意见</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="txt_jsb">
+  <widget class="QTextEdit" name="txt_tec_part">
    <property name="geometry">
     <rect>
-     <x>99</x>
-     <y>9</y>
-     <width>351</width>
+     <x>119</x>
+     <y>49</y>
+     <width>231</width>
      <height>74</height>
     </rect>
    </property>
@@ -43,8 +43,8 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>89</y>
+     <x>29</x>
+     <y>129</y>
      <width>60</width>
      <height>16</height>
     </rect>
@@ -53,12 +53,12 @@
     <string>工艺部意见</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="txt_gyb">
+  <widget class="QTextEdit" name="txt_pro_part">
    <property name="geometry">
     <rect>
-     <x>99</x>
-     <y>89</y>
-     <width>351</width>
+     <x>119</x>
+     <y>129</y>
+     <width>231</width>
      <height>74</height>
     </rect>
    </property>
@@ -66,8 +66,8 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>169</y>
+     <x>29</x>
+     <y>209</y>
      <width>60</width>
      <height>16</height>
     </rect>
@@ -76,12 +76,12 @@
     <string>质量部意见</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="txt_zlb">
+  <widget class="QTextEdit" name="txt_qc_part">
    <property name="geometry">
     <rect>
-     <x>99</x>
-     <y>169</y>
-     <width>351</width>
+     <x>119</x>
+     <y>209</y>
+     <width>231</width>
      <height>73</height>
     </rect>
    </property>
@@ -89,8 +89,8 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>248</y>
+     <x>29</x>
+     <y>288</y>
      <width>84</width>
      <height>16</height>
     </rect>
@@ -99,12 +99,12 @@
     <string>技术支持部意见</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="txt_jszcb">
+  <widget class="QTextEdit" name="txt_tec_support">
    <property name="geometry">
     <rect>
-     <x>99</x>
-     <y>248</y>
-     <width>351</width>
+     <x>119</x>
+     <y>288</y>
+     <width>231</width>
      <height>74</height>
     </rect>
    </property>
@@ -112,8 +112,8 @@
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>328</y>
+     <x>29</x>
+     <y>368</y>
      <width>60</width>
      <height>16</height>
     </rect>
@@ -122,52 +122,144 @@
     <string>总经理意见</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="txt_zjb">
+  <widget class="QTextEdit" name="txt_general_m">
    <property name="geometry">
     <rect>
-     <x>99</x>
-     <y>328</y>
-     <width>351</width>
+     <x>119</x>
+     <y>368</y>
+     <width>231</width>
      <height>74</height>
     </rect>
    </property>
   </widget>
-  <widget class="QSplitter" name="splitter">
+  <widget class="QGroupBox" name="gpb_deal">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>40</y>
+     <width>111</width>
+     <height>241</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>选择处置方式</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QCheckBox" name="chk_devi_release">
+      <property name="text">
+       <string>偏差放行</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="chk_rework">
+      <property name="text">
+       <string>返工</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="chk_downgrade">
+      <property name="text">
+       <string>降级</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="chk_direc_sales">
+      <property name="text">
+       <string>定向销售</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="chk_scrap">
+      <property name="text">
+       <string>报废</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="btn_deal_method">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#55ff00;&quot;&gt;不在上述列表中的处置方式可手动输入&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>Add</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>icons/pass_to_left.png</normaloff>icons/pass_to_left.png</iconset>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="btn_save_idea">
    <property name="geometry">
     <rect>
      <x>160</x>
-     <y>410</y>
-     <width>150</width>
+     <y>470</y>
+     <width>72</width>
      <height>23</height>
     </rect>
    </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
    </property>
-   <widget class="QPushButton" name="btn_save">
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="text">
-     <string>保存</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_sign">
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="text">
-     <string>签名</string>
-    </property>
-   </widget>
+   <property name="text">
+    <string>保存</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/Save_32px.ico</normaloff>icons/Save_32px.ico</iconset>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_sign_name">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>470</y>
+     <width>72</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; color:#0055ff;&quot;&gt;在意见输入框末尾添加&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="text">
+    <string>签名</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/dealidea.ico</normaloff>icons/dealidea.ico</iconset>
+   </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>txt_tec_part</tabstop>
+  <tabstop>txt_pro_part</tabstop>
+  <tabstop>txt_qc_part</tabstop>
+  <tabstop>txt_tec_support</tabstop>
+  <tabstop>txt_general_m</tabstop>
+  <tabstop>chk_devi_release</tabstop>
+  <tabstop>chk_rework</tabstop>
+  <tabstop>chk_downgrade</tabstop>
+  <tabstop>chk_direc_sales</tabstop>
+  <tabstop>chk_scrap</tabstop>
+  <tabstop>btn_save_idea</tabstop>
+  <tabstop>btn_sign_name</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
