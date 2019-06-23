@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1116</width>
-    <height>703</height>
+    <width>1345</width>
+    <height>823</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -51,22 +51,6 @@
         <string>不良品目录</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_6">
-        <item>
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
@@ -576,16 +560,6 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_dealidea">
-       <attribute name="icon">
-        <iconset>
-         <normaloff>C:/Users/Administrator/.designer/backup/icons/dealidea.ico</normaloff>C:/Users/Administrator/.designer/backup/icons/dealidea.ico</iconset>
-       </attribute>
-       <attribute name="title">
-        <string>处理意见</string>
-       </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_3"/>
-      </widget>
       <widget class="QWidget" name="tab_onpreving">
        <attribute name="icon">
         <iconset>
@@ -594,6 +568,22 @@
        <attribute name="title">
         <string>待评审</string>
        </attribute>
+       <widget class="QFrame" name="frame_4">
+        <property name="geometry">
+         <rect>
+          <x>410</x>
+          <y>0</y>
+          <width>741</width>
+          <height>701</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_following">
        <attribute name="icon">
@@ -613,7 +603,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1116</width>
+     <width>1345</width>
      <height>23</height>
     </rect>
    </property>
@@ -691,7 +681,6 @@
   <tabstop>precaution</tabstop>
   <tabstop>lineEdit_11</tabstop>
   <tabstop>btn_search</tabstop>
-  <tabstop>tabWidget</tabstop>
   <tabstop>pre_check</tabstop>
   <tabstop>describe</tabstop>
   <tabstop>tbl_unpass</tabstop>
