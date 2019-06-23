@@ -52,7 +52,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
     def set_tbl_unpass(self, sql):
         self.model = get_model(FIELDS_UNPASS[:-1] + ['总经理意见'], sql)
         self.tbl_unpass.setModel(self.model)
-        font = QFont("SimHei", 11)
+        font = QFont("SimHei", 10)
         self.tbl_unpass.setFont(font)  # set font
         self.tbl_unpass.resizeColumnsToContents()  # set column width to fit contents (set font first!)
         self.tbl_unpass.setSortingEnabled(True)  # enable sorting
