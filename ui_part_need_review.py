@@ -7,20 +7,19 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QCheckBox, QPushButton
-import sys
+from PyQt5.QtWidgets import QCheckBox, QPushButton, QDialog
 from getdb import AccDb
 
 db = AccDb()
 with db:
     rst = db.get_rst('SELECT 部门 from 部门')
-PARTS = [item[0] for item in rst]
+PARTS = [p[0] for p in rst]
 
 
 class Ui_parts_need_review(object):
     def setupUi(self, parts_need_review):
         parts_need_review.setObjectName("parts_need_review")
-        parts_need_review.resize(262, 304)
+        parts_need_review.resize(200, 304)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("icons/user.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         parts_need_review.setWindowIcon(icon)
@@ -49,16 +48,21 @@ class Ui_parts_need_review(object):
         parts_need_review.setWindowTitle(_translate("parts_need_review", "选择需参与的部门"))
         self.groupBox.setTitle(_translate("parts_need_review", "参与部门"))
 
+
+class PartsNeeds(QDialog, Ui_parts_need_review):
+    def __init__(self, parent):  # pass parent then edit controls in parent by this cls()
+        super().__init__(parent)
+        self.parent = parent
+        self.setupUi(self)
+        self.btn_save.clicked.connect(self.parts_need)
+
     def parts_need(self):
-        check_list =  self.groupBox.findChildren(QCheckBox)
+        check_list = self.groupBox.findChildren(QCheckBox)
         parts = ','.join([check.objectName() for check in check_list if check.isChecked()])
-        print(parts)
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ui = Ui_parts_need_review()
-    frm = QtWidgets.QDialog()
-    ui.setupUi(frm)
-    frm.show()
-    sys.exit(app.exec_())
+        unpass_id = self.parent.ID.text()
+        if unpass_id:
+            db = AccDb()
+            with db:
+                sql = "update 状态标记 set part_need_review='{}' where ID={}".format(parts, unpass_id)
+                db.modify_db(sql)
+            self.parent.parts.setText(parts)

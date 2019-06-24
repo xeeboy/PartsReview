@@ -1,5 +1,6 @@
 from pyodbc import connect
 from configparser import ConfigParser
+from PyQt5.QtGui import QStandardItem, QStandardItemModel
 
 config = ConfigParser()
 config.read('config.ini')
@@ -26,4 +27,23 @@ class AccDb:
     def modify_db(self, sql):
         self._cursor.execute(sql)
         self._cursor.commit()
+
+
+def get_model(fields, sql):
+    """set and return a QstandItemModel"""
+    db = AccDb()
+    model = QStandardItemModel()
+    with db:
+        rst = db.get_rst(sql)
+    n = len(rst)
+    for i in range(len(fields)):
+        item = QStandardItem(fields[i])
+        model.setHorizontalHeaderItem(i, item)
+    for rown in range(n):
+        for coln in range(len(fields)):
+            content = rst[rown][coln]
+            content = '' if content is None else content
+            item = QStandardItem(str(content))
+            model.setItem(rown, coln, item)
+    return model
 
