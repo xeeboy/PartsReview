@@ -348,8 +348,9 @@
                 <widget class="QTextEdit" name="describe">
                  <property name="font">
                   <font>
+                   <family>等线</family>
                    <pointsize>10</pointsize>
-                   <italic>true</italic>
+                   <italic>false</italic>
                   </font>
                  </property>
                  <property name="readOnly">
