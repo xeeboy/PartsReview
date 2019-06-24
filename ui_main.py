@@ -2,11 +2,12 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.12.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -15,7 +16,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(1345, 823)
         MainWindow.setMinimumSize(QtCore.QSize(1116, 703))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("C:/Users/Administrator/.designer/backup/icons/parameterreview_32px_26157_easyicon.net.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("icons/parameterreview_32px.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -293,7 +294,7 @@ class Ui_MainWindow(object):
         self.btn_search = QtWidgets.QPushButton(self.frame_3)
         self.btn_search.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("C:/Users/Administrator/.designer/backup/icons/search.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("icons/search.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_search.setIcon(icon3)
         self.btn_search.setObjectName("btn_search")
         self.horizontalLayout_2.addWidget(self.btn_search)
@@ -311,7 +312,7 @@ class Ui_MainWindow(object):
         spacerItem7 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_6.addItem(spacerItem7)
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("C:/Users/Administrator/.designer/backup/icons/dir.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap("icons/dir.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.tab_ongoing, icon4, "")
         self.tab_onpreving = QtWidgets.QWidget()
         self.tab_onpreving.setObjectName("tab_onpreving")
@@ -321,12 +322,12 @@ class Ui_MainWindow(object):
         self.frame_4.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_4.setObjectName("frame_4")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("C:/Users/Administrator/.designer/backup/icons/find.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap("icons/find.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.tab_onpreving, icon5, "")
         self.tab_following = QtWidgets.QWidget()
         self.tab_following.setObjectName("tab_following")
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("C:/Users/Administrator/.designer/backup/icons/gps_navigation_position_positioning_tracking_32px_1225459_easyicon.net.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap("icons/gps_navigation_32px.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.tabWidget.addTab(self.tab_following, icon6, "")
         self.verticalLayout_2.addWidget(self.tabWidget)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -343,17 +344,17 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.act_changepwd = QtWidgets.QAction(MainWindow)
         icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("C:/Users/Administrator/.designer/backup/icons/password32px.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon7.addPixmap(QtGui.QPixmap("icons/password32px.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.act_changepwd.setIcon(icon7)
         self.act_changepwd.setObjectName("act_changepwd")
         self.act_chguser = QtWidgets.QAction(MainWindow)
         icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap("C:/Users/Administrator/.designer/backup/icons/user32px.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon8.addPixmap(QtGui.QPixmap("icons/user32px.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.act_chguser.setIcon(icon8)
         self.act_chguser.setObjectName("act_chguser")
         self.action_quit = QtWidgets.QAction(MainWindow)
         icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap("C:/Users/Administrator/.designer/backup/icons/quit128px.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon9.addPixmap(QtGui.QPixmap("icons/quit128px.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.action_quit.setIcon(icon9)
         self.action_quit.setObjectName("action_quit")
         self.action_about = QtWidgets.QAction(MainWindow)
@@ -418,4 +419,5 @@ class Ui_MainWindow(object):
         self.action_quit.setShortcut(_translate("MainWindow", "Ctrl+Q"))
         self.action_about.setText(_translate("MainWindow", "关于"))
         self.action_about.setShortcut(_translate("MainWindow", "Ctrl+H"))
+
 
