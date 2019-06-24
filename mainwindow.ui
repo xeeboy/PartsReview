@@ -24,7 +24,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>C:/Users/Administrator/.designer/backup/icons/parameterreview_32px_26157_easyicon.net.ico</normaloff>C:/Users/Administrator/.designer/backup/icons/parameterreview_32px_26157_easyicon.net.ico</iconset>
+    <normaloff>icons/parameterreview_32px.ico</normaloff>icons/parameterreview_32px.ico</iconset>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
@@ -45,7 +45,7 @@
       <widget class="QWidget" name="tab_ongoing">
        <attribute name="icon">
         <iconset>
-         <normaloff>C:/Users/Administrator/.designer/backup/icons/dir.png</normaloff>C:/Users/Administrator/.designer/backup/icons/dir.png</iconset>
+         <normaloff>icons/dir.png</normaloff>icons/dir.png</iconset>
        </attribute>
        <attribute name="title">
         <string>不良品目录</string>
@@ -587,7 +587,7 @@
                   </property>
                   <property name="icon">
                    <iconset>
-                    <normaloff>C:/Users/Administrator/.designer/backup/icons/search.ico</normaloff>C:/Users/Administrator/.designer/backup/icons/search.ico</iconset>
+                    <normaloff>icons/search.ico</normaloff>icons/search.ico</iconset>
                   </property>
                  </widget>
                 </item>
@@ -640,7 +640,7 @@
       <widget class="QWidget" name="tab_onpreving">
        <attribute name="icon">
         <iconset>
-         <normaloff>C:/Users/Administrator/.designer/backup/icons/find.png</normaloff>C:/Users/Administrator/.designer/backup/icons/find.png</iconset>
+         <normaloff>icons/find.png</normaloff>icons/find.png</iconset>
        </attribute>
        <attribute name="title">
         <string>待评审</string>
@@ -665,7 +665,7 @@
       <widget class="QWidget" name="tab_following">
        <attribute name="icon">
         <iconset>
-         <normaloff>C:/Users/Administrator/.designer/backup/icons/gps_navigation_position_positioning_tracking_32px_1225459_easyicon.net.ico</normaloff>C:/Users/Administrator/.designer/backup/icons/gps_navigation_position_positioning_tracking_32px_1225459_easyicon.net.ico</iconset>
+         <normaloff>icons/gps_navigation_32px.ico</normaloff>icons/gps_navigation_32px.ico</iconset>
        </attribute>
        <attribute name="title">
         <string>处理跟踪</string>
@@ -706,7 +706,7 @@
   <action name="act_changepwd">
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/Administrator/.designer/backup/icons/password32px.ico</normaloff>C:/Users/Administrator/.designer/backup/icons/password32px.ico</iconset>
+     <normaloff>icons/password32px.ico</normaloff>icons/password32px.ico</iconset>
    </property>
    <property name="text">
     <string>更改密码</string>
@@ -718,7 +718,7 @@
   <action name="act_chguser">
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/Administrator/.designer/backup/icons/user32px.ico</normaloff>C:/Users/Administrator/.designer/backup/icons/user32px.ico</iconset>
+     <normaloff>icons/user32px.ico</normaloff>icons/user32px.ico</iconset>
    </property>
    <property name="text">
     <string>更换用户</string>
@@ -730,7 +730,7 @@
   <action name="action_quit">
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/Administrator/.designer/backup/icons/quit128px.ico</normaloff>C:/Users/Administrator/.designer/backup/icons/quit128px.ico</iconset>
+     <normaloff>icons/quit128px.ico</normaloff>icons/quit128px.ico</iconset>
    </property>
    <property name="text">
     <string>退出</string>
@@ -742,7 +742,7 @@
   <action name="action_about">
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/Administrator/.designer/backup/icons/dir.png</normaloff>C:/Users/Administrator/.designer/backup/icons/dir.png</iconset>
+     <normaloff>icons/dir.png</normaloff>icons/dir.png</iconset>
    </property>
    <property name="text">
     <string>关于</string>
