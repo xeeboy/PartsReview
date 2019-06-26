@@ -4,7 +4,7 @@ import pymysql
 from configparser import ConfigParser
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 
-#  for using when pyodbc connect Access
+#  for using when pymysql connect Access
 config = ConfigParser()
 config.read('config.ini')
 HOST = config.get('DBInfo', 'host')
