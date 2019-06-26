@@ -1,37 +1,48 @@
-from pyodbc import connect
+"""Connect database and generate model for tbl_view"""
+
+import pymysql
 from configparser import ConfigParser
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 
+#  for using when pyodbc connect Access
 config = ConfigParser()
 config.read('config.ini')
-DB_FILE = config.get('DBPath', 'path')
+HOST = config.get('DBInfo', 'host')
+PORT = config.getint('DBInfo', 'port')
+DB_NAME = config.get('DBInfo', 'db_name')
 
 
-class AccDb:
-    def __init__(self):
-        self._conn = connect(
-            r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=' + DB_FILE)
-        self._cursor = self._conn.cursor()
+class MysqlDb:
+    """conncet to Mysql server"""
+    def __init__(self, user='root', password='123456',
+                 cursor_type=pymysql.cursors.DictCursor):
+        self._cnn = pymysql.connect(host=HOST, port=PORT, user=user, password=password,
+                                    charset='utf8', cursorclass=cursor_type)
+        self._cursor = self._cnn.cursor()
+        self._con_db(DB_NAME)
 
     def __enter__(self):
         pass
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        self._cnn.close()
         self._cursor.close()
-        self._conn.close()
 
-    def get_rst(self, sql):
-        recordset = self._cursor.execute(sql).fetchall()
-        return recordset
+    def _con_db(self, db_name):
+        self.modify_db('use %s' % db_name)
 
     def modify_db(self, sql):
         self._cursor.execute(sql)
-        self._cursor.commit()
+        self._cnn.commit()
+
+    def get_rst(self, sql):
+        self._cursor.execute(sql)
+        return self._cursor.fetchall()
 
 
 def get_model(fields, sql):
     """set and return a QstandItemModel"""
-    db = AccDb()
+    db = MysqlDb()
     model = QStandardItemModel()
     with db:
         rst = db.get_rst(sql)
