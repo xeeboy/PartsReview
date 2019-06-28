@@ -4,7 +4,7 @@ import pymysql
 from configparser import ConfigParser
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 
-#  for using when pyodbc connect Access
+#  for using when pymysql connect Access
 config = ConfigParser()
 config.read('config.ini')
 HOST = config.get('DBInfo', 'host')
@@ -52,7 +52,7 @@ def get_model(fields, sql):
         model.setHorizontalHeaderItem(i, item)
     for rown in range(n):
         for coln in range(len(fields)):
-            content = rst[rown][coln]
+            content = list(rst[rown].values())[coln]
             content = '' if content is None else content
             item = QStandardItem(str(content))
             model.setItem(rown, coln, item)

@@ -1,4 +1,4 @@
-from getdb import AccDb
+from getdb import MysqlDb
 from datetime import datetime
 from ui_parts_idea import Ui_partidea
 from PyQt5.QtWidgets import QDialog, QTextEdit, QMessageBox, QCheckBox
@@ -19,18 +19,18 @@ class IdeaDialog(QDialog, Ui_partidea):
         self.setupUi(self)
         self.ctl = self.findChild(QTextEdit,
                                   dict(zip(self.ctl_name_zh.values(), self.ctl_name_zh.keys()))[self.department])
-        db = AccDb()
+        db = MysqlDb()
         with db:
-            sql = 'select {} from 不合格品登记 where ID={}'.format(
+            sql = 'SELECT {} FROM 不合格品登记 WHERE ID={}'.format(
                 ','.join([part + '意见' for part in self.ctl_name_zh.values()]), deal_id
             )
-            pre_sql = 'select 责任自审 from 不合格品登记 where ID=%d' % deal_id
+            flag_sql = 'SELECT 责任自审 FROM 不合格品登记 WHERE ID=%d' % deal_id
             rst = db.get_rst(sql)
-            flag_rst = db.get_rst(pre_sql)
+            flag_rst = db.get_rst(flag_sql)
         for i in range(len(rst[0])):
-            eval('self.%s.setPlainText(rst[0][i])' % list(self.ctl_name_zh.keys())[i])
+            eval('self.%s.setPlainText(list(rst[0].values())[i])' % list(self.ctl_name_zh.keys())[i])
 
-        start_type_idea_flag = flag_rst[0][0]  # if 责任自审未完成 then 不能输入处理意见
+        start_type_idea_flag = flag_rst[0]['责任自审']  # if 责任自审未完成 then 不能输入处理意见
         if not start_type_idea_flag:
             self.setWindowTitle(self.windowTitle() + '>>>当前不合格品处理尚未完成分析、预防及改善办法提交')
         for ctl in self.findChildren(QTextEdit):
@@ -48,10 +48,11 @@ class IdeaDialog(QDialog, Ui_partidea):
 
     def save_idea(self):
         contents = self.ctl.toPlainText()
-        db = AccDb()
+        db = MysqlDb()
         with db:
-            sql = "update 不合格品登记 set {}意见='{}' where ID={}".format(self.department, contents, self.deal_id)
+            sql = "UPDATE 不合格品登记 SET {}意见='{}' WHERE ID={}".format(self.department, contents, self.deal_id)
             db.modify_db(sql)
+        self.parent.fuzzy_search()
         QMessageBox.information(self, 'Update success', '本次更新完成！')
 
     def sign(self):

@@ -8,12 +8,12 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QCheckBox, QPushButton, QDialog
-from getdb import AccDb
+from getdb import MysqlDb
 
-db = AccDb()
+db = MysqlDb()
 with db:
     rst = db.get_rst('SELECT 部门 from 部门')
-PARTS = [p[0] for p in rst]
+PARTS = [p['部门'] for p in rst]
 
 
 class Ui_parts_need_review(object):
@@ -61,7 +61,7 @@ class PartsNeeds(QDialog, Ui_parts_need_review):
         parts = ','.join([check.objectName() for check in check_list if check.isChecked()])
         unpass_id = self.parent.ID.text()
         if unpass_id:
-            db = AccDb()
+            db = MysqlDb()
             with db:
                 sql = "update 状态标记 set part_need_review='{}' where ID={}".format(parts, unpass_id)
                 db.modify_db(sql)

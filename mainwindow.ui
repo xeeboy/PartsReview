@@ -34,7 +34,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="iconSize">
        <size>
@@ -322,9 +322,15 @@
          </spacer>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,4">
           <item>
            <widget class="QFrame" name="frame">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="frameShape">
              <enum>QFrame::Panel</enum>
             </property>
@@ -557,7 +563,7 @@
             <property name="frameShadow">
              <enum>QFrame::Sunken</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_5">
+            <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0">
              <item>
               <widget class="QFrame" name="frame_3">
                <property name="frameShape">
@@ -646,22 +652,153 @@
        <attribute name="title">
         <string>待评审</string>
        </attribute>
-       <widget class="QFrame" name="frame_4">
-        <property name="geometry">
-         <rect>
-          <x>410</x>
-          <y>0</y>
-          <width>741</width>
-          <height>701</height>
-         </rect>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="6,7">
+        <item>
+         <widget class="QTableView" name="pre_tbl_view"/>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame_4">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_7">
+           <item>
+            <layout class="QFormLayout" name="formLayout_4">
+             <item row="2" column="1">
+              <widget class="QTextEdit" name="pre_result">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>原因分析</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>纠正措施</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>预防措施</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>技术部意见</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_18">
+               <property name="text">
+                <string>工艺部意见</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_19">
+               <property name="text">
+                <string>质量部意见</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QLabel" name="label_20">
+               <property name="text">
+                <string>技术支持部意见</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="0">
+              <widget class="QLabel" name="label_21">
+               <property name="text">
+                <string>总经理意见</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QTextEdit" name="pre_correctiveation">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QTextEdit" name="pre_precaution">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QTextEdit" name="pre_tec_idea">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QTextEdit" name="pre_pro_idea">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <widget class="QTextEdit" name="pre_qa_idea">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <widget class="QTextEdit" name="pre_tec_support_idea">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="1">
+              <widget class="QTextEdit" name="pre_general_idea">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QTextEdit" name="pre_describle">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_22">
+               <property name="text">
+                <string>不合格原因</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_following">
        <attribute name="icon">
@@ -689,22 +826,22 @@
     <property name="title">
      <string>菜单(&amp;M)</string>
     </property>
-    <addaction name="act_changepwd"/>
+    <addaction name="act_chgpwd"/>
     <addaction name="act_chguser"/>
     <addaction name="separator"/>
-    <addaction name="action_quit"/>
+    <addaction name="act_quit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>帮助(&amp;H)</string>
     </property>
-    <addaction name="action_about"/>
+    <addaction name="act_about"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="act_changepwd">
+  <action name="act_chgpwd">
    <property name="icon">
     <iconset>
      <normaloff>icons/password32px.ico</normaloff>icons/password32px.ico</iconset>
@@ -728,7 +865,7 @@
     <string>Ctrl+U</string>
    </property>
   </action>
-  <action name="action_quit">
+  <action name="act_quit">
    <property name="icon">
     <iconset>
      <normaloff>icons/quit128px.ico</normaloff>icons/quit128px.ico</iconset>
@@ -740,7 +877,7 @@
     <string>Ctrl+Q</string>
    </property>
   </action>
-  <action name="action_about">
+  <action name="act_about">
    <property name="icon">
     <iconset>
      <normaloff>icons/dir.png</normaloff>icons/dir.png</iconset>
@@ -771,7 +908,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>action_quit</sender>
+   <sender>act_quit</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>

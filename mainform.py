@@ -1,14 +1,12 @@
 import user_info
-
-from ui_main import *
 from getdb import *
+from ui_main import *
 from ui_part_need_review import *
-from sysrun import *
+from parts_idea import IdeaDialog
 
 from datetime import datetime
-from parts_idea import IdeaDialog
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow, QTableView, QHeaderView, QMenu, QAction
+from PyQt5.QtWidgets import QMainWindow, QTableView, QHeaderView, QMenu, QAction, QMessageBox
 from PyQt5.QtGui import QStandardItemModel, QFont, QCursor, QIcon
 
 FIELDS_UNPASS = ['ID', '客户', '批号', '不良品名称', '责任部门', '送部门评审', '送总经理评审', '技术部意见', '工艺部意见', '质量部意见', '技术支持部意见', '总经办意见']
@@ -28,17 +26,31 @@ FIELDS_IN_TAB1 = {'ID': 'ID',
                   'parts': 'part_need_review'
                   }
 
-idea = ','.join(("IIF(ISNULL({}) or {}='','待输入','已更新')".format(part_idea, part_idea) for part_idea in
+FIELDS_PRE = ['ID', '批号', '不良品名称', '客户', '生产日期', '不良品种类', '数量Kg']
+FIELDS_IN_TAB2 = {
+    'pre_describle': '不合格描述',
+    'pre_result': '原因分析',
+    'pre_correctiveation': '纠正措施',
+    'pre_precaution': '预防措施',
+    'pre_tec_idea': '技术部意见',
+    'pre_pro_idea': '工艺部意见',
+    'pre_qa_idea': '质量部意见',
+    'pre_tec_support_idea': '技术支持部意见',
+    'pre_general_idea': '总经办意见'
+}
+
+idea = ','.join(("IF(ISNULL({}) or {}='','待输入','已更新')".format(part_idea, part_idea) for part_idea in
                  ('技术部意见', '工艺部意见', '质量部意见', '技术支持部意见', '总经办意见')))
 
-TBL_UNPASS_SQL = "SELECT a.ID,客户,批号,不良品名称,caseto_by_QA,IIF(b.b_m_rev=TRUE,'YES','NO')," \
-                 "IIF(b.g_m_rev=TRUE,'YES','NO'),{} FROM 不合格品登记 a LEFT JOIN 状态标记 b ON a.ID=b.ID".format(idea)
+TBL_UNPASS_SQL = "SELECT a.ID,客户,批号,不良品名称,caseto_by_QA,IF(b.b_m_rev=TRUE,'YES','NO')," \
+                 "IF(b.g_m_rev=TRUE,'YES','NO'),{} FROM 不合格品登记 a LEFT JOIN 状态标记 b ON a.ID=b.ID".format(idea)
 
 
 class MainForm(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        # set tab1
         self.set_tbl_unpass(TBL_UNPASS_SQL)
         self.btn_search.clicked.connect(self.fuzzy_search)
         self.lineEdit_11.setPlaceholderText('批号或者不良品名称关键字')
@@ -47,30 +59,47 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.btn_save.clicked.connect(self.save)
         self.pre_check.clicked.connect(self.preview)
         self.tbl_unpass.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.tbl_unpass.customContextMenuRequested.connect(self.rclick)
+        self.tbl_unpass.customContextMenuRequested.connect(self.rclick_tbl_unpass)
+
+        # TODO tab2 logic
+        # set tab2
+        pre_info_sql = 'SELECT a.ID,{} FROM ' \
+                       '不合格品登记 a INNER JOIN 状态标记 b ' \
+                       'ON a.ID=b.ID ' \
+                       'WHERE b.b_m_rev=True AND b.case_closed_flag=False'.format(
+            ','.join(FIELDS_PRE[1:]))
+        self.set_tbl_pre(pre_info_sql)
 
     def set_tbl_unpass(self, sql):
+        """SET data for QTableView"""
         self.model = get_model(FIELDS_UNPASS[:-1] + ['总经理意见'], sql)
         self.tbl_unpass.setModel(self.model)
+        self.set_tbl_format('tbl_unpass')
+
+    def set_tbl_pre(self, sql):
+        self.model_pre = get_model(FIELDS_PRE, sql)
+        self.pre_tbl_view.setModel(self.model_pre)
+        self.set_tbl_format('pre_tbl_view')
+
+    def set_tbl_format(self, tbl_name):
+        tbl_view = self.findChild(QTableView, tbl_name)
         font = QFont("SimHei", 10)
-        self.tbl_unpass.setFont(font)  # set font
-        self.tbl_unpass.resizeColumnsToContents()  # set column width to fit contents (set font first!)
-        self.tbl_unpass.setSortingEnabled(True)  # enable sorting
-        self.tbl_unpass.verticalHeader().hide()
-        self.tbl_unpass.setEditTriggers(QTableView.NoEditTriggers)  # set table ReadOnly
+        tbl_view.setFont(font)  # set font
+        tbl_view.resizeColumnsToContents()  # set column width to fit contents (set font first!)
+        tbl_view.setSortingEnabled(True)  # enable sorting
+        tbl_view.verticalHeader().hide()  # hide vertical Header
+        tbl_view.setEditTriggers(QTableView.NoEditTriggers)  # set table ReadOnly
         # self.tbl_unpass.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)  # Width of equalization column
-        self.tbl_unpass.horizontalHeader().setStretchLastSection(True)  # last column stretch to full
-        self.tbl_unpass.setSelectionBehavior(QTableView.SelectRows)  # set select entire row
-        self.tbl_unpass.setSelectionMode(QTableView.SingleSelection)  # select only one
+        tbl_view.horizontalHeader().setStretchLastSection(True)  # last column stretch to full
+        tbl_view.setSelectionBehavior(QTableView.SelectRows)  # set select entire row
+        tbl_view.setSelectionMode(QTableView.SingleSelection)  # select only one
 
-    def rclick(self):
+    def rclick_tbl_unpass(self):
         popMenu = QMenu()
-
         submenu_caseto = QMenu('CaseTo')
         submenu_caseto.setIcon(QIcon('icons/user.ico'))
         for part in user_info.get_value('PARTS')[:-1]:
             submenu_caseto.addAction(QAction(part, self))
-
         action_del = QAction('Delete', self)
         action_del.setIcon(QIcon('icons/delete_file_32px.ico'))
         action_part_preview = QAction('Start Department Preview', self)
@@ -89,39 +118,38 @@ class MainForm(QMainWindow, Ui_MainWindow):
         popMenu.addAction(action_part_preview)
         popMenu.addAction(action_general_preview)
         popMenu.addAction(action_typeidea)
-        popMenu.triggered.connect(self.processtrigger)
+        popMenu.triggered.connect(self.processtrigger_tbl_unpass)
         popMenu.exec_(QCursor.pos())
 
-    def processtrigger(self, act):
+    def processtrigger_tbl_unpass(self, act):
         row = self.tbl_unpass.currentIndex().row()
         unpass_id = int(self.model.item(row, 0).text())
         to_parts = user_info.get_value('PARTS')[:-1]
         sql = ''
         try:
-            db = AccDb()
+            db = MysqlDb()
             with db:
                 if act.text() in to_parts:
-                    sql = "update 状态标记 set caseto_by_QA='{}' where ID={}".format(act.text(), unpass_id)
-                    if len(db.get_rst('select caseto_by_QA from 状态标记 where ID=%d' % unpass_id)) == 0:
-                        sql = "insert into 状态标记(ID, caseto_by_QA) values({},'{}')".format(unpass_id, act.text())
+                    sql = "UPDATE 状态标记 SET caseto_by_QA='{}' WHERE ID={}".format(act.text(), unpass_id)
+                    if len(db.get_rst('SELECT caseto_by_QA FROM 状态标记 WHERE ID=%d' % unpass_id)) == 0:
+                        sql = "INSERT INTO 状态标记(ID, caseto_by_QA) VALUES({},'{}')".format(unpass_id, act.text())
                 elif act.text() == 'Delete':
-                    sql = 'delete * from 不合格品登记 where ID = %d' % unpass_id
+                    sql = 'DELETE FROM 不合格品登记 WHERE ID = %d' % unpass_id
                 elif act.text() == 'Start Department Preview':
-                    sql = "update 状态标记 set b_m_rev=True where ID={}".format(unpass_id)
+                    sql = "UPDATE 状态标记 SET b_m_rev=True WHERE ID={}".format(unpass_id)
                 elif act.text() == 'Start General Preview':
-                    sql = "update 状态标记 set g_m_rev=True where ID={}".format(unpass_id)
+                    sql = "UPDATE 状态标记 SET g_m_rev=True WHERE ID={}".format(unpass_id)
                 elif act.text() == '输入处理意见':
-                    # TODO show type in idea window
                     idea_dia = IdeaDialog(self, user_info.get_value('USERNAME'), user_info.get_value('PART'), unpass_id)
                     idea_dia.show()
                 db.modify_db(sql)
-            self.set_tbl_unpass(TBL_UNPASS_SQL)
+                self.fuzzy_search()
         except:
             pass
 
     def fuzzy_search(self):
         keyword = self.lineEdit_11.text()
-        search_str = " WHERE a.批号 & a.不良品名称 LIKE '%{}%'".format(keyword) if keyword else ""
+        search_str = " WHERE CONCAT(批号,不良品名称) LIKE '%{}%'".format(keyword) if keyword else ""
         fuzzy_sql = TBL_UNPASS_SQL + search_str
         self.set_tbl_unpass(fuzzy_sql)
 
@@ -133,12 +161,15 @@ class MainForm(QMainWindow, Ui_MainWindow):
     def show_unpass_item_info(self):
         row = self.tbl_unpass.currentIndex().row()
         unpass_id = int(self.model.item(row, 0).text())  # pos(row, 0) the first column
-        db = AccDb()
+        db = MysqlDb()
         with db:
             fd = ','.join(list(FIELDS_IN_TAB1.values())[1:])
-            sql = "select a.ID,{0} from 不合格品登记 a left join 状态标记 b on a.ID=b.ID where a.ID={1}".format(fd, unpass_id)
+            sql = "SELECT a.ID,{0} FROM" \
+                  " 不合格品登记 a LEFT JOIN 状态标记 b " \
+                  "ON a.ID=b.ID " \
+                  "WHERE a.ID={1}".format(fd, unpass_id)
             _rst = db.get_rst(sql)
-        values = _rst[0]
+        values = list(_rst[0].values())
         fd = list(FIELDS_IN_TAB1.keys())
         for i in range(len(fd)):
             try:
@@ -165,21 +196,31 @@ class MainForm(QMainWindow, Ui_MainWindow):
         if self.ID.text():
             username = user_info.get_value('USERNAME')
             savetime = datetime.now().strftime('%Y-%m-%d %H:%M')
-            db = AccDb()
+            db = MysqlDb()
             with db:
-                sql = "update 不合格品登记 set 原因分析='{0}',纠正措施='{1}',预防措施='{2}',自审人='{3}',自审时间='{4}',责任自审={5} where ID={6}".format(
-                    self.result.toPlainText(), self.correctiveaciton.toPlainText(), self.precaution.toPlainText(),
-                    username, savetime, self.pre_check.isChecked(), int(self.ID.text()))
+                sql = "UPDATE 不合格品登记 " \
+                      "SET 原因分析='{0}',纠正措施='{1}',预防措施='{2}',自审人='{3}',自审时间='{4}',责任自审={5} " \
+                      "WHERE ID={6}".format(self.result.toPlainText(),
+                                            self.correctiveaciton.toPlainText(),
+                                            self.precaution.toPlainText(),
+                                            username,
+                                            savetime,
+                                            self.pre_check.isChecked(),
+                                            int(self.ID.text())
+                                            )
                 db.modify_db(sql)
-            QMessageBox.information(self, 'Information', '已保存', )
+            QMessageBox.information(self, 'Information', '已保存')
             self.person.setText(username)
             self.pre_time.setText(savetime)
 
     def preview(self):
         if self.pre_check.isChecked():
-            s = QMessageBox.question(self, '提交处理单', '<自审人：{}>， <提交时间：{}>'.format(user_info.get_value('USERNAME'),
-                                                                                 datetime.now().strftime(
-                                                                                     '%Y-%m-%d %H:%M')))
+            s = QMessageBox.question(
+                self, '提交处理单','<自审人：{}>， <提交时间：{}>'.format(
+                    user_info.get_value('USERNAME'),datetime.now().strftime(
+                        '%Y-%m-%d %H:%M')
+                )
+            )
             if s == QMessageBox.Yes:
                 contents = [ctl.toPlainText().replace(' ', '') for ctl in (
                     self.result, self.correctiveaciton, self.precaution)]
@@ -187,14 +228,19 @@ class MainForm(QMainWindow, Ui_MainWindow):
                 if all(contents):
                     self.save()  # update db
                 else:
-                    QMessageBox.warning(self, '处理信息不全', '完成原因分析，纠正措施，预防措施及需参与的评审部门后提交！')
+                    QMessageBox.warning(
+                        self, '处理信息不全',
+                        '完成原因分析，纠正措施，预防措施及需参与的评审部门后提交！')
                     self.pre_check.setChecked(False)
             else:
                 self.pre_check.setChecked(False)
         else:
-            s = QMessageBox.question(self, '撤销提交', '<自审人：{}>， <提交时间：{}>'.format(user_info.get_value('USERNAME'),
-                                                                                datetime.now().strftime(
-                                                                                    '%Y-%m-%d %H:%M')))
+            s = QMessageBox.question(
+                self, '撤销提交', '<自审人：{}>， <提交时间：{}>'.format(
+                    user_info.get_value('USERNAME'),datetime.now().strftime(
+                        '%Y-%m-%d %H:%M')
+                )
+            )
             if s == QMessageBox.Yes:
                 self.save()  # update db
             else:
