@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <author>Xebo Yu</author>
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
   <property name="windowModality">
@@ -9,14 +10,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1345</width>
-    <height>823</height>
+    <width>804</width>
+    <height>552</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1116</width>
-    <height>703</height>
+    <width>761</width>
+    <height>552</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -33,6 +40,12 @@
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <widget class="QTabWidget" name="tabWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="currentIndex">
        <number>1</number>
       </property>
@@ -650,25 +663,105 @@
          <normaloff>icons/find.png</normaloff>icons/find.png</iconset>
        </attribute>
        <attribute name="title">
-        <string>待评审</string>
+        <string>评审清单</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="6,7">
+       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="6,0,7">
         <item>
-         <widget class="QTableView" name="pre_tbl_view"/>
-        </item>
-        <item>
-         <widget class="QFrame" name="frame_4">
+         <widget class="QFrame" name="frame_5">
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
+          <layout class="QVBoxLayout" name="verticalLayout_8" stretch="6,1,0">
+           <item>
+            <widget class="QTableView" name="pre_tbl_view">
+             <property name="statusTip">
+              <string>单击查看详细信息，右键评审！</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTextEdit" name="txt_pre_info">
+             <property name="placeholderText">
+              <string>输入评审意见</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <spacer name="horizontalSpacer_6">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_sign_pre">
+               <property name="text">
+                <string>签名</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_save_pre">
+               <property name="text">
+                <string>保存</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>58</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame_4">
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Sunken</enum>
+          </property>
+          <property name="lineWidth">
+           <number>1</number>
+          </property>
+          <property name="midLineWidth">
+           <number>1</number>
+          </property>
           <layout class="QVBoxLayout" name="verticalLayout_7">
            <item>
             <layout class="QFormLayout" name="formLayout_4">
-             <item row="2" column="1">
-              <widget class="QTextEdit" name="pre_result">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_22">
+               <property name="text">
+                <string>不合格原因</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QTextEdit" name="pre_describle">
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -681,52 +774,17 @@
                </property>
               </widget>
              </item>
+             <item row="2" column="1">
+              <widget class="QTextEdit" name="pre_result">
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
              <item row="3" column="0">
               <widget class="QLabel" name="label_8">
                <property name="text">
                 <string>纠正措施</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_9">
-               <property name="text">
-                <string>预防措施</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_10">
-               <property name="text">
-                <string>技术部意见</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_18">
-               <property name="text">
-                <string>工艺部意见</string>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="label_19">
-               <property name="text">
-                <string>质量部意见</string>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="0">
-              <widget class="QLabel" name="label_20">
-               <property name="text">
-                <string>技术支持部意见</string>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="0">
-              <widget class="QLabel" name="label_21">
-               <property name="text">
-                <string>总经理意见</string>
                </property>
               </widget>
              </item>
@@ -737,10 +795,24 @@
                </property>
               </widget>
              </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>预防措施</string>
+               </property>
+              </widget>
+             </item>
              <item row="4" column="1">
               <widget class="QTextEdit" name="pre_precaution">
                <property name="readOnly">
                 <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>技术部意见</string>
                </property>
               </widget>
              </item>
@@ -751,10 +823,24 @@
                </property>
               </widget>
              </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_18">
+               <property name="text">
+                <string>工艺部意见</string>
+               </property>
+              </widget>
+             </item>
              <item row="6" column="1">
               <widget class="QTextEdit" name="pre_pro_idea">
                <property name="readOnly">
                 <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_19">
+               <property name="text">
+                <string>质量部意见</string>
                </property>
               </widget>
              </item>
@@ -765,31 +851,17 @@
                </property>
               </widget>
              </item>
+             <item row="8" column="0">
+              <widget class="QLabel" name="label_20">
+               <property name="text">
+                <string>技术支持部意见</string>
+               </property>
+              </widget>
+             </item>
              <item row="8" column="1">
               <widget class="QTextEdit" name="pre_tec_support_idea">
                <property name="readOnly">
                 <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="1">
-              <widget class="QTextEdit" name="pre_general_idea">
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QTextEdit" name="pre_describle">
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_22">
-               <property name="text">
-                <string>不合格原因</string>
                </property>
               </widget>
              </item>
@@ -818,7 +890,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1345</width>
+     <width>804</width>
      <height>23</height>
     </rect>
    </property>

@@ -20,16 +20,18 @@ class Login(QMainWindow, Ui_Login):
         if USERNAME and _password:
             db = MysqlDb()
             with db:
-                sql = "select 密码,部门,邮箱 from 用户 where 用户名='%s'" % USERNAME
+                sql = "select 密码,部门,邮箱,评审权限 from 用户 where 用户名='%s'" % USERNAME
                 rst = db.get_rst(sql)
                 _PARTS = db.get_rst('select 部门 from 部门')
             if rst and rst[0]['密码'] == _password:
                 PART = rst[0]['部门']
                 EMAIL = rst[0]['邮箱']
+                PRIVILEGE = rst[0]['评审权限']
                 user_info._init()
                 user_info.set_value('USERNAME', USERNAME)
                 user_info.set_value('PART', PART)
                 user_info.set_value('EMAIL', EMAIL)
+                user_info.set_value('PRIVILEGE', PRIVILEGE)
                 user_info.set_value('PARTS', [p['部门'] for p in _PARTS])
                 main_win.showMaximized()  # login success then transfer to Main Form and close login form
                 main_win.setWindowTitle(main_win.windowTitle() + '   >>>当前用户：<%s> %s' % (PART, USERNAME))

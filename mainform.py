@@ -6,12 +6,11 @@ from parts_idea import IdeaDialog
 
 from datetime import datetime
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow, QTableView, QHeaderView, QMenu, QAction, \
-    QMessageBox
-from PyQt5.QtGui import QStandardItemModel, QFont, QCursor, QIcon
+from PyQt5.QtWidgets import QMainWindow, QTableView, QMenu, QAction, QMessageBox
+from PyQt5.QtGui import QFont, QCursor, QIcon
 
-FIELDS_UNPASS = ['ID', '客户', '批号', '不良品名称', '责任部门', '送部门评审', '送总经理评审', '技术部意见', '工艺部意见',
-                 '质量部意见', '技术支持部意见', '总经办意见']
+FIELDS_UNPASS = ['ID', '客户', '批号', '不良品名称', '责任部门', '送部门评审', '送总经理评审',
+                 '技术部意见', '工艺部意见','质量部意见', '技术支持部意见']
 FIELDS_IN_TAB1 = {'ID': 'ID', 'batch': '批号', 'prodate': '生产日期', 'unpasstype': '不良品种类',
                   'unpassname': '不良品名称', 'unpassqty': '数量Kg', 'describe': '不合格描述',
                   'result': '原因分析', 'correctiveaciton': '纠正措施', 'precaution': '预防措施',
@@ -19,12 +18,17 @@ FIELDS_IN_TAB1 = {'ID': 'ID', 'batch': '批号', 'prodate': '生产日期', 'unp
                   'parts': 'part_need_review'}
 idea = ','.join(
     ("IF(ISNULL({}) or {}='','待输入','已更新')".format(part_idea, part_idea) for part_idea in
-     ('技术部意见', '工艺部意见', '质量部意见', '技术支持部意见', '总经办意见')))
+     ('技术部意见', '工艺部意见', '质量部意见', '技术支持部意见')))
 TBL_UNPASS_SQL = "SELECT a.ID,客户,批号,不良品名称,caseto_by_QA," \
                  "IF(b.b_m_rev=TRUE,'YES','NO'),IF(b.g_m_rev=TRUE,'YES','NO'),{} " \
                  "FROM 不合格品登记 a LEFT JOIN 状态标记 b ON a.ID=b.ID".format(idea)
 
 FIELDS_PRE = ['ID', '评审状态', '结案标记', '批号', '不良品名称', '客户', '生产日期', '数量Kg', '不良品种类']
+FIELDS_IN_TAB2 = {'pre_describle': '不合格描述', 'pre_result': '原因分析',
+                  'pre_correctiveation': '纠正措施', 'pre_precaution': '预防措施',
+                  'pre_tec_idea': '技术部意见', 'pre_pro_idea': '工艺部意见',
+                  'pre_qa_idea': '质量部意见', 'pre_tec_support_idea': '技术支持部意见'
+                  }
 
 
 class MainForm(QMainWindow, Ui_MainWindow):
@@ -41,9 +45,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.btn_save.clicked.connect(self.save)
         self.pre_check.clicked.connect(self.preview)
         self.tbl_unpass.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.pre_tbl_view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tbl_unpass.customContextMenuRequested.connect(self.rclick_tbl_unpass)
-        self.pre_tbl_view.customContextMenuRequested.connect(self.rclick_tbl_pre)
 
         # TODO tab2 logic
         # set tab2
@@ -54,21 +56,23 @@ class MainForm(QMainWindow, Ui_MainWindow):
         if index == 1:
             current_part = user_info.get_value('PART')
             other_fields = ','.join(FIELDS_PRE[3:])
+            _m_flag = 'g_m_rev=True' if current_part == '总经办' else 'b_m_rev=True'
             pre_info_sql = "SELECT a.ID,IF({2}评审=TRUE,'YES','NO')," \
                            "IF(case_closed_flag=TRUE,'YES','NO'),{0} " \
                            "FROM 不合格品登记 a INNER JOIN 状态标记 b ON a.ID=b.ID " \
-                           "WHERE b_m_rev=True " \
+                           "WHERE {3} " \
                            "AND case_closed_flag=False " \
                            "AND FIND_IN_SET('{1}',part_need_review)" \
-                           "".format(other_fields, current_part, current_part)
+                           "".format(other_fields, current_part, current_part, _m_flag)
             self.set_tbl_pre(pre_info_sql)
+            self.txt_pre_info.setEnabled(False)
         else:
             pass
 
     def set_tbl_unpass(self, sql):
         """SET data for QTableView"""
-        self.model = get_model(FIELDS_UNPASS[:-1] + ['总经理意见'], sql)
-        self.tbl_unpass.setModel(self.model)
+        self.model_unpass = get_model(FIELDS_UNPASS, sql)
+        self.tbl_unpass.setModel(self.model_unpass)
         self.set_tbl_format('tbl_unpass')
 
     def set_tbl_pre(self, sql):
@@ -84,7 +88,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
         _tbl_view.setSortingEnabled(True)  # enable sorting
         _tbl_view.verticalHeader().hide()  # hide vertical Header
         _tbl_view.setEditTriggers(QTableView.NoEditTriggers)  # set table ReadOnly
-        # self.tbl_unpass.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)  # Width of equalization column
+        # self.tbl_unpass.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         _tbl_view.horizontalHeader().setStretchLastSection(
             True)  # last column stretch to full
         _tbl_view.setSelectionBehavior(QTableView.SelectRows)  # set select entire row
@@ -116,14 +120,9 @@ class MainForm(QMainWindow, Ui_MainWindow):
         popMenu.triggered.connect(self.processtrigger_tbl_unpass)
         popMenu.exec_(QCursor.pos())
 
-    def rclick_tbl_pre(self):
-        row = self.pre_tbl_view.currentIndex().row()
-        unpass_id = int(self.model_pre.item(row, 0).text())
-        print(unpass_id)
-
     def processtrigger_tbl_unpass(self, act):
         row = self.tbl_unpass.currentIndex().row()
-        unpass_id = int(self.model.item(row, 0).text())
+        unpass_id = int(self.model_unpass.item(row, 0).text())
         to_parts = user_info.get_value('PARTS')[:-1]
         sql = ''
         try:
@@ -166,7 +165,8 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
     def show_unpass_item(self):
         row = self.tbl_unpass.currentIndex().row()
-        unpass_id = int(self.model.item(row, 0).text())  # pos(row, 0) the first column
+        unpass_id = int(
+            self.model_unpass.item(row, 0).text())  # pos(row, 0) the first column
         db = MysqlDb()
         with db:
             fd = ','.join(list(FIELDS_IN_TAB1.values())[1:])
@@ -200,15 +200,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
             self.btn_slparts.setEnabled(True)
 
     def show_pre_item(self):
-        FIELDS_IN_TAB2 = {'pre_describle': '不合格描述',
-                         'pre_result': '原因分析',
-                         'pre_correctiveation': '纠正措施',
-                         'pre_precaution': '预防措施',
-                         'pre_tec_idea': '技术部意见',
-                         'pre_pro_idea': '工艺部意见',
-                         'pre_qa_idea': '质量部意见',
-                         'pre_tec_support_idea': '技术支持部意见',
-                         'pre_general_idea': '总经办意见'}
+        self.txt_pre_info.setEnabled(True)
         row = self.pre_tbl_view.currentIndex().row()
         unpass_id = int(self.model_pre.item(row, 0).text())
         db = MysqlDb()
@@ -217,7 +209,8 @@ class MainForm(QMainWindow, Ui_MainWindow):
             sql = "SELECT {} FROM 不合格品登记 WHERE ID={}".format(fd, unpass_id)
             pre_rst = db.get_rst(sql)
         for obj_name in FIELDS_IN_TAB2.keys():
-            eval("self.{}.setText(pre_rst[0]['{}'])".format(obj_name, FIELDS_IN_TAB2[obj_name]))
+            eval("self.{}.setText(pre_rst[0]['{}'])".format(obj_name,
+                                                            FIELDS_IN_TAB2[obj_name]))
 
     def save(self):
         if self.ID.text():
