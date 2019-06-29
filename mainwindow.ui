@@ -709,12 +709,20 @@
                <property name="text">
                 <string>签名</string>
                </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>icons/signature_128px.ico</normaloff>icons/signature_128px.ico</iconset>
+               </property>
               </widget>
              </item>
              <item>
               <widget class="QPushButton" name="btn_save_pre">
                <property name="text">
                 <string>保存</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>icons/Save_32px.ico</normaloff>icons/Save_32px.ico</iconset>
                </property>
               </widget>
              </item>
@@ -916,8 +924,41 @@
             <layout class="QFormLayout" name="formLayout_3">
              <item row="0" column="0">
               <widget class="QLabel" name="label_29">
+               <property name="contextMenuPolicy">
+                <enum>Qt::DefaultContextMenu</enum>
+               </property>
+               <property name="toolTip">
+                <string>需参与评审的部门</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Panel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Plain</enum>
+               </property>
+               <property name="lineWidth">
+                <number>-5</number>
+               </property>
+               <property name="midLineWidth">
+                <number>2</number>
+               </property>
                <property name="text">
-                <string>涉及部门</string>
+                <string>参与部门</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::AutoText</enum>
+               </property>
+               <property name="scaledContents">
+                <bool>false</bool>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+               </property>
+               <property name="margin">
+                <number>1</number>
+               </property>
+               <property name="indent">
+                <number>-1</number>
                </property>
               </widget>
              </item>

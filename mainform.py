@@ -1,13 +1,16 @@
 import user_info
+
 from getdb import *
 from ui_main import *
 from ui_part_need_review import *
 from parts_idea import IdeaDialog
+from chgpwd import ChgPwd
+from chguser import ChgUser
 
 from datetime import datetime
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow, QTableView, QMenu, QAction, QMessageBox
 from PyQt5.QtGui import QFont, QCursor, QIcon
+from PyQt5.QtWidgets import QMainWindow, QTableView, QMenu, QAction, QMessageBox, QApplication
 
 FIELDS_UNPASS = ['ID', '客户', '批号', '不良品名称', '责任部门', '送部门评审', '技术部意见', '工艺部意见',
                  '质量部意见', '技术支持部意见']
@@ -41,6 +44,8 @@ class MainForm(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.tabWidget.setCurrentIndex(0)
+        self.act_chgpwd.triggered.connect(self.chgpwd)
+        self.act_chguser.triggered.connect(self.chguser)
 
         # set tab1
         self.set_tbl_unpass(TBL_UNPASS_SQL)
@@ -51,14 +56,25 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.tbl_unpass.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tbl_unpass.customContextMenuRequested.connect(self.rclick_tbl_unpass)
 
-        # TODO tab2 logic
         # set tab2
         self.pre_tbl_view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.pre_tbl_view.customContextMenuRequested.connect(self.rclick_tbl_pre)
         self.tabWidget.currentChanged.connect(self.tab_changed)
         self.pre_tbl_view.clicked.connect(self.show_pre_item)  # self.pre_tbl_view.setMouseTracking(True)
+        self.btn_sign_pre.clicked.connect(self._pre_sign)
+
+    def chgpwd(self):
+        # Todo show change pwd dialog
+        chg_pwd = ChgPwd(self)
+        chg_pwd.show()
+
+    def chguser(self):
+        chg_user = ChgUser(self)
+        chg_user.show()
+        QApplication.processEvents()
 
     def tab_changed(self, index):
+        self.txt_pre_info.setPlainText('')
         if index == 1:
             # set privileges
             if not user_info.get_value('PRIVILEGE'):
@@ -66,7 +82,6 @@ class MainForm(QMainWindow, Ui_MainWindow):
             self._load_tbl_pre_data()
             self.txt_pre_info.setEnabled(False)
             self.btn_save_pre.clicked.connect(self.save_pre_info)
-            self.btn_sign_pre.clicked.connect(self.pre_sign)
 
     def _load_tbl_pre_data(self):
         current_part = user_info.get_value('PART')
@@ -80,7 +95,6 @@ class MainForm(QMainWindow, Ui_MainWindow):
                        "".format(other_fields, current_part, current_part, _m_flag)
         self.set_tbl_pre(pre_info_sql)
 
-    # TODO save preview information
     def save_pre_info(self):
         try:
             row = self.pre_tbl_view.currentIndex().row()
@@ -98,7 +112,6 @@ class MainForm(QMainWindow, Ui_MainWindow):
                         _db._cursor.execute(sql_pre_chk)
                         _db._cursor.execute(sql_pre_info)
                         self._load_tbl_pre_data()
-                        # Todo update pre_info
                         eval('self.{}.setText(pre_information)'
                              ''.format(dict(zip(FIELDS_IN_TAB2.values(),
                                                 FIELDS_IN_TAB2.keys()))[part+'评审信息']))
@@ -106,15 +119,13 @@ class MainForm(QMainWindow, Ui_MainWindow):
                         QMessageBox.information(self, 'Information', '已保存！')
                     except Exception as e:
                         _db._cnn.rollback()
-                        # TODO logging
-                        print(e)
+                        user_info.log2txt('提交写入评审信息时出现错误<save_pre_info>：<{}>'.format(e))
                         QMessageBox.critical(self, 'Mistake', '系统错误未保存！')
         except Exception as e:
-            # TODO logging
-            print(e)
+            user_info.log2txt('试图保存评审信息时出现错误<save_pre_info>：<{}>'.format(e))
             pass
 
-    def pre_sign(self):
+    def _pre_sign(self):
         old_cont = self.txt_pre_info.toPlainText()
         sign_info = "\t>>>评审人:{}\n\t>>>评审日期：{}" \
                     "".format(user_info.get_value('USERNAME'),
@@ -190,8 +201,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
                 db.modify_db(sql)
                 self.fuzzy_search()
         except Exception as e:
-            # TODO logging
-            print(e)
+            user_info.log2txt('右键操作不合格清单列表<ID={}>时出现错误<processtrigger_tbl_unpass>：<{}>'.format(unpass_id, e))
             pass
 
     def rclick_tbl_pre(self):
@@ -251,8 +261,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
                     exec_str = 'self.{}.setText(v.strftime("%Y-%m-%d"))'.format(fd[i])
                 eval(exec_str)
             except Exception as e:
-                # TODO logging
-                print(e)
+                user_info.log2txt('单击显示不合格项目<ID={}>时出现错误<show_unpass_item>：<{}>'.format(unpass_id, e))
                 pass
 
         if self.person.text() != '' and self.person.text() != user_info.get_value(
@@ -280,7 +289,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
                 eval("self.{}.setText(pre_rst[0]['{}'])"
                      "".format(obj_name, FIELDS_IN_TAB2[obj_name]))
             except Exception as e:
-                print(e)
+                user_info.log2txt('单击显示待(已)评审项目<ID={}>时出现错误<show_unpass_item>：<{}>'.format(unpass_id, e))
                 pass
 
     def save(self):
