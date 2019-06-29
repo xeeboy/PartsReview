@@ -6,9 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>627</width>
-    <height>521</height>
+    <width>557</width>
+    <height>486</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>微软雅黑</family>
+   </font>
   </property>
   <property name="windowTitle">
    <string>意见输入</string>
@@ -22,9 +27,15 @@
     <rect>
      <x>120</x>
      <y>51</y>
-     <width>60</width>
+     <width>71</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>技术部意见</string>
@@ -35,9 +46,22 @@
     <rect>
      <x>210</x>
      <y>51</y>
-     <width>381</width>
+     <width>321</width>
      <height>74</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="html">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'微软雅黑'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Consolas'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -45,9 +69,15 @@
     <rect>
      <x>120</x>
      <y>131</y>
-     <width>60</width>
+     <width>71</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>工艺部意见</string>
@@ -58,9 +88,15 @@
     <rect>
      <x>210</x>
      <y>131</y>
-     <width>381</width>
+     <width>321</width>
      <height>74</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -68,9 +104,15 @@
     <rect>
      <x>120</x>
      <y>211</y>
-     <width>60</width>
+     <width>71</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>质量部意见</string>
@@ -81,9 +123,15 @@
     <rect>
      <x>210</x>
      <y>211</y>
-     <width>381</width>
+     <width>321</width>
      <height>73</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -91,9 +139,15 @@
     <rect>
      <x>120</x>
      <y>290</y>
-     <width>84</width>
+     <width>91</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>技术支持部意见</string>
@@ -104,32 +158,15 @@
     <rect>
      <x>210</x>
      <y>290</y>
-     <width>381</width>
+     <width>321</width>
      <height>74</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QLabel" name="label_5">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
-     <y>370</y>
-     <width>60</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>总经理意见</string>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="txt_general_m">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
-     <y>370</y>
-     <width>381</width>
-     <height>74</height>
-    </rect>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </widget>
   <widget class="QGroupBox" name="gpb_deal">
@@ -141,12 +178,24 @@
      <height>261</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <property name="title">
     <string>选择处置方式</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QCheckBox" name="chk_devi_release">
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>偏差放行</string>
       </property>
@@ -154,6 +203,12 @@
     </item>
     <item>
      <widget class="QCheckBox" name="chk_rework">
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>返工</string>
       </property>
@@ -161,6 +216,12 @@
     </item>
     <item>
      <widget class="QCheckBox" name="chk_downgrade">
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>降级</string>
       </property>
@@ -168,6 +229,12 @@
     </item>
     <item>
      <widget class="QCheckBox" name="chk_direc_sales">
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>定向销售</string>
       </property>
@@ -175,6 +242,12 @@
     </item>
     <item>
      <widget class="QCheckBox" name="chk_scrap">
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>报废</string>
       </property>
@@ -182,6 +255,12 @@
     </item>
     <item>
      <widget class="QPushButton" name="btn_deal_method">
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="toolTip">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#55ff00;&quot;&gt;不在上述列表中的处置方式可手动输入&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
@@ -199,8 +278,8 @@
   <widget class="QPushButton" name="btn_save_idea">
    <property name="geometry">
     <rect>
-     <x>520</x>
-     <y>470</y>
+     <x>450</x>
+     <y>440</y>
      <width>72</width>
      <height>23</height>
     </rect>
@@ -210,6 +289,12 @@
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>保存</string>
@@ -222,8 +307,8 @@
   <widget class="QPushButton" name="btn_sign_name">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>470</y>
+     <x>370</x>
+     <y>440</y>
      <width>72</width>
      <height>23</height>
     </rect>
@@ -233,6 +318,12 @@
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; color:#0055ff;&quot;&gt;在意见输入框末尾添加&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -251,7 +342,6 @@
   <tabstop>txt_pro_part</tabstop>
   <tabstop>txt_qc_part</tabstop>
   <tabstop>txt_tec_support</tabstop>
-  <tabstop>txt_general_m</tabstop>
   <tabstop>chk_devi_release</tabstop>
   <tabstop>chk_rework</tabstop>
   <tabstop>chk_downgrade</tabstop>

@@ -64,7 +64,6 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.btn_sign_pre.clicked.connect(self._pre_sign)
 
     def chgpwd(self):
-        # Todo show change pwd dialog
         chg_pwd = ChgPwd(self)
         chg_pwd.show()
 
@@ -86,13 +85,18 @@ class MainForm(QMainWindow, Ui_MainWindow):
     def _load_tbl_pre_data(self):
         current_part = user_info.get_value('PART')
         other_fields = ','.join(FIELDS_PRE[2:])
-        _m_flag = 'g_m_rev=True' if current_part == '总经办' else 'b_m_rev=True'
         pre_info_sql = "SELECT a.ID,IF({2}评审=TRUE,'YES','NO'),{0} " \
                        "FROM 不合格品登记 a INNER JOIN 状态标记 b ON a.ID=b.ID " \
-                       "WHERE {3} " \
+                       "WHERE b_m_rev=TRUE " \
                        "AND case_closed_flag=False " \
                        "AND FIND_IN_SET('{1}',part_need_review)" \
-                       "".format(other_fields, current_part, current_part, _m_flag)
+                       "".format(other_fields, current_part, current_part)
+        if current_part == '总经办':
+            pre_info_sql = "SELECT a.ID,IF({2}评审=TRUE,'YES','NO'),{0} " \
+                           "FROM 不合格品登记 a INNER JOIN 状态标记 b ON a.ID=b.ID " \
+                           "WHERE g_m_rev=TRUE " \
+                           "AND case_closed_flag=False " \
+                           "".format(other_fields, current_part, current_part)
         self.set_tbl_pre(pre_info_sql)
 
     def save_pre_info(self):
@@ -145,15 +149,14 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
     def set_tbl_format(self, tbl_name):
         _tbl_view = self.findChild(QTableView, tbl_name)
-        font = QFont("SimHei", 10)
+        font = QFont("Consolas", 9)
         _tbl_view.setFont(font)  # set font
         _tbl_view.resizeColumnsToContents()  # set column width to fit contents (set font first!)
         _tbl_view.setSortingEnabled(True)  # enable sorting
         _tbl_view.verticalHeader().hide()  # hide vertical Header
         _tbl_view.setEditTriggers(QTableView.NoEditTriggers)  # set table ReadOnly
         # self.tbl_unpass.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        _tbl_view.horizontalHeader().setStretchLastSection(
-            True)  # last column stretch to full
+        _tbl_view.horizontalHeader().setStretchLastSection(True)  # last column stretch to full
         _tbl_view.setSelectionBehavior(QTableView.SelectRows)  # set select entire row
         _tbl_view.setSelectionMode(QTableView.SingleSelection)  # select only one
 

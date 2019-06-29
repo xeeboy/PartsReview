@@ -14,6 +14,7 @@ db = MysqlDb()
 with db:
     rst = db.get_rst('SELECT 部门 from 部门')
 PARTS = [p['部门'] for p in rst]
+PARTS.remove('总经办')
 
 
 class Ui_parts_need_review(object):

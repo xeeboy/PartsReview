@@ -10,8 +10,7 @@ class IdeaDialog(QDialog, Ui_partidea):
         self.ctl_name_zh = {'txt_tec_part': '技术部',
                             'txt_pro_part': '工艺部',
                             'txt_qc_part': '质量部',
-                            'txt_tec_support': '技术支持部',
-                            'txt_general_m': '总经办'}
+                            'txt_tec_support': '技术支持部'}
         self.username = username
         self.department = department
         self.deal_id = deal_id
