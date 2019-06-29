@@ -11,10 +11,13 @@ from PyQt5.QtGui import QFont, QCursor, QIcon
 
 FIELDS_UNPASS = ['ID', '客户', '批号', '不良品名称', '责任部门', '送部门评审', '技术部意见', '工艺部意见',
                  '质量部意见', '技术支持部意见']
+
 idea = ','.join(("IF(ISNULL({}) or {}='','待输入','已更新')"
                  "".format(part_idea, part_idea) for part_idea in FIELDS_UNPASS[-4:]))
+
 TBL_UNPASS_SQL = "SELECT a.ID,客户,批号,不良品名称,caseto_by_QA,IF(b.b_m_rev=TRUE,'YES','NO'),{} " \
                  "FROM 不合格品登记 a LEFT JOIN 状态标记 b ON a.ID=b.ID".format(idea)
+
 FIELDS_IN_TAB1 = {'ID': 'ID', 'batch': '批号', 'prodate': '生产日期', 'unpasstype': '不良品种类',
                   'unpassname': '不良品名称', 'unpassqty': '数量Kg', 'describe': '不合格描述',
                   'result': '原因分析', 'correctiveaciton': '纠正措施', 'precaution': '预防措施',
@@ -22,10 +25,15 @@ FIELDS_IN_TAB1 = {'ID': 'ID', 'batch': '批号', 'prodate': '生产日期', 'unp
                   'parts': 'part_need_review'}
 
 FIELDS_PRE = ['ID', '评审状态', '批号', '不良品名称', '客户', '生产日期', '数量Kg', '不良品种类']
+
 FIELDS_IN_TAB2 = {'pre_describle': '不合格描述', 'pre_result': '原因分析',
                   'pre_correctiveation': '纠正措施', 'pre_precaution': '预防措施',
                   'pre_tec_idea': '技术部意见', 'pre_pro_idea': '工艺部意见',
-                  'pre_qa_idea': '质量部意见', 'pre_tec_support_idea': '技术支持部意见'}
+                  'pre_qa_idea': '质量部意见', 'pre_tec_support_idea': '技术支持部意见',
+                  'pre_info_purchase': '采购部评审信息', 'pre_info_produce': '生产部评审信息',
+                  'pre_info_process': '工艺部评审信息', 'pre_info_logistics': '物流部评审信息',
+                  'pre_info_tec': '技术部评审信息', 'pre_info_qa': '质量部评审信息',
+                  'pre_info_general': '总经办评审信息', 'lbl_rev_parts_need': 'part_need_review'}
 
 
 class MainForm(QMainWindow, Ui_MainWindow):
@@ -89,9 +97,13 @@ class MainForm(QMainWindow, Ui_MainWindow):
                     try:
                         _db._cursor.execute(sql_pre_chk)
                         _db._cursor.execute(sql_pre_info)
+                        self._load_tbl_pre_data()
+                        # Todo update pre_info
+                        eval('self.{}.setText(pre_information)'
+                             ''.format(dict(zip(FIELDS_IN_TAB2.values(),
+                                                FIELDS_IN_TAB2.keys()))[part+'评审信息']))
                         _db._cnn.commit()
                         QMessageBox.information(self, 'Information', '已保存！')
-                        self._load_tbl_pre_data()
                     except Exception as e:
                         _db._cnn.rollback()
                         # TODO logging
@@ -104,7 +116,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
     def pre_sign(self):
         old_cont = self.txt_pre_info.toPlainText()
-        sign_info = "\t\t\t>>>评审人:{}\n\t\t\t>>>评审日期：{}" \
+        sign_info = "\t>>>评审人:{}\n\t>>>评审日期：{}" \
                     "".format(user_info.get_value('USERNAME'),
                               datetime.now().strftime("%Y-%m-%d %H:%M"))
         self.txt_pre_info.setPlainText(old_cont + '\n' + sign_info)
@@ -240,6 +252,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
                 eval(exec_str)
             except Exception as e:
                 # TODO logging
+                print(e)
                 pass
 
         if self.person.text() != '' and self.person.text() != user_info.get_value(
@@ -259,11 +272,16 @@ class MainForm(QMainWindow, Ui_MainWindow):
         _db = MysqlDb()
         with _db:
             fd = ','.join(FIELDS_IN_TAB2.values())
-            sql = "SELECT {} FROM 不合格品登记 WHERE ID={}".format(fd, unpass_id)
+            sql = "SELECT {} FROM 不合格品登记 a INNER JOIN 状态标记 b ON a.ID=b.ID WHERE a.ID={}" \
+                  "".format(fd, unpass_id)
             pre_rst = _db.get_rst(sql)
         for obj_name in FIELDS_IN_TAB2.keys():
-            eval("self.{}.setText(pre_rst[0]['{}'])"
-                 "".format(obj_name, FIELDS_IN_TAB2[obj_name]))
+            try:
+                eval("self.{}.setText(pre_rst[0]['{}'])"
+                     "".format(obj_name, FIELDS_IN_TAB2[obj_name]))
+            except Exception as e:
+                print(e)
+                pass
 
     def save(self):
         if self.ID.text():

@@ -10,7 +10,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>804</width>
+    <width>761</width>
     <height>552</height>
    </rect>
   </property>
@@ -47,7 +47,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="iconSize">
        <size>
@@ -665,7 +665,7 @@
        <attribute name="title">
         <string>评审清单</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="6,0,7">
+       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="4,0,3,3">
         <item>
          <widget class="QFrame" name="frame_5">
           <property name="frameShape">
@@ -678,7 +678,7 @@
            <item>
             <widget class="QTableView" name="pre_tbl_view">
              <property name="statusTip">
-              <string>单击查看详细信息，右键评审！</string>
+              <string>单击查看详细信息，选中后可添加评审信息！</string>
              </property>
             </widget>
            </item>
@@ -730,7 +730,7 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>58</width>
+            <width>17</width>
             <height>20</height>
            </size>
           </property>
@@ -745,7 +745,7 @@
            <enum>QFrame::Sunken</enum>
           </property>
           <property name="lineWidth">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="midLineWidth">
            <number>1</number>
@@ -762,6 +762,9 @@
              </item>
              <item row="1" column="1">
               <widget class="QTextEdit" name="pre_describle">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -776,6 +779,9 @@
              </item>
              <item row="2" column="1">
               <widget class="QTextEdit" name="pre_result">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -790,6 +796,12 @@
              </item>
              <item row="3" column="1">
               <widget class="QTextEdit" name="pre_correctiveation">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Sunken</enum>
+               </property>
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -804,6 +816,9 @@
              </item>
              <item row="4" column="1">
               <widget class="QTextEdit" name="pre_precaution">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -818,6 +833,9 @@
              </item>
              <item row="5" column="1">
               <widget class="QTextEdit" name="pre_tec_idea">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -832,6 +850,9 @@
              </item>
              <item row="6" column="1">
               <widget class="QTextEdit" name="pre_pro_idea">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -846,6 +867,9 @@
              </item>
              <item row="7" column="1">
               <widget class="QTextEdit" name="pre_qa_idea">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -860,6 +884,177 @@
              </item>
              <item row="8" column="1">
               <widget class="QTextEdit" name="pre_tec_support_idea">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame_6">
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Sunken</enum>
+          </property>
+          <property name="lineWidth">
+           <number>0</number>
+          </property>
+          <property name="midLineWidth">
+           <number>1</number>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <item>
+            <layout class="QFormLayout" name="formLayout_3">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_29">
+               <property name="text">
+                <string>涉及部门</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="lbl_rev_parts_need">
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>19</width>
+                 <height>50</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_21">
+               <property name="text">
+                <string>采购部评审</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QTextEdit" name="pre_info_purchase">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_23">
+               <property name="text">
+                <string>生产部评审</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QTextEdit" name="pre_info_produce">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_24">
+               <property name="text">
+                <string>工艺部评审</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QTextEdit" name="pre_info_process">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_25">
+               <property name="text">
+                <string>物流部评审</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QTextEdit" name="pre_info_logistics">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_26">
+               <property name="text">
+                <string>技术部评审</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QTextEdit" name="pre_info_tec">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_27">
+               <property name="text">
+                <string>质量部评审</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <widget class="QTextEdit" name="pre_info_qa">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QLabel" name="label_28">
+               <property name="text">
+                <string>总经理评审</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <widget class="QTextEdit" name="pre_info_general">
+               <property name="frameShape">
+                <enum>QFrame::Box</enum>
+               </property>
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -890,7 +1085,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>804</width>
+     <width>761</width>
      <height>23</height>
     </rect>
    </property>

@@ -57,7 +57,7 @@ class IdeaDialog(QDialog, Ui_partidea):
 
     def sign(self):
         old_cont = self.ctl.toPlainText()
-        sign_info = "\t\t>>>填写人:{}\n\t\t>>>填写日期：{}".format(self.username, datetime.now().strftime("%Y-%m-%d %H:%M"))
+        sign_info = "\t>>>填写人:{}\n\t>>>填写日期：{}".format(self.username, datetime.now().strftime("%Y-%m-%d %H:%M"))
         self.ctl.setPlainText(old_cont + '\n' + sign_info)
 
     def add_methods(self):
