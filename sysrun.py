@@ -3,7 +3,6 @@ from ui_login import Ui_Login
 
 import sys
 
-from PyQt5.QtWidgets import QMessageBox, QWidget, QApplication, QMainWindow
 from PyQt5.QtGui import QPalette
 
 
