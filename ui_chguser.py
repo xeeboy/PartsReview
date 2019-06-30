@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui_files\chguser.ui'
+# Form implementation generated from reading ui file 'chguser.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -13,7 +13,9 @@ class Ui_chguser(object):
     def setupUi(self, chguser):
         chguser.setObjectName("chguser")
         chguser.setWindowModality(QtCore.Qt.WindowModal)
-        chguser.resize(425, 175)
+        chguser.resize(422, 177)
+        chguser.setMinimumSize(QtCore.QSize(422, 177))
+        chguser.setMaximumSize(QtCore.QSize(422, 177))
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
         chguser.setFont(font)

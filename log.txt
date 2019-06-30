@@ -44,3 +44,23 @@
 2019-06-30 16:50:46,488 - INFO - 右键操作不合格清单列表<ID=17>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
 2019-06-30 16:54:04,300 - INFO - 右键操作不合格清单列表<ID=17>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
 2019-06-30 17:29:14,602 - INFO - 右键操作不合格清单列表<ID=13>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-06-30 17:55:47,941 - INFO - 右键操作不合格清单列表<ID=19>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-06-30 17:56:00,927 - INFO - 右键操作不合格清单列表<ID=19>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-06-30 21:37:32,486 - INFO - 右键操作不合格清单列表<ID=14>时出现错误<processtrigger_tbl_unpass>：<'物流部'>
+2019-06-30 21:37:36,163 - INFO - 右键操作不合格清单列表<ID=15>时出现错误<processtrigger_tbl_unpass>：<'物流部'>
+2019-06-30 21:37:39,899 - INFO - 右键操作不合格清单列表<ID=18>时出现错误<processtrigger_tbl_unpass>：<'物流部'>
+2019-06-30 21:43:02,518 - INFO - (1054, "Unknown column '销售部评审' in 'field list'")
+2019-06-30 21:43:03,921 - INFO - (1054, "Unknown column '销售部评审' in 'field list'")
+2019-06-30 21:43:05,972 - INFO - (1054, "Unknown column '销售部评审' in 'field list'")
+2019-06-30 21:43:07,532 - INFO - (1054, "Unknown column '销售部评审' in 'field list'")
+2019-06-30 21:43:09,148 - INFO - (1054, "Unknown column '销售部评审' in 'field list'")
+2019-06-30 21:43:40,354 - INFO - (1054, "Unknown column '销售部评审' in 'field list'")
+2019-06-30 21:43:42,044 - INFO - (1054, "Unknown column '销售部评审' in 'field list'")
+2019-06-30 21:43:46,967 - INFO - (1054, "Unknown column '销售部评审' in 'field list'")
+2019-06-30 21:43:58,877 - INFO - (1054, "Unknown column '销售部评审' in 'field list'")
+2019-06-30 21:43:59,807 - INFO - (1054, "Unknown column '销售部评审' in 'field list'")
+2019-06-30 21:44:02,167 - INFO - (1054, "Unknown column '销售部评审' in 'field list'")
+2019-06-30 21:44:03,059 - INFO - (1054, "Unknown column '销售部评审' in 'field list'")
+2019-06-30 21:45:29,592 - INFO - (1054, "Unknown column '销售部评审' in 'field list'")
+2019-06-30 21:46:48,175 - INFO - list index out of range
+2019-06-30 21:48:22,688 - INFO - list index out of range

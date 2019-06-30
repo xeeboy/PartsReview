@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui_files\chgpwd.ui'
+# Form implementation generated from reading ui file 'chgpwd.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.2
 #
@@ -14,6 +14,8 @@ class Ui_chgpwd(object):
         chgpwd.setObjectName("chgpwd")
         chgpwd.setWindowModality(QtCore.Qt.WindowModal)
         chgpwd.resize(423, 151)
+        chgpwd.setMinimumSize(QtCore.QSize(423, 151))
+        chgpwd.setMaximumSize(QtCore.QSize(423, 151))
         font = QtGui.QFont()
         font.setFamily("幼圆")
         font.setPointSize(10)

@@ -12,6 +12,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QCursor, QIcon
 from PyQt5.QtWidgets import QMainWindow, QTableView, QMenu, QAction, QMessageBox, QApplication
 
+# on tab1
 FIELDS_UNPASS = ['ID', '客户', '批号', '不良品名称', '责任部门', '送部门评审', '技术部意见', '工艺部意见',
                  '质量部意见', '技术支持部意见']
 
@@ -27,8 +28,8 @@ FIELDS_IN_TAB1 = {'ID': 'ID', 'batch': '批号', 'prodate': '生产日期', 'unp
                   'person': '自审人', 'pre_time': '自审时间', 'pre_check': '责任自审',
                   'parts': 'part_need_review'}
 
-FIELDS_PRE = ['ID', '评审状态', '批号', '不良品名称', '客户', '生产日期', '数量Kg', '不良品种类']
-
+# on tab2
+FIELDS_PRE = ['ID', '本部评审', '批号', '不良品名称', '客户', '生产日期', '数量Kg', '不良品种类', 'Review Finish', 'To_General']
 FIELDS_IN_TAB2 = {'pre_describle': '不合格描述', 'pre_result': '原因分析',
                   'pre_correctiveation': '纠正措施', 'pre_precaution': '预防措施',
                   'pre_tec_idea': '技术部意见', 'pre_pro_idea': '工艺部意见',
@@ -37,6 +38,8 @@ FIELDS_IN_TAB2 = {'pre_describle': '不合格描述', 'pre_result': '原因分�
                   'pre_info_process': '工艺部评审信息', 'pre_info_logistics': '物流部评审信息',
                   'pre_info_tec': '技术部评审信息', 'pre_info_qa': '质量部评审信息',
                   'pre_info_general': '总经办评审信息', 'lbl_rev_parts_need': 'part_need_review'}
+# on tab3
+FIELDS_FOLLOW_VIEW = ['ID', '批号', '客户', '不良品名称', '数量Kg', '处理次数', '不良剩余Kg']
 
 
 class MainForm(QMainWindow, Ui_MainWindow):
@@ -49,6 +52,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
         # set tab1
         self.set_tbl_unpass(TBL_UNPASS_SQL)
+        self.btn_search.clicked.connect(self.fuzzy_search)
         self.btn_slparts.clicked.connect(self.show_select_parts_frm)
         self.btn_save.clicked.connect(self.save)
         self.tbl_unpass.clicked.connect(self.show_unpass_item)
@@ -63,6 +67,11 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.pre_tbl_view.clicked.connect(self.show_pre_item)  # self.pre_tbl_view.setMouseTracking(True)
         self.btn_sign_pre.clicked.connect(self._pre_sign)
 
+        # set tab3
+        # Todo 单击表->显示每一条处理记录；
+
+        # Todo 实现右键功能菜单：增加处理记录，添加结案标记(仅质量可用)
+
     def chgpwd(self):
         chg_pwd = ChgPwd(self)
         chg_pwd.show()
@@ -70,7 +79,6 @@ class MainForm(QMainWindow, Ui_MainWindow):
     def chguser(self):
         chg_user = ChgUser(self)
         chg_user.show()
-        QApplication.processEvents()
 
     def tab_changed(self, index):
         self.txt_pre_info.setPlainText('')
@@ -78,14 +86,32 @@ class MainForm(QMainWindow, Ui_MainWindow):
             # set privileges
             if not user_info.get_value('PRIVILEGE'):
                 self.btn_save_pre.setEnabled(False)
-            self._load_tbl_pre_data()
+            try:
+                self._load_tbl_pre_data()
+            except Exception as e:
+                user_info.log2txt(e)
             self.txt_pre_info.setEnabled(False)
             self.btn_save_pre.clicked.connect(self.save_pre_info)
+        if index == 2:
+            self._load_on_follow_view_data()
+            self.on_follow_view.clicked.connect(self.show_deal_method)
+
+    def _load_on_follow_view_data(self):
+        # fields will be ['ID', '批号', '客户', '不良品名称', '数量Kg', '处理次数', '不良剩余Kg']
+        on_follow_sql = "SELECT A.ID,A.批号,A.客户,A.不良品名称,A.数量Kg,B.处理次数, " \
+                        "If(ISNULL(B.dealed_q),A.数量Kg,A.数量Kg-B.dealed_q) AS 不良剩余Kg " \
+                        "FROM (SELECT a.ID, 客户, 不良品名称, 批号, 数量Kg FROM 不合格品登记 " \
+                        "AS a INNER JOIN 状态标记 AS b ON a.ID = b.ID WHERE " \
+                        "review_finish=True) AS A LEFT JOIN (SELECT ID, SUM(处理数量Kg) AS " \
+                        "dealed_q, COUNT(*) AS 处理次数 FROM Fcase_DealLog GROUP BY ID) AS B " \
+                        "ON A.ID = B.ID;"
+        self.set_on_follow_view_data(on_follow_sql)
 
     def _load_tbl_pre_data(self):
         current_part = user_info.get_value('PART')
-        other_fields = ','.join(FIELDS_PRE[2:])
-        pre_info_sql = "SELECT a.ID,IF({2}评审=TRUE,'YES','NO'),{0} " \
+        other_fields = ','.join(FIELDS_PRE[2:-2])
+        # fields will be ['ID', '本部评审', '批号', '不良品名称', '客户', '生产日期', '数量Kg', '不良品种类', 'Review Finish', 'To_General']
+        pre_info_sql = "SELECT a.ID,IF({2}评审=TRUE,'完成','未完成'),{0},IF(review_finish=TRUE,'YES','NO'),IF(g_m_rev=TRUE,'YES','NO') " \
                        "FROM 不合格品登记 a INNER JOIN 状态标记 b ON a.ID=b.ID " \
                        "WHERE b_m_rev=TRUE " \
                        "AND case_closed_flag=False " \
@@ -147,6 +173,11 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.pre_tbl_view.setModel(self.model_pre)
         self.set_tbl_format('pre_tbl_view')
 
+    def set_on_follow_view_data(self, sql):
+        self.model_on_follow = get_model(FIELDS_FOLLOW_VIEW, sql)
+        self.on_follow_view.setModel(self.model_on_follow)
+        self.set_tbl_format('on_follow_view')
+
     def set_tbl_format(self, tbl_name):
         _tbl_view = self.findChild(QTableView, tbl_name)
         font = QFont("Consolas", 9)
@@ -168,7 +199,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
             submenu_caseto.addAction(QAction(part, self))
         action_del = QAction('Delete', self)
         action_del.setIcon(QIcon('icons/delete_file_32px.ico'))
-        action_part_preview = QAction('Start Department Preview', self)
+        action_part_preview = QAction('Start Department Review', self)
         action_part_preview.setIcon(QIcon('icons/parameterreview_32px.ico'))
         action_typeidea = QAction('输入处理意见', self)
         action_typeidea.setIcon(QIcon('icons/input_tablet_32px.ico'))
@@ -188,20 +219,20 @@ class MainForm(QMainWindow, Ui_MainWindow):
         to_parts = user_info.get_value('PARTS')[:-1]
         sql = ''
         try:
-            db = MysqlDb()
-            with db:
+            _db = MysqlDb()
+            with _db:
                 if act.text() in to_parts:
                     sql = "UPDATE 状态标记 SET caseto_by_QA='{}' WHERE ID={}".format(act.text(), unpass_id)
-                    if len(db.get_rst('SELECT caseto_by_QA FROM 状态标记 WHERE ID=%d' % unpass_id)) == 0:
+                    if len(_db.get_rst('SELECT caseto_by_QA FROM 状态标记 WHERE ID=%d' % unpass_id)) == 0:
                         sql = "INSERT INTO 状态标记(ID, caseto_by_QA) VALUES({},'{}')".format(unpass_id, act.text())
                 elif act.text() == 'Delete':
                     sql = 'DELETE FROM 不合格品登记 WHERE ID = %d' % unpass_id
-                elif act.text() == 'Start Department Preview':
+                elif act.text() == 'Start Department Review':
                     sql = "UPDATE 状态标记 SET b_m_rev=True WHERE ID={}".format(unpass_id)
                 elif act.text() == '输入处理意见':
                     idea_dia = IdeaDialog(self, user_info.get_value('USERNAME'), user_info.get_value('PART'), unpass_id)
                     idea_dia.show()
-                db.modify_db(sql)
+                _db.modify_db(sql)
                 self.fuzzy_search()
         except Exception as e:
             user_info.log2txt('右键操作不合格清单列表<ID={}>时出现错误<processtrigger_tbl_unpass>：<{}>'.format(unpass_id, e))
@@ -211,26 +242,36 @@ class MainForm(QMainWindow, Ui_MainWindow):
         popMenu = QMenu()
         action_to_gm = QAction('Start General Review')
         action_to_gm.setIcon(QIcon('icons/general_manager_128px.ico'))
+        action_review_finish = QAction('Flag Review Finish')
+        action_review_finish.setIcon(QIcon('icons/confirm128px.ico'))
         popMenu.addAction(action_to_gm)
+        popMenu.addAction(action_review_finish)
+
         if user_info.get_value('PART') != '质量部':
             action_to_gm.setEnabled(False)
+            action_review_finish.setEnabled(False)
+
         popMenu.triggered.connect(self.processtrigger_tbl_pre)
         popMenu.exec_(QCursor.pos())
 
     def processtrigger_tbl_pre(self, act):
         row = self.pre_tbl_view.currentIndex().row()
         unpass_id = int(self.model_pre.item(row, 0).text())
-        if act.text() == 'Start General Review':
-            sql = "UPDATE 状态标记 SET g_m_rev=True WHERE ID={}".format(unpass_id)
-            _db = MysqlDb()
-            with _db:
+        _db = MysqlDb()
+        with _db:
+            if act.text() == 'Start General Review':
+                sql = "UPDATE 状态标记 SET g_m_rev=True WHERE ID={}".format(unpass_id)
+            elif act.text() == 'Flag Review Finish':
+                sql = "UPDATE 状态标记 SET review_finish=True WHERE ID={}".format(unpass_id)
+            try:
                 _db.modify_db(sql)
-                QMessageBox.information(self, 'Information', '已送审')
+                self._load_tbl_pre_data()
+            except Exception as e:
+                user_info.log2txt('第二页右键更新评审信息状态时发生错误：{}'.format(e))
 
     def fuzzy_search(self):
         keyword = self.lineEdit_11.text()
-        search_str = " WHERE CONCAT(批号,不良品名称) LIKE '%{}%'".format(
-            keyword) if keyword else ""
+        search_str = " WHERE CONCAT(批号,不良品名称) LIKE '%{}%'".format(keyword) if keyword else ""
         fuzzy_sql = TBL_UNPASS_SQL + search_str
         self.set_tbl_unpass(fuzzy_sql)
 
@@ -294,6 +335,15 @@ class MainForm(QMainWindow, Ui_MainWindow):
             except Exception as e:
                 user_info.log2txt('单击显示待(已)评审项目<ID={}>时出现错误<show_unpass_item>：<{}>'.format(unpass_id, e))
                 pass
+
+    def show_deal_method(self):
+        row = self.on_follow_view.currentIndex().row()
+        unpass_id = int(self.model_on_follow.item(row, 0).text())
+        fields_handle_view = ['序号', '处理数量Kg', '处理日期', '处理措施']
+        sql = "SELECT deal_id,处理数量Kg,处理日期,处理措施 FROM fcase_deallog WHERE ID={}".format(unpass_id)
+        model = get_model(fields_handle_view, sql)
+        self.handle_view.setModel(model)
+        self.set_tbl_format('handle_view')
 
     def save(self):
         if self.ID.text():

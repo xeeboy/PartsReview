@@ -37,7 +37,7 @@
    <enum>Qt::ToolButtonIconOnly</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QHBoxLayout" name="horizontalLayout_6">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="sizePolicy">
@@ -52,7 +52,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <property name="iconSize">
        <size>
@@ -610,6 +610,9 @@
                 </item>
                 <item>
                  <widget class="QLineEdit" name="lineEdit_11">
+                  <property name="placeholderText">
+                   <string>批号或名称关键字</string>
+                  </property>
                   <property name="clearButtonEnabled">
                    <bool>true</bool>
                   </property>
@@ -680,7 +683,7 @@
        <attribute name="title">
         <string>评审清单</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="4,0,3,3">
+       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="4,3,3">
         <item>
          <widget class="QFrame" name="frame_5">
           <property name="frameShape">
@@ -747,31 +750,12 @@
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer_5">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+         <widget class="QGroupBox" name="groupBox_4">
+          <property name="title">
+           <string>处置意见</string>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>17</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QFrame" name="frame_4">
-          <property name="frameShape">
-           <enum>QFrame::Box</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Sunken</enum>
-          </property>
-          <property name="lineWidth">
-           <number>0</number>
-          </property>
-          <property name="midLineWidth">
-           <number>1</number>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_7">
            <item>
@@ -921,18 +905,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="frame_6">
-          <property name="frameShape">
-           <enum>QFrame::Box</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Sunken</enum>
-          </property>
-          <property name="lineWidth">
-           <number>0</number>
-          </property>
-          <property name="midLineWidth">
-           <number>1</number>
+         <widget class="QGroupBox" name="groupBox_6">
+          <property name="title">
+           <string>评审信息</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_9">
            <item>
@@ -1131,6 +1106,98 @@
        <attribute name="title">
         <string>处理跟踪</string>
        </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="5,6">
+          <item>
+           <widget class="QFrame" name="frame_4">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,3,2">
+             <item>
+              <widget class="QFrame" name="frame_6">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <item>
+                 <widget class="QLabel" name="label_30">
+                  <property name="text">
+                   <string>查找</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="following_keyword">
+                  <property name="placeholderText">
+                   <string>批号或名称关键字</string>
+                  </property>
+                  <property name="clearButtonEnabled">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="follow_btn_search">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>icons/search.ico</normaloff>icons/search.ico</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_5">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableView" name="on_follow_view"/>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="groupBox">
+               <property name="title">
+                <string>处理记录</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_10">
+                <item>
+                 <widget class="QTableView" name="handle_view"/>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTextBrowser" name="txtbrowser"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>

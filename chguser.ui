@@ -9,9 +9,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>425</width>
-    <height>175</height>
+    <width>422</width>
+    <height>177</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>422</width>
+    <height>177</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>422</width>
+    <height>177</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -116,7 +128,7 @@
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>../icons/chg_users_128px.ico</pixmap>
+    <pixmap>icons/chg_users_128px.ico</pixmap>
    </property>
   </widget>
  </widget>
