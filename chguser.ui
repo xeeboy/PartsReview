@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>292</width>
-    <height>179</height>
+    <width>425</width>
+    <height>175</height>
    </rect>
   </property>
   <property name="font">
@@ -25,29 +25,13 @@
    <iconset>
     <normaloff>icons/partner.png</normaloff>icons/partner.png</iconset>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
-     <y>140</y>
-     <width>156</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
-  </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>150</x>
      <y>40</y>
-     <width>251</width>
-     <height>81</height>
+     <width>261</width>
+     <height>101</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
@@ -68,13 +52,14 @@
      <widget class="QLabel" name="label">
       <property name="font">
        <font>
-        <family>微软雅黑</family>
-        <weight>50</weight>
-        <bold>false</bold>
+        <family>Consolas</family>
+        <pointsize>10</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
        </font>
       </property>
       <property name="text">
-       <string>请输入用户名：</string>
+       <string>User Name:</string>
       </property>
      </widget>
     </item>
@@ -82,13 +67,14 @@
      <widget class="QLabel" name="label_2">
       <property name="font">
        <font>
-        <family>微软雅黑</family>
-        <weight>50</weight>
-        <bold>false</bold>
+        <family>Consolas</family>
+        <pointsize>10</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
        </font>
       </property>
       <property name="text">
-       <string>请输入密码：</string>
+       <string>Password:</string>
       </property>
      </widget>
     </item>
@@ -105,7 +91,33 @@
       </property>
      </widget>
     </item>
+    <item row="3" column="1">
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </property>
+     </widget>
+    </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>131</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../icons/chg_users_128px.ico</pixmap>
+   </property>
   </widget>
  </widget>
  <tabstops>

@@ -43,3 +43,4 @@
 2019-06-30 02:21:21,300 - INFO - 右键操作不合格清单列表<ID=10>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
 2019-06-30 16:50:46,488 - INFO - 右键操作不合格清单列表<ID=17>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
 2019-06-30 16:54:04,300 - INFO - 右键操作不合格清单列表<ID=17>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-06-30 17:29:14,602 - INFO - 右键操作不合格清单列表<ID=13>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
