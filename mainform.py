@@ -9,7 +9,7 @@ from chguser import ChgUser
 from add_mothod import AddMethod
 
 from datetime import datetime
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QDate
 from PyQt5.QtGui import QFont, QCursor, QIcon
 from PyQt5.QtWidgets import QMainWindow, QTableView, QMenu, QAction, QMessageBox
 

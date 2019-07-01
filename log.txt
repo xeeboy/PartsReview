@@ -122,3 +122,81 @@
 2019-07-01 15:55:05,638 - INFO - 右键操作不合格清单列表<ID=15>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
 2019-07-01 15:55:14,016 - INFO - 右键操作不合格清单列表<ID=14>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
 2019-07-01 15:55:17,727 - INFO - 右键操作不合格清单列表<ID=17>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-01 22:20:06,947 - INFO - 单击显示不合格项目<ID=23>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:07,645 - INFO - 单击显示不合格项目<ID=22>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:08,069 - INFO - 单击显示不合格项目<ID=20>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:08,389 - INFO - 单击显示不合格项目<ID=18>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:08,813 - INFO - 单击显示不合格项目<ID=17>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:09,245 - INFO - 单击显示不合格项目<ID=19>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:09,574 - INFO - 单击显示不合格项目<ID=20>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:09,862 - INFO - 单击显示不合格项目<ID=21>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:10,118 - INFO - 单击显示不合格项目<ID=22>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:10,439 - INFO - 单击显示不合格项目<ID=23>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:10,798 - INFO - 单击显示不合格项目<ID=22>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:11,097 - INFO - 单击显示不合格项目<ID=21>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:11,359 - INFO - 单击显示不合格项目<ID=19>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:11,615 - INFO - 单击显示不合格项目<ID=17>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:11,838 - INFO - 单击显示不合格项目<ID=15>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:12,213 - INFO - 单击显示不合格项目<ID=19>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:12,486 - INFO - 单击显示不合格项目<ID=21>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:20:13,046 - INFO - 单击显示不合格项目<ID=23>时出现错误<show_unpass_item>：<'QDateEdit' object has no attribute 'setText'>
+2019-07-01 22:26:43,189 - INFO - 单击显示不合格项目<ID=21>时出现错误<show_unpass_item>：<setDate(self, Union[QDate, datetime.date]): argument 1 has unexpected type 'str'>
+2019-07-01 22:26:43,749 - INFO - 单击显示不合格项目<ID=19>时出现错误<show_unpass_item>：<setDate(self, Union[QDate, datetime.date]): argument 1 has unexpected type 'str'>
+2019-07-01 22:26:44,076 - INFO - 单击显示不合格项目<ID=18>时出现错误<show_unpass_item>：<setDate(self, Union[QDate, datetime.date]): argument 1 has unexpected type 'str'>
+2019-07-01 22:31:33,521 - INFO - 单击显示不合格项目<ID=23>时出现错误<show_unpass_item>：<name 'QDate' is not defined>
+2019-07-01 22:31:34,185 - INFO - 单击显示不合格项目<ID=22>时出现错误<show_unpass_item>：<name 'QDate' is not defined>
+2019-07-01 22:31:34,480 - INFO - 单击显示不合格项目<ID=20>时出现错误<show_unpass_item>：<name 'QDate' is not defined>
+2019-07-01 22:31:34,712 - INFO - 单击显示不合格项目<ID=18>时出现错误<show_unpass_item>：<name 'QDate' is not defined>
+2019-07-01 22:32:10,811 - INFO - 单击显示不合格项目<ID=23>时出现错误<show_unpass_item>：<arguments did not match any overloaded call:
+  QDate(): too many arguments
+  QDate(int, int, int): argument 1 has unexpected type 'str'
+  QDate(QDate): argument 1 has unexpected type 'str'>
+2019-07-01 22:32:11,425 - INFO - 单击显示不合格项目<ID=22>时出现错误<show_unpass_item>：<arguments did not match any overloaded call:
+  QDate(): too many arguments
+  QDate(int, int, int): argument 1 has unexpected type 'str'
+  QDate(QDate): argument 1 has unexpected type 'str'>
+2019-07-01 22:32:11,700 - INFO - 单击显示不合格项目<ID=21>时出现错误<show_unpass_item>：<arguments did not match any overloaded call:
+  QDate(): too many arguments
+  QDate(int, int, int): argument 1 has unexpected type 'str'
+  QDate(QDate): argument 1 has unexpected type 'str'>
+2019-07-01 22:32:11,952 - INFO - 单击显示不合格项目<ID=20>时出现错误<show_unpass_item>：<arguments did not match any overloaded call:
+  QDate(): too many arguments
+  QDate(int, int, int): argument 1 has unexpected type 'str'
+  QDate(QDate): argument 1 has unexpected type 'str'>
+2019-07-01 22:34:42,053 - INFO - 单击显示不合格项目<ID=23>时出现错误<show_unpass_item>：<arguments did not match any overloaded call:
+  QDate(): too many arguments
+  QDate(int, int, int): argument 1 has unexpected type 'str'
+  QDate(QDate): argument 1 has unexpected type 'str'>
+2019-07-01 22:34:42,651 - INFO - 单击显示不合格项目<ID=22>时出现错误<show_unpass_item>：<arguments did not match any overloaded call:
+  QDate(): too many arguments
+  QDate(int, int, int): argument 1 has unexpected type 'str'
+  QDate(QDate): argument 1 has unexpected type 'str'>
+2019-07-01 22:34:42,956 - INFO - 单击显示不合格项目<ID=21>时出现错误<show_unpass_item>：<arguments did not match any overloaded call:
+  QDate(): too many arguments
+  QDate(int, int, int): argument 1 has unexpected type 'str'
+  QDate(QDate): argument 1 has unexpected type 'str'>
+2019-07-01 22:34:43,252 - INFO - 单击显示不合格项目<ID=19>时出现错误<show_unpass_item>：<arguments did not match any overloaded call:
+  QDate(): too many arguments
+  QDate(int, int, int): argument 1 has unexpected type 'str'
+  QDate(QDate): argument 1 has unexpected type 'str'>
+2019-07-01 22:34:43,900 - INFO - 单击显示不合格项目<ID=20>时出现错误<show_unpass_item>：<arguments did not match any overloaded call:
+  QDate(): too many arguments
+  QDate(int, int, int): argument 1 has unexpected type 'str'
+  QDate(QDate): argument 1 has unexpected type 'str'>
+2019-07-01 22:34:44,164 - INFO - 单击显示不合格项目<ID=21>时出现错误<show_unpass_item>：<arguments did not match any overloaded call:
+  QDate(): too many arguments
+  QDate(int, int, int): argument 1 has unexpected type 'str'
+  QDate(QDate): argument 1 has unexpected type 'str'>
+2019-07-01 22:36:04,317 - INFO - 单击显示不合格项目<ID=23>时出现错误<show_unpass_item>：<unexpected EOF while parsing (<string>, line 1)>
+2019-07-01 22:36:04,860 - INFO - 单击显示不合格项目<ID=22>时出现错误<show_unpass_item>：<unexpected EOF while parsing (<string>, line 1)>
+2019-07-01 22:36:05,132 - INFO - 单击显示不合格项目<ID=20>时出现错误<show_unpass_item>：<unexpected EOF while parsing (<string>, line 1)>
+2019-07-01 22:36:36,803 - INFO - 单击显示不合格项目<ID=22>时出现错误<show_unpass_item>：<unexpected EOF while parsing (<string>, line 1)>
+2019-07-01 22:36:37,301 - INFO - 单击显示不合格项目<ID=20>时出现错误<show_unpass_item>：<unexpected EOF while parsing (<string>, line 1)>
+2019-07-01 22:36:37,549 - INFO - 单击显示不合格项目<ID=19>时出现错误<show_unpass_item>：<unexpected EOF while parsing (<string>, line 1)>
+2019-07-01 22:42:29,965 - INFO - 单击显示不合格项目<ID=18>时出现错误<show_unpass_item>：<setDate(self, Union[QDate, datetime.date]): too many arguments>
+2019-07-01 22:42:30,315 - INFO - 单击显示不合格项目<ID=21>时出现错误<show_unpass_item>：<setDate(self, Union[QDate, datetime.date]): too many arguments>
+2019-07-01 22:42:30,632 - INFO - 单击显示不合格项目<ID=21>时出现错误<show_unpass_item>：<setDate(self, Union[QDate, datetime.date]): too many arguments>
+2019-07-01 22:42:30,880 - INFO - 单击显示不合格项目<ID=18>时出现错误<show_unpass_item>：<setDate(self, Union[QDate, datetime.date]): too many arguments>
+2019-07-01 22:42:51,766 - INFO - 单击显示不合格项目<ID=23>时出现错误<show_unpass_item>：<setDate(self, Union[QDate, datetime.date]): too many arguments>
+2019-07-01 22:42:52,226 - INFO - 单击显示不合格项目<ID=21>时出现错误<show_unpass_item>：<setDate(self, Union[QDate, datetime.date]): too many arguments>
+2019-07-01 22:42:52,497 - INFO - 单击显示不合格项目<ID=19>时出现错误<show_unpass_item>：<setDate(self, Union[QDate, datetime.date]): too many arguments>

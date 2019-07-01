@@ -13,7 +13,7 @@ def _init():
     _global_dict = {}
 
 
-def set_value(key,value):
+def set_value(key, value):
     _global_dict[key] = value
 
 

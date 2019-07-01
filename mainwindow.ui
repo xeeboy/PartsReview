@@ -52,7 +52,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="iconSize">
        <size>
@@ -80,13 +80,6 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>ID</string>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="6">
              <spacer name="horizontalSpacer_3">
               <property name="orientation">
@@ -105,33 +98,6 @@
             </item>
             <item row="1" column="5">
              <widget class="QLineEdit" name="unpassname">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>70</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>微软雅黑</family>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="5">
-             <widget class="QLineEdit" name="batch">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -180,40 +146,6 @@
               </property>
              </spacer>
             </item>
-            <item row="0" column="9">
-             <widget class="QLineEdit" name="prodate">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>70</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>微软雅黑</family>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="4">
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>批号</string>
-              </property>
-             </widget>
-            </item>
             <item row="1" column="2">
              <widget class="QLineEdit" name="unpasstype">
               <property name="sizePolicy">
@@ -241,13 +173,6 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="7">
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>生产日期</string>
-              </property>
-             </widget>
-            </item>
             <item row="1" column="4">
              <widget class="QLabel" name="label_5">
               <property name="text">
@@ -257,33 +182,6 @@
             </item>
             <item row="1" column="9">
              <widget class="QLineEdit" name="unpassqty">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>70</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>微软雅黑</family>
-                <pointsize>10</pointsize>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QLineEdit" name="ID">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -325,25 +223,133 @@
               </property>
              </spacer>
             </item>
+            <item row="0" column="7">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>生产日期</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="5">
+             <widget class="QLineEdit" name="batch">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>70</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="4">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>批号</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLineEdit" name="ID">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>70</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>微软雅黑</family>
+                <pointsize>10</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>ID</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="9">
+             <widget class="QLineEdit" name="prodate">
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>
         </item>
         <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+         <widget class="QFrame" name="frame_7">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
           </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>30</height>
-           </size>
-          </property>
-         </spacer>
+          <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="3,0">
+           <item>
+            <spacer name="horizontalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>35</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="save_unpass">
+             <property name="text">
+              <string>添加新记录</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>icons/arrow_128px.ico</normaloff>icons/arrow_128px.ico</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>48</width>
+               <height>16</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,4">
@@ -1281,19 +1287,46 @@
   </action>
  </widget>
  <tabstops>
-  <tabstop>result</tabstop>
-  <tabstop>precaution</tabstop>
-  <tabstop>lineEdit_11</tabstop>
-  <tabstop>btn_search</tabstop>
-  <tabstop>pre_check</tabstop>
-  <tabstop>describe</tabstop>
-  <tabstop>tbl_unpass</tabstop>
-  <tabstop>unpassname</tabstop>
-  <tabstop>batch</tabstop>
-  <tabstop>prodate</tabstop>
   <tabstop>unpasstype</tabstop>
+  <tabstop>unpassname</tabstop>
   <tabstop>unpassqty</tabstop>
-  <tabstop>ID</tabstop>
+  <tabstop>describe</tabstop>
+  <tabstop>result</tabstop>
+  <tabstop>correctiveaciton</tabstop>
+  <tabstop>precaution</tabstop>
+  <tabstop>parts</tabstop>
+  <tabstop>btn_save</tabstop>
+  <tabstop>btn_search</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>btn_slparts</tabstop>
+  <tabstop>pre_check</tabstop>
+  <tabstop>pre_tbl_view</tabstop>
+  <tabstop>txt_pre_info</tabstop>
+  <tabstop>btn_sign_pre</tabstop>
+  <tabstop>btn_save_pre</tabstop>
+  <tabstop>pre_describle</tabstop>
+  <tabstop>pre_result</tabstop>
+  <tabstop>pre_correctiveation</tabstop>
+  <tabstop>pre_precaution</tabstop>
+  <tabstop>pre_tec_idea</tabstop>
+  <tabstop>pre_pro_idea</tabstop>
+  <tabstop>pre_qa_idea</tabstop>
+  <tabstop>pre_tec_support_idea</tabstop>
+  <tabstop>pre_info_purchase</tabstop>
+  <tabstop>pre_info_produce</tabstop>
+  <tabstop>pre_info_process</tabstop>
+  <tabstop>pre_info_logistics</tabstop>
+  <tabstop>pre_info_tec</tabstop>
+  <tabstop>pre_info_qa</tabstop>
+  <tabstop>pre_info_general</tabstop>
+  <tabstop>following_keyword</tabstop>
+  <tabstop>follow_btn_search</tabstop>
+  <tabstop>on_follow_view</tabstop>
+  <tabstop>handle_view</tabstop>
+  <tabstop>txtbrowser</tabstop>
+  <tabstop>save_unpass</tabstop>
+  <tabstop>tbl_unpass</tabstop>
+  <tabstop>lineEdit_11</tabstop>
  </tabstops>
  <resources/>
  <connections>
