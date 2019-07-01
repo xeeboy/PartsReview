@@ -641,6 +641,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setCurrentIndex(2)
         self.act_quit.triggered.connect(MainWindow.close)
         self.lineEdit_11.returnPressed.connect(self.btn_search.click)
+        self.following_keyword.returnPressed.connect(self.follow_btn_search.click)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.result, self.precaution)
         MainWindow.setTabOrder(self.precaution, self.lineEdit_11)

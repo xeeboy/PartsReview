@@ -6,11 +6,12 @@ from ui_part_need_review import *
 from parts_idea import IdeaDialog
 from chgpwd import ChgPwd
 from chguser import ChgUser
+from add_mothod import AddMethod
 
 from datetime import datetime
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QCursor, QIcon
-from PyQt5.QtWidgets import QMainWindow, QTableView, QMenu, QAction, QMessageBox, QApplication
+from PyQt5.QtWidgets import QMainWindow, QTableView, QMenu, QAction, QMessageBox
 
 # on tab1
 FIELDS_UNPASS = ['ID', '客户', '批号', '不良品名称', '责任部门', '送部门评审', '技术部意见', '工艺部意见',
@@ -39,7 +40,7 @@ FIELDS_IN_TAB2 = {'pre_describle': '不合格描述', 'pre_result': '原因分�
                   'pre_info_tec': '技术部评审信息', 'pre_info_qa': '质量部评审信息',
                   'pre_info_general': '总经办评审信息', 'lbl_rev_parts_need': 'part_need_review'}
 # on tab3
-FIELDS_FOLLOW_VIEW = ['ID', '批号', '客户', '不良品名称', '数量Kg', '处理次数', '不良剩余Kg']
+FIELDS_FOLLOW_VIEW = ['ID', 'CaseClosed', '批号', '不良品名称', '数量Kg', '处理次数', '不良剩余Kg', '客户']
 
 
 class MainForm(QMainWindow, Ui_MainWindow):
@@ -68,9 +69,11 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.btn_sign_pre.clicked.connect(self._pre_sign)
 
         # set tab3
-        # Todo 单击表->显示每一条处理记录；
+        self.on_follow_view.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.on_follow_view.customContextMenuRequested.connect(self.rclick_follow_view)
+        self.follow_btn_search.clicked.connect(self.search_follow_item)
 
-        # Todo 实现右键功能菜单：增加处理记录，添加结案标记(仅质量可用)
+        # Todo 实现右键功能菜单：
 
     def chgpwd(self):
         chg_pwd = ChgPwd(self)
@@ -97,10 +100,10 @@ class MainForm(QMainWindow, Ui_MainWindow):
             self.on_follow_view.clicked.connect(self.show_deal_method)
 
     def _load_on_follow_view_data(self):
-        # fields will be ['ID', '批号', '客户', '不良品名称', '数量Kg', '处理次数', '不良剩余Kg']
-        on_follow_sql = "SELECT A.ID,A.批号,A.客户,A.不良品名称,A.数量Kg,B.处理次数, " \
-                        "If(ISNULL(B.dealed_q),A.数量Kg,A.数量Kg-B.dealed_q) AS 不良剩余Kg " \
-                        "FROM (SELECT a.ID, 客户, 不良品名称, 批号, 数量Kg FROM 不合格品登记 " \
+        # fields will be ['ID', 'CaseClose', '批号', '不良品名称', '数量Kg', '处理次数', '不良剩余Kg', '客户']
+        on_follow_sql = "SELECT A.ID,IF(A.case_closed_flag=TRUE,'Closed','Following'),A.批号,A.不良品名称,A.数量Kg,B.处理次数, " \
+                        "If(ISNULL(B.dealed_q),A.数量Kg,A.数量Kg-B.dealed_q) AS 不良剩余Kg,A.客户 " \
+                        "FROM (SELECT a.ID,客户,不良品名称,批号,数量Kg,case_closed_flag FROM 不合格品登记 " \
                         "AS a INNER JOIN 状态标记 AS b ON a.ID = b.ID WHERE " \
                         "review_finish=True) AS A LEFT JOIN (SELECT ID, SUM(处理数量Kg) AS " \
                         "dealed_q, COUNT(*) AS 处理次数 FROM Fcase_DealLog GROUP BY ID) AS B " \
@@ -269,11 +272,66 @@ class MainForm(QMainWindow, Ui_MainWindow):
             except Exception as e:
                 user_info.log2txt('第二页右键更新评审信息状态时发生错误：{}'.format(e))
 
+    def rclick_follow_view(self):
+        popMenu = QMenu()
+        action_close_case = QAction('Close Case')
+        action_close_case.setIcon(QIcon('icons/delete_file_32px.ico'))
+        action_add_method = QAction('添加处置')
+        action_add_method.setIcon(QIcon('icons/dealidea.ico'))
+        action_flush = QAction('刷新')
+        action_flush.setIcon(QIcon('icons/dir.png'))
+
+        popMenu.addAction(action_close_case)
+        popMenu.addAction(action_add_method)
+        popMenu.addAction(action_flush)
+
+        if user_info.get_value('PART') != '质量部':
+            action_close_case.setEnabled(False)
+
+        popMenu.triggered.connect(self.processtrigger_follow_view)
+        popMenu.exec_(QCursor.pos())
+
+    def processtrigger_follow_view(self, act):
+        row = self.on_follow_view.currentIndex().row()
+        unpass_id = int(self.model_on_follow.item(row, 0).text())
+        _db = MysqlDb()
+        with _db:
+            if act.text() == 'Close Case':
+                sql = "UPDATE 状态标记 SET case_closed_flag=True WHERE ID={}".format(unpass_id)
+                try:
+                    _db.modify_db(sql)
+                    self._load_on_follow_view_data()
+                except Exception as e:
+                    user_info.log2txt('第三页右键更新跟踪信息状态时发生错误：{}'.format(e))
+            elif act.text() == '添加处置':
+                # TODO create func to add method
+                count_rst = _db.get_rst("SELECT COUNT(*) as _count FROM fcase_deallog WHERE ID={}".format(unpass_id))
+                count = count_rst[0]['_count']
+                add_method_frm = AddMethod(self)
+                add_method_frm.line_unpass_id.setText(str(unpass_id))
+                add_method_frm.line_deal_id.setText('{}-{}'.format(str(unpass_id), str(count+1)))
+                add_method_frm.show()
+                add_method_frm.move(QCursor.pos())
+            elif act.text() == '刷新':
+                self._load_on_follow_view_data()
+
+
     def fuzzy_search(self):
         keyword = self.lineEdit_11.text()
         search_str = " WHERE CONCAT(批号,不良品名称) LIKE '%{}%'".format(keyword) if keyword else ""
         fuzzy_sql = TBL_UNPASS_SQL + search_str
         self.set_tbl_unpass(fuzzy_sql)
+
+    def search_follow_item(self):
+        keyword = self.following_keyword.text()
+        on_follow_sql = "SELECT A.ID,A.批号,A.客户,A.不良品名称,A.数量Kg,B.处理次数, " \
+                        "If(ISNULL(B.dealed_q),A.数量Kg,A.数量Kg-B.dealed_q) AS 不良剩余Kg " \
+                        "FROM (SELECT a.ID, 客户, 不良品名称, 批号, 数量Kg FROM 不合格品登记 " \
+                        "AS a INNER JOIN 状态标记 AS b ON a.ID = b.ID WHERE " \
+                        "review_finish=True) AS A LEFT JOIN (SELECT ID, SUM(处理数量Kg) AS " \
+                        "dealed_q, COUNT(*) AS 处理次数 FROM Fcase_DealLog GROUP BY ID) AS B " \
+                        "ON A.ID = B.ID WHERE CONCAT(A.批号,A.不良品名称) LIKE '%{}%'".format(keyword)
+        self.set_on_follow_view_data(on_follow_sql)
 
     def show_select_parts_frm(self):
         frm = PartsNeeds(self)
@@ -339,8 +397,8 @@ class MainForm(QMainWindow, Ui_MainWindow):
     def show_deal_method(self):
         row = self.on_follow_view.currentIndex().row()
         unpass_id = int(self.model_on_follow.item(row, 0).text())
-        fields_handle_view = ['序号', '处理数量Kg', '处理日期', '处理措施']
-        sql = "SELECT deal_id,处理数量Kg,处理日期,处理措施 FROM fcase_deallog WHERE ID={}".format(unpass_id)
+        fields_handle_view = ['序号', '填写人', '处理数量Kg', '处理日期', '处理措施']
+        sql = "SELECT deal_id,填写人,处理数量Kg,处理日期,处理措施 FROM fcase_deallog WHERE ID={}".format(unpass_id)
         model = get_model(fields_handle_view, sql)
         self.handle_view.setModel(model)
         self.set_tbl_format('handle_view')

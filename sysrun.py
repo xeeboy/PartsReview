@@ -3,6 +3,7 @@ from ui_login import Ui_Login
 
 import sys
 
+from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QPalette
 
 
