@@ -164,6 +164,14 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>date_deal</tabstop>
+  <tabstop>line_deal_qty</tabstop>
+  <tabstop>txt_deal_method</tabstop>
+  <tabstop>btn_save_method</tabstop>
+  <tabstop>line_deal_id</tabstop>
+  <tabstop>line_unpass_id</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

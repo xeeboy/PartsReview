@@ -75,6 +75,11 @@ class Ui_add_method(object):
 
         self.retranslateUi(add_method)
         QtCore.QMetaObject.connectSlotsByName(add_method)
+        add_method.setTabOrder(self.date_deal, self.line_deal_qty)
+        add_method.setTabOrder(self.line_deal_qty, self.txt_deal_method)
+        add_method.setTabOrder(self.txt_deal_method, self.btn_save_method)
+        add_method.setTabOrder(self.btn_save_method, self.line_deal_id)
+        add_method.setTabOrder(self.line_deal_id, self.line_unpass_id)
 
     def retranslateUi(self, add_method):
         _translate = QtCore.QCoreApplication.translate

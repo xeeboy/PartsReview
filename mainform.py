@@ -48,6 +48,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.currentChanged.connect(self.tab_changed)
         self.act_chgpwd.triggered.connect(self.chgpwd)
         self.act_chguser.triggered.connect(self.chguser)
 
@@ -64,16 +65,12 @@ class MainForm(QMainWindow, Ui_MainWindow):
         # set tab2
         self.pre_tbl_view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.pre_tbl_view.customContextMenuRequested.connect(self.rclick_tbl_pre)
-        self.tabWidget.currentChanged.connect(self.tab_changed)
         self.pre_tbl_view.clicked.connect(self.show_pre_item)  # self.pre_tbl_view.setMouseTracking(True)
         self.btn_sign_pre.clicked.connect(self._pre_sign)
 
         # set tab3
         self.on_follow_view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.on_follow_view.customContextMenuRequested.connect(self.rclick_follow_view)
-        self.follow_btn_search.clicked.connect(self.search_follow_item)
-
-        # Todo 实现右键功能菜单：
 
     def chgpwd(self):
         chg_pwd = ChgPwd(self)
@@ -98,6 +95,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
         if index == 2:
             self._load_on_follow_view_data()
             self.on_follow_view.clicked.connect(self.show_deal_method)
+            self.follow_btn_search.clicked.connect(self.search_follow_item)
 
     def _load_on_follow_view_data(self):
         # fields will be ['ID', 'CaseClose', '批号', '不良品名称', '数量Kg', '处理次数', '不良剩余Kg', '客户']
@@ -315,7 +313,6 @@ class MainForm(QMainWindow, Ui_MainWindow):
             elif act.text() == '刷新':
                 self._load_on_follow_view_data()
 
-
     def fuzzy_search(self):
         keyword = self.lineEdit_11.text()
         search_str = " WHERE CONCAT(批号,不良品名称) LIKE '%{}%'".format(keyword) if keyword else ""
@@ -324,13 +321,14 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
     def search_follow_item(self):
         keyword = self.following_keyword.text()
-        on_follow_sql = "SELECT A.ID,A.批号,A.客户,A.不良品名称,A.数量Kg,B.处理次数, " \
-                        "If(ISNULL(B.dealed_q),A.数量Kg,A.数量Kg-B.dealed_q) AS 不良剩余Kg " \
-                        "FROM (SELECT a.ID, 客户, 不良品名称, 批号, 数量Kg FROM 不合格品登记 " \
+        on_follow_sql = "SELECT A.ID,IF(A.case_closed_flag=TRUE,'Closed','Following'),A.批号,A.不良品名称,A.数量Kg,B.处理次数, " \
+                        "If(ISNULL(B.dealed_q),A.数量Kg,A.数量Kg-B.dealed_q) AS 不良剩余Kg,A.客户 " \
+                        "FROM (SELECT a.ID,客户,不良品名称,批号,数量Kg,case_closed_flag FROM 不合格品登记 " \
                         "AS a INNER JOIN 状态标记 AS b ON a.ID = b.ID WHERE " \
                         "review_finish=True) AS A LEFT JOIN (SELECT ID, SUM(处理数量Kg) AS " \
                         "dealed_q, COUNT(*) AS 处理次数 FROM Fcase_DealLog GROUP BY ID) AS B " \
                         "ON A.ID = B.ID WHERE CONCAT(A.批号,A.不良品名称) LIKE '%{}%'".format(keyword)
+        print(on_follow_sql)
         self.set_on_follow_view_data(on_follow_sql)
 
     def show_select_parts_frm(self):

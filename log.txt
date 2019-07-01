@@ -119,3 +119,6 @@
 2019-07-01 15:06:21,488 - INFO - 第三页右键更新跟踪信息状态时发生错误：local variable 'sql' referenced before assignment
 2019-07-01 15:06:28,898 - INFO - 添加新的处理（id=<13>)记录时<error>: 'NoneType' object has no attribute 'text'
 2019-07-01 15:07:50,790 - INFO - 第三页右键更新跟踪信息状态时发生错误：local variable 'sql' referenced before assignment
+2019-07-01 15:55:05,638 - INFO - 右键操作不合格清单列表<ID=15>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-01 15:55:14,016 - INFO - 右键操作不合格清单列表<ID=14>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-01 15:55:17,727 - INFO - 右键操作不合格清单列表<ID=17>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
