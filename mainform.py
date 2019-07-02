@@ -75,7 +75,6 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.on_follow_view.customContextMenuRequested.connect(self.rclick_follow_view)
 
     def type_new_unpass(self):
-        # TODO save new unpass item
         new_unpass_frm = NewUnpass(self)
         new_unpass_frm.show()
 
@@ -320,7 +319,6 @@ class MainForm(QMainWindow, Ui_MainWindow):
                 except Exception as e:
                     user_info.log2txt('第三页右键更新跟踪信息状态时发生错误：{}'.format(e))
             elif act.text() == '添加处置':
-                # TODO create func to add method
                 count_rst = _db.get_rst("SELECT COUNT(*) as _count FROM fcase_deallog WHERE ID={}".format(unpass_id))
                 count = count_rst[0]['_count']
                 add_method_frm = AddMethod(self)
