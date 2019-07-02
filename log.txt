@@ -200,3 +200,91 @@
 2019-07-01 22:42:51,766 - INFO - 单击显示不合格项目<ID=23>时出现错误<show_unpass_item>：<setDate(self, Union[QDate, datetime.date]): too many arguments>
 2019-07-01 22:42:52,226 - INFO - 单击显示不合格项目<ID=21>时出现错误<show_unpass_item>：<setDate(self, Union[QDate, datetime.date]): too many arguments>
 2019-07-01 22:42:52,497 - INFO - 单击显示不合格项目<ID=19>时出现错误<show_unpass_item>：<setDate(self, Union[QDate, datetime.date]): too many arguments>
+2019-07-02 00:13:57,960 - INFO - 右键操作不合格清单列表<ID=20>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-02 20:27:40,549 - INFO - 右键操作不合格清单列表<ID=18>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-02 20:31:41,137 - INFO - 右键操作不合格清单列表<ID=20>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-02 20:31:46,638 - INFO - 右键操作不合格清单列表<ID=18>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-02 20:32:36,326 - INFO - 右键操作不合格清单列表<ID=18>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-02 20:37:24,600 - INFO - 右键操作不合格清单列表<ID=18>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-02 20:40:02,499 - INFO - 右键操作不合格清单列表<ID=18>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-02 20:40:48,347 - INFO - 右键操作不合格清单列表<ID=18>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-02 20:41:50,604 - INFO - 右键操作不合格清单列表<ID=18>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-02 22:26:10,581 - INFO - 右键操作不合格清单列表<ID=21>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-02 22:26:16,816 - INFO - 右键操作不合格清单列表<ID=18>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-02 22:46:01,366 - INFO - 登记新不合格品时发生错误：(1364, "Field 'ID' doesn't have a default value")
+2019-07-02 22:46:05,221 - INFO - 登记新不合格品时发生错误：(1364, "Field 'ID' doesn't have a default value")
+2019-07-02 22:51:31,177 - INFO - 登记新不合格品时发生错误：(1136, "Column count doesn't match value count at row 1")
+2019-07-02 22:52:19,198 - INFO - 登记新不合格品时发生错误：(1136, "Column count doesn't match value count at row 1")
+2019-07-02 22:52:25,962 - INFO - 登记新不合格品时发生错误：(1136, "Column count doesn't match value count at row 1")
+2019-07-02 22:53:02,705 - INFO - 登记新不合格品时发生错误：(1136, "Column count doesn't match value count at row 1")
+2019-07-02 23:00:05,177 - INFO - 登记新不合格品时发生错误：setText(self, str): argument 1 has unexpected type 'int'
+2019-07-02 23:37:16,326 - INFO - 右键操作不合格清单列表<ID=10>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-02 23:37:27,162 - INFO - 右键操作不合格清单列表<ID=7>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-02 23:37:38,415 - INFO - 右键操作不合格清单列表<ID=6>时出现错误<processtrigger_tbl_unpass>：<(1065, 'Query was empty')>
+2019-07-02 23:38:38,382 - INFO - list index out of range
+2019-07-02 23:38:42,953 - INFO - 右键操作不合格清单列表<ID=4>时出现错误<processtrigger_tbl_unpass>：<'总经办'>
+2019-07-02 23:38:45,504 - INFO - 右键操作不合格清单列表<ID=4>时出现错误<processtrigger_tbl_unpass>：<'总经办'>
+2019-07-02 23:38:48,631 - INFO - 右键操作不合格清单列表<ID=6>时出现错误<processtrigger_tbl_unpass>：<'总经办'>
+2019-07-02 23:38:53,304 - INFO - 右键操作不合格清单列表<ID=5>时出现错误<processtrigger_tbl_unpass>：<'总经办'>
+2019-07-02 23:38:57,823 - INFO - 右键操作不合格清单列表<ID=6>时出现错误<processtrigger_tbl_unpass>：<'总经办'>
+2019-07-02 23:38:58,943 - INFO - list index out of range
+2019-07-02 23:39:03,691 - INFO - list index out of range
+2019-07-02 23:39:04,511 - INFO - list index out of range
+2019-07-02 23:39:06,179 - INFO - list index out of range
+2019-07-02 23:39:09,851 - INFO - list index out of range
+2019-07-02 23:39:16,807 - INFO - list index out of range
+2019-07-02 23:39:49,272 - INFO - list index out of range
+2019-07-02 23:40:14,120 - INFO - list index out of range
+2019-07-02 23:40:14,996 - INFO - list index out of range
+2019-07-02 23:40:15,914 - INFO - list index out of range
+2019-07-02 23:42:49,188 - INFO - (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FIND_IN_SET('质量部',part_need_review)' at line 1")
+2019-07-02 23:42:50,773 - INFO - (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FIND_IN_SET('质量部',part_need_review)' at line 1")
+2019-07-02 23:42:51,763 - INFO - (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FIND_IN_SET('质量部',part_need_review)' at line 1")
+2019-07-02 23:42:52,636 - INFO - (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FIND_IN_SET('质量部',part_need_review)' at line 1")
+2019-07-02 23:42:54,892 - INFO - (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FIND_IN_SET('质量部',part_need_review)' at line 1")
+2019-07-02 23:42:57,804 - INFO - (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FIND_IN_SET('质量部',part_need_review)' at line 1")
+2019-07-02 23:44:47,044 - INFO - list index out of range
+2019-07-02 23:44:57,863 - INFO - list index out of range
+2019-07-02 23:44:59,176 - INFO - list index out of range
+2019-07-02 23:51:41,246 - INFO - list index out of range
+2019-07-02 23:52:15,778 - INFO - list index out of range
+2019-07-02 23:54:35,293 - INFO - list index out of range
+2019-07-02 23:57:42,752 - INFO - list index out of range
+2019-07-02 23:57:55,145 - INFO - list index out of range
+2019-07-02 23:57:57,100 - INFO - list index out of range
+2019-07-02 23:59:10,525 - INFO - list index out of range
+2019-07-02 23:59:12,230 - INFO - list index out of range
+2019-07-02 23:59:15,955 - INFO - list index out of range
+2019-07-02 23:59:19,986 - INFO - list index out of range
+2019-07-02 23:59:21,963 - INFO - list index out of range
+2019-07-02 23:59:25,411 - INFO - list index out of range
+2019-07-02 23:59:27,581 - INFO - list index out of range
+2019-07-03 00:00:46,498 - INFO - list index out of range
+2019-07-03 00:00:50,924 - INFO - list index out of range
+2019-07-03 00:00:51,917 - INFO - list index out of range
+2019-07-03 00:12:26,986 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:12:26,986 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:12:26,986 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:13:20,547 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:13:20,547 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:13:20,547 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:13:20,547 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:13:20,548 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:16:08,835 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:16:08,835 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:16:08,835 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:17:17,275 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:17:17,275 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:17:17,275 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:17:17,276 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:17:17,276 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:17:17,276 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:17:17,276 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:17:31,692 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:17:31,693 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:17:31,693 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:17:31,693 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:17:31,693 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:17:31,693 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:17:31,693 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>
+2019-07-03 00:22:44,183 - INFO - 试图保存评审信息时出现错误<save_pre_info>：<'NoneType' object has no attribute 'text'>

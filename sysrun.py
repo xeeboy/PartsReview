@@ -35,9 +35,10 @@ class Login(QMainWindow, Ui_Login):
                 user_info.set_value('EMAIL', EMAIL)
                 user_info.set_value('PRIVILEGE', PRIVILEGE)
                 user_info.set_value('PARTS', [p['部门'] for p in _PARTS])
-                main_win.showMaximized()  # login success then transfer to Main Form and close login form
+                main_win.tab_changed(0)
                 login_info = '   >>>当前用户：<%s> %s' % (PART, USERNAME)
                 main_win.setWindowTitle(main_win.windowTitle() + login_info)
+                main_win.showMaximized()  # login success then transfer to Main Form and close login form
                 self.close()
             else:
                 self.show_msg('warning', 'Error', '用户名或密码错误!')

@@ -55,12 +55,11 @@ class IdeaDialog(QDialog, Ui_partidea):
         QMessageBox.information(self, 'Update success', '本次更新完成！')
 
     def sign(self):
-        old_cont = self.ctl.toPlainText()
         sign_info = "\t>>>填写人:{}\n\t>>>填写日期：{}".format(self.username, datetime.now().strftime("%Y-%m-%d %H:%M"))
-        self.ctl.setPlainText(old_cont + '\n' + sign_info)
+        self.ctl.append(sign_info)
 
     def add_methods(self):
-        old_cont = self.ctl.toPlainText()
         check_list = self.gpb_deal.findChildren(QCheckBox)
         deal_methods = ','.join([check.text() for check in check_list if check.isChecked()])
-        self.ctl.setPlainText("处置方式>>> {}\n{}".format(deal_methods, old_cont))
+        contents = "处置方式>>> {}".format(deal_methods)
+        self.ctl.append(contents)

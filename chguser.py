@@ -40,7 +40,7 @@ class ChgUser(QDialog, Ui_chguser):
                             user_info.set_value('PARTS', [p['部门'] for p in _PARTS])
                             login_info = '   >>>当前用户：<%s> %s' % (PART, user)
                             self.parent.setWindowTitle(self.parent.windowTitle()[:8] + login_info)
-                            self.parent.tab_changed(1)
+                            self.parent.tab_changed(0)
                             self.parent.tabWidget.setCurrentIndex(0)
                         else:
                             QMessageBox.warning(self, '输入错误', '密码输入错误！')

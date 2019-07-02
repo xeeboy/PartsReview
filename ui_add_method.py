@@ -66,10 +66,10 @@ class Ui_add_method(object):
         self.btn_save_method.setIcon(icon1)
         self.btn_save_method.setObjectName("btn_save_method")
         self.label_5 = QtWidgets.QLabel(add_method)
-        self.label_5.setGeometry(QtCore.QRect(10, 20, 151, 151))
+        self.label_5.setGeometry(QtCore.QRect(20, 30, 131, 141))
         self.label_5.setAutoFillBackground(False)
         self.label_5.setText("")
-        self.label_5.setPixmap(QtGui.QPixmap("icons/find.png"))
+        self.label_5.setPixmap(QtGui.QPixmap("icons/dealwith_128px.ico"))
         self.label_5.setScaledContents(True)
         self.label_5.setObjectName("label_5")
 
