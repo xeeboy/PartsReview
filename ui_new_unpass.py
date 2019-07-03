@@ -13,6 +13,8 @@ class Ui_new_unpass(object):
     def setupUi(self, new_unpass):
         new_unpass.setObjectName("new_unpass")
         new_unpass.resize(538, 315)
+        new_unpass.setMinimumSize(QtCore.QSize(538, 315))
+        new_unpass.setMaximumSize(QtCore.QSize(538, 315))
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
         new_unpass.setFont(font)

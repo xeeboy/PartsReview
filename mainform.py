@@ -3,6 +3,7 @@ import user_info
 from getdb import *
 from ui_main import *
 from ui_part_need_review import *
+from qa_data import AddDataForm
 from parts_idea import IdeaDialog
 from chgpwd import ChgPwd
 from chguser import ChgUser
@@ -10,7 +11,7 @@ from add_mothod import AddMethod
 from new_unpass import NewUnpass
 
 from datetime import datetime
-from PyQt5.QtCore import Qt, QDate
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QCursor, QIcon
 from PyQt5.QtWidgets import QMainWindow, QTableView, QMenu, QAction, QMessageBox
 
@@ -55,6 +56,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
         # set tab1
         self.set_tbl_unpass(TBL_UNPASS_SQL)
+        self.show_test_win.clicked.connect(self.test_win)
         self.save_unpass.clicked.connect(self.type_new_unpass)
         self.btn_search.clicked.connect(self.fuzzy_search)
         self.btn_slparts.clicked.connect(self.show_select_parts_frm)
@@ -73,6 +75,10 @@ class MainForm(QMainWindow, Ui_MainWindow):
         # set tab3
         self.on_follow_view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.on_follow_view.customContextMenuRequested.connect(self.rclick_follow_view)
+
+    def test_win(self):
+        frm = AddDataForm(self)
+        frm.showMaximized()
 
     def type_new_unpass(self):
         new_unpass_frm = NewUnpass(self)
@@ -216,6 +222,8 @@ class MainForm(QMainWindow, Ui_MainWindow):
         action_del.setIcon(QIcon('icons/delete_file_32px.ico'))
         action_part_preview = QAction('Start Department Review', self)
         action_part_preview.setIcon(QIcon('icons/parameterreview_32px.ico'))
+        action_flush = QAction('刷新', self)
+        action_flush.setIcon(QIcon('icons/dir.png'))
         action_typeidea = QAction('输入处理意见', self)
         action_typeidea.setIcon(QIcon('icons/input_tablet_32px.ico'))
         if user_info.get_value('PART') != '质量部':
@@ -224,6 +232,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
         popMenu.addMenu(submenu_caseto)
         popMenu.addAction(action_del)
         popMenu.addAction(action_part_preview)
+        popMenu.addAction(action_flush)
         popMenu.addAction(action_typeidea)
         popMenu.triggered.connect(self.processtrigger_tbl_unpass)
         popMenu.exec_(QCursor.pos())
@@ -246,6 +255,8 @@ class MainForm(QMainWindow, Ui_MainWindow):
                         user_info.log2txt(e)
                 elif act.text() == 'Start Department Review':
                     sql = "UPDATE 状态标记 SET b_m_rev=True WHERE ID={}".format(unpass_id)
+                elif act.text() == '刷新':
+                    self.set_tbl_unpass(TBL_UNPASS_SQL)
                 elif act.text() == '输入处理意见':
                     idea_dia = IdeaDialog(self, user_info.get_value('USERNAME'), user_info.get_value('PART'), unpass_id)
                     idea_dia.show()
@@ -357,28 +368,31 @@ class MainForm(QMainWindow, Ui_MainWindow):
         row = self.tbl_unpass.currentIndex().row()
         unpass_id = int(
             self.model_unpass.item(row, 0).text())  # pos(row, 0) the first column
-        _db = MysqlDb()
-        with _db:
-            fd = ','.join(list(FIELDS_IN_TAB1.values())[1:])
-            sql = "SELECT a.ID,{0} FROM" \
-                  " 不合格品登记 a LEFT JOIN 状态标记 b " \
-                  "ON a.ID=b.ID " \
-                  "WHERE a.ID={1}".format(fd, unpass_id)
-            _rst = _db.get_rst(sql)
-        values = list(_rst[0].values())
-        fd = list(FIELDS_IN_TAB1.keys())
-        for i in range(len(fd)):
-            try:
-                v = values[i] if values[i] is not None else ''
-                exec_str = 'self.{}.setText(str(v))'.format(fd[i])
-                if fd[i] == 'pre_check':
-                    exec_str = 'self.{}.setChecked(v)'.format(fd[i])
-                elif fd[i] == 'prodate':
-                    exec_str = 'self.{}.setText(v.strftime("%Y-%m-%d"))'.format(fd[i])
-                eval(exec_str)
-            except Exception as e:
-                user_info.log2txt('单击显示不合格项目<ID={}>时出现错误<show_unpass_item>：<{}>'.format(unpass_id, e))
-                pass
+        try:
+            _db = MysqlDb()
+            with _db:
+                fd = ','.join(list(FIELDS_IN_TAB1.values())[1:])
+                sql = "SELECT a.ID,{0} FROM" \
+                      " 不合格品登记 a LEFT JOIN 状态标记 b " \
+                      "ON a.ID=b.ID " \
+                      "WHERE a.ID={1}".format(fd, unpass_id)
+                _rst = _db.get_rst(sql)
+            values = list(_rst[0].values())
+            fd = list(FIELDS_IN_TAB1.keys())
+            for i in range(len(fd)):
+                try:
+                    v = values[i] if values[i] is not None else ''
+                    exec_str = 'self.{}.setText(str(v))'.format(fd[i])
+                    if fd[i] == 'pre_check':
+                        exec_str = 'self.{}.setChecked(v)'.format(fd[i])
+                    elif fd[i] == 'prodate':
+                        exec_str = 'self.{}.setText(v.strftime("%Y-%m-%d"))'.format(fd[i])
+                    eval(exec_str)
+                except Exception as e:
+                    user_info.log2txt('单击显示不合格项目<ID={}>时出现错误<show_unpass_item>：<{}>'.format(unpass_id, e))
+                    pass
+        except Exception as e:
+            user_info.log2txt(e)
 
         if self.person.text() != '' and self.person.text() != user_info.get_value(
                 'USERNAME'):
@@ -421,8 +435,8 @@ class MainForm(QMainWindow, Ui_MainWindow):
         if self.ID.text():
             username = user_info.get_value('USERNAME')
             save_time = datetime.now().strftime('%Y-%m-%d %H:%M')
-            db = MysqlDb()
-            with db:
+            _db = MysqlDb()
+            with _db:
                 sql = "UPDATE 不合格品登记 " \
                       "SET 原因分析='{0}',纠正措施='{1}',预防措施='{2}',自审人='{3}',自审时间='{4}',责任自审={5} " \
                       "WHERE ID={6}".format(self.result.toPlainText(),
@@ -430,7 +444,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
                                             self.precaution.toPlainText(), username,
                                             save_time, self.pre_check.isChecked(),
                                             int(self.ID.text()))
-                db.modify_db(sql)
+                _db.modify_db(sql)
             QMessageBox.information(self, 'Information', '已保存')
             self.person.setText(username)
             self.pre_time.setText(save_time)

@@ -8,7 +8,7 @@ from PyQt5.QtGui import QStandardItem, QStandardItemModel
 config = ConfigParser()
 config.read('config.ini')
 HOST = config.get('DBInfo', 'host')
-PORT = config.getint('DBInfo', 'port')
+PORT = config.getint('DBInfo', 'port')  # port must be type int
 DB_NAME = config.get('DBInfo', 'db_name')
 
 

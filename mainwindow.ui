@@ -90,7 +90,7 @@
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>76</width>
+                <width>50</width>
                 <height>20</height>
                </size>
               </property>
@@ -140,7 +140,7 @@
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>76</width>
+                <width>50</width>
                 <height>20</height>
                </size>
               </property>
@@ -317,7 +317,7 @@
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="3,0">
+          <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="3,0,0">
            <item>
             <spacer name="horizontalSpacer_7">
              <property name="orientation">
@@ -332,9 +332,20 @@
             </spacer>
            </item>
            <item>
+            <widget class="QPushButton" name="show_test_win">
+             <property name="text">
+              <string>录入检测数据</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>icons/pass_to_left.png</normaloff>icons/pass_to_left.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPushButton" name="save_unpass">
              <property name="text">
-              <string>添加新记录</string>
+              <string>登记不合格品</string>
              </property>
              <property name="icon">
               <iconset>
