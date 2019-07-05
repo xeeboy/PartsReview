@@ -52,7 +52,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <property name="iconSize">
        <size>
@@ -73,6 +73,12 @@
          <layout class="QVBoxLayout" name="verticalLayout">
           <item>
            <layout class="QGridLayout" name="gridLayout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>15</number>
+            </property>
             <item row="1" column="7">
              <widget class="QLabel" name="label_11">
               <property name="text">
@@ -1216,6 +1222,128 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="tab_search">
+       <attribute name="icon">
+        <iconset>
+         <normaloff>icons/search.ico</normaloff>icons/search.ico</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>查询检测数据</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_11">
+        <item>
+         <widget class="QFrame" name="frame_8">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <property name="topMargin">
+            <number>20</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="label_33">
+             <property name="text">
+              <string>查询关键字：</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="test_sch_key">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>300</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="placeholderText">
+              <string>批号或产品名称</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="test_search">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>icons/search.ico</normaloff>icons/search.ico</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>16</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::MinimumExpanding</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_to_excel">
+             <property name="text">
+              <string>导出到EXCEL</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>icons/excel_128px.ico</normaloff>icons/excel_128px.ico</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_to_spc">
+             <property name="text">
+              <string>SPC</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>icons/bar.png</normaloff>icons/bar.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>20</width>
+               <height>20</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableView" name="test_result_view"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -1386,6 +1514,22 @@
     <hint type="destinationlabel">
      <x>216</x>
      <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>test_sch_key</sender>
+   <signal>returnPressed()</signal>
+   <receiver>test_search</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>159</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>266</x>
+     <y>94</y>
     </hint>
    </hints>
   </connection>

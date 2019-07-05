@@ -61,3 +61,5 @@ class NewUnpass(QDialog, Ui_new_unpass):
                     self.clear_unpass_info()
                 except Exception as e:
                     user_info.log2txt('登记新不合格品时发生错误：{}'.format(e))
+        else:
+            QMessageBox.warning(self, '警告', '缺少必要信息,请完善后保存！')

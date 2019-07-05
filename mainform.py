@@ -3,17 +3,19 @@ import user_info
 from getdb import *
 from ui_main import *
 from ui_part_need_review import *
-from qa_data import AddDataForm
+from qa_data import AddDataForm, TEST_ITEMS
 from parts_idea import IdeaDialog
 from chgpwd import ChgPwd
 from chguser import ChgUser
 from add_mothod import AddMethod
 from new_unpass import NewUnpass
 
+import xlsxwriter
+from os.path import join
 from datetime import datetime
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont, QCursor, QIcon
-from PyQt5.QtWidgets import QMainWindow, QTableView, QMenu, QAction, QMessageBox
+from PyQt5.QtGui import QFont, QCursor, QIcon, QBrush, QColor
+from PyQt5.QtWidgets import QMainWindow, QTableView, QMenu, QAction, QMessageBox, QFileDialog
 
 # on tab1
 FIELDS_UNPASS = ['ID', '客户', '批号', '不良品名称', '责任部门', '送部门评审', '技术部意见', '工艺部意见',
@@ -76,6 +78,47 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.on_follow_view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.on_follow_view.customContextMenuRequested.connect(self.rclick_follow_view)
 
+        # set tab4
+        self.test_search.clicked.connect(self.search_test_result)
+        self.btn_to_excel.clicked.connect(self.to_excel)
+
+    def to_excel(self):
+        try:
+            row_count = self.test_result_model.rowCount()
+            col_count = len(self.test_result_fields)
+            directory = QFileDialog.getExistingDirectory(self, "选择存放的位置")
+            if directory:
+                filename = join(directory, 'test_result.xlsx')
+                wkb = xlsxwriter.Workbook(filename)
+                sht = wkb.add_worksheet("test_result")
+                # todo write to excel
+                sht.write_row('A1', self.test_result_fields)
+                for r in range(row_count):
+                    for c in range(col_count):
+                        sht.write(r+1, c, self.test_result_model.item(r, c).text())
+                wkb.close()
+                QMessageBox.information(self, '完成', '文件地址：{}'.format(filename))
+        except Exception as e:
+            print(e)
+
+    def search_test_result(self):
+        keyword = self.test_sch_key.text()
+        keyword = '' if keyword is None else keyword
+        _pro_info_fields = ('客户', '产品型号', '颜色', '生产日期')
+        self.test_result_fields = _pro_info_fields + TEST_ITEMS
+        sql = "SELECT {0},a.批号,IF(表面判定=TRUE,'PASS',IF(表面判定 IS NULL,NULL,'UNPASS'))," \
+              "IF(RoSH=TRUE,'PASS',IF(RoSH IS NULL,NULL,'UNPASS'))," \
+              "{1} FROM 产品信息 a INNER JOIN 常规性能 b ON a.批号=b.批号 " \
+              "WHERE CONCAT(b.批号,产品型号) like '%{2}%'" \
+              "".format(','.join(_pro_info_fields), ','.join(TEST_ITEMS[3:]), keyword)
+        self.test_result_model = get_model(self.test_result_fields, sql)
+        for i in range(self.test_result_model.rowCount()):
+            v = self.test_result_model.item(i, 14).text()
+            if v:
+                self.test_result_model.setItem(i, 14, QStandardItem('%.2e'%int(v)))
+        self.test_result_view.setModel(self.test_result_model)
+        self.set_tbl_format('test_result_view')
+
     def test_win(self):
         frm = AddDataForm(self)
         frm.showMaximized()
@@ -97,8 +140,10 @@ class MainForm(QMainWindow, Ui_MainWindow):
         if index == 0:
             if user_info.get_value('PART') == '质量部':
                 self.save_unpass.setVisible(True)
+                self.show_test_win.setVisible(True)
             else:
                 self.save_unpass.setVisible(False)
+                self.show_test_win.setVisible(False)
         elif index == 1:
             # set privileges
             if not user_info.get_value('PRIVILEGE'):
@@ -196,6 +241,10 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
     def set_on_follow_view_data(self, sql):
         self.model_on_follow = get_model(FIELDS_FOLLOW_VIEW, sql)
+        for i in range(self.model_on_follow.rowCount()):
+            current_item = self.model_on_follow.item(i, 6)
+            if float(current_item.text()) != 0:
+                current_item.setForeground(QBrush(QColor(255, 0, 0)))
         self.on_follow_view.setModel(self.model_on_follow)
         self.set_tbl_format('on_follow_view')
 
@@ -239,32 +288,33 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
     def processtrigger_tbl_unpass(self, act):
         row = self.tbl_unpass.currentIndex().row()
-        unpass_id = int(self.model_unpass.item(row, 0).text())
-        to_parts = user_info.get_value('PARTS')[:-1]
-        sql = ''
-        try:
-            _db = MysqlDb()
-            with _db:
-                if act.text() in to_parts:
-                    sql = "UPDATE 状态标记 SET caseto_by_QA='{}' WHERE ID={}".format(act.text(), unpass_id)
-                elif act.text() == 'Delete':
-                    sql = 'DELETE FROM 不合格品登记 WHERE ID = %d' % unpass_id
-                    try:
-                        _db.modify_db("DELETE FROM 状态标记 WHERE ID = %d" % unpass_id)
-                    except Exception as e:
-                        user_info.log2txt(e)
-                elif act.text() == 'Start Department Review':
-                    sql = "UPDATE 状态标记 SET b_m_rev=True WHERE ID={}".format(unpass_id)
-                elif act.text() == '刷新':
-                    self.set_tbl_unpass(TBL_UNPASS_SQL)
-                elif act.text() == '输入处理意见':
-                    idea_dia = IdeaDialog(self, user_info.get_value('USERNAME'), user_info.get_value('PART'), unpass_id)
-                    idea_dia.show()
-                _db.modify_db(sql)
-                self.fuzzy_search()
-        except Exception as e:
-            user_info.log2txt('右键操作不合格清单列表<ID={}>时出现错误<processtrigger_tbl_unpass>：<{}>'.format(unpass_id, e))
-            pass
+        if row != -1:
+            unpass_id = int(self.model_unpass.item(row, 0).text())
+            to_parts = user_info.get_value('PARTS')[:-1]
+            sql = ''
+            try:
+                _db = MysqlDb()
+                with _db:
+                    if act.text() in to_parts:
+                        sql = "UPDATE 状态标记 SET caseto_by_QA='{}' WHERE ID={}".format(act.text(), unpass_id)
+                    elif act.text() == 'Delete':
+                        sql = 'DELETE FROM 不合格品登记 WHERE ID = %d' % unpass_id
+                        try:
+                            _db.modify_db("DELETE FROM 状态标记 WHERE ID = %d" % unpass_id)
+                        except Exception as e:
+                            user_info.log2txt(e)
+                    elif act.text() == 'Start Department Review':
+                        sql = "UPDATE 状态标记 SET b_m_rev=True WHERE ID={}".format(unpass_id)
+                    elif act.text() == '刷新':
+                        self.set_tbl_unpass(TBL_UNPASS_SQL)
+                    elif act.text() == '输入处理意见':
+                        idea_dia = IdeaDialog(self, user_info.get_value('USERNAME'), user_info.get_value('PART'), unpass_id)
+                        idea_dia.show()
+                    _db.modify_db(sql)
+                    self.fuzzy_search()
+            except Exception as e:
+                user_info.log2txt('右键操作不合格清单列表<ID={}>时出现错误<processtrigger_tbl_unpass>：<{}>'.format(unpass_id, e))
+                pass
 
     def rclick_tbl_pre(self):
         popMenu = QMenu()
@@ -284,18 +334,20 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
     def processtrigger_tbl_pre(self, act):
         row = self.pre_tbl_view.currentIndex().row()
-        unpass_id = int(self.model_pre.item(row, 0).text())
-        _db = MysqlDb()
-        with _db:
-            if act.text() == 'Start General Review':
-                sql = "UPDATE 状态标记 SET g_m_rev=True WHERE ID={}".format(unpass_id)
-            elif act.text() == 'Flag Review Finish':
-                sql = "UPDATE 状态标记 SET review_finish=True WHERE ID={}".format(unpass_id)
-            try:
-                _db.modify_db(sql)
-                self._load_tbl_pre_data()
-            except Exception as e:
-                user_info.log2txt('第二页右键更新评审信息状态时发生错误：{}'.format(e))
+        sql = ''
+        if row != -1:
+            unpass_id = int(self.model_pre.item(row, 0).text())
+            _db = MysqlDb()
+            with _db:
+                if act.text() == 'Start General Review':
+                    sql = "UPDATE 状态标记 SET g_m_rev=True WHERE ID={}".format(unpass_id)
+                elif act.text() == 'Flag Review Finish':
+                    sql = "UPDATE 状态标记 SET review_finish=True WHERE ID={}".format(unpass_id)
+                try:
+                    _db.modify_db(sql)
+                    self._load_tbl_pre_data()
+                except Exception as e:
+                    user_info.log2txt('第二页右键更新评审信息状态时发生错误：{}'.format(e))
 
     def rclick_follow_view(self):
         popMenu = QMenu()
@@ -318,27 +370,28 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
     def processtrigger_follow_view(self, act):
         row = self.on_follow_view.currentIndex().row()
-        unpass_id = int(self.model_on_follow.item(row, 0).text())
-        _db = MysqlDb()
-        with _db:
-            if act.text() == 'Close Case':
-                sql = "UPDATE 状态标记 SET case_closed_flag=True WHERE ID={}".format(unpass_id)
-                try:
-                    _db.modify_db(sql)
+        if row != -1:
+            unpass_id = int(self.model_on_follow.item(row, 0).text())
+            _db = MysqlDb()
+            with _db:
+                if act.text() == 'Close Case':
+                    sql = "UPDATE 状态标记 SET case_closed_flag=True WHERE ID={}".format(unpass_id)
+                    try:
+                        _db.modify_db(sql)
+                        self._load_on_follow_view_data()
+                        self.set_tbl_unpass(TBL_UNPASS_SQL)
+                    except Exception as e:
+                        user_info.log2txt('第三页右键更新跟踪信息状态时发生错误：{}'.format(e))
+                elif act.text() == '添加处置':
+                    count_rst = _db.get_rst("SELECT COUNT(*) as _count FROM fcase_deallog WHERE ID={}".format(unpass_id))
+                    count = count_rst[0]['_count']
+                    add_method_frm = AddMethod(self)
+                    add_method_frm.line_unpass_id.setText(str(unpass_id))
+                    add_method_frm.line_deal_id.setText('{}-{}'.format(str(unpass_id), str(count+1)))
+                    add_method_frm.show()
+                    add_method_frm.move(QCursor.pos())
+                elif act.text() == '刷新':
                     self._load_on_follow_view_data()
-                    self.set_tbl_unpass(TBL_UNPASS_SQL)
-                except Exception as e:
-                    user_info.log2txt('第三页右键更新跟踪信息状态时发生错误：{}'.format(e))
-            elif act.text() == '添加处置':
-                count_rst = _db.get_rst("SELECT COUNT(*) as _count FROM fcase_deallog WHERE ID={}".format(unpass_id))
-                count = count_rst[0]['_count']
-                add_method_frm = AddMethod(self)
-                add_method_frm.line_unpass_id.setText(str(unpass_id))
-                add_method_frm.line_deal_id.setText('{}-{}'.format(str(unpass_id), str(count+1)))
-                add_method_frm.show()
-                add_method_frm.move(QCursor.pos())
-            elif act.text() == '刷新':
-                self._load_on_follow_view_data()
 
     def fuzzy_search(self):
         keyword = self.lineEdit_11.text()
@@ -355,7 +408,6 @@ class MainForm(QMainWindow, Ui_MainWindow):
                         "review_finish=True) AS A LEFT JOIN (SELECT ID, SUM(处理数量Kg) AS " \
                         "dealed_q, COUNT(*) AS 处理次数 FROM Fcase_DealLog GROUP BY ID) AS B " \
                         "ON A.ID = B.ID WHERE CONCAT(A.批号,A.不良品名称) LIKE '%{}%'".format(keyword)
-        print(on_follow_sql)
         self.set_on_follow_view_data(on_follow_sql)
 
     def show_select_parts_frm(self):

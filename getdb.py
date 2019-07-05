@@ -47,9 +47,7 @@ def get_model(fields, sql):
     with db:
         rst = db.get_rst(sql)
     n = len(rst)
-    for i in range(len(fields)):
-        item = QStandardItem(fields[i])
-        model.setHorizontalHeaderItem(i, item)
+    model.setHorizontalHeaderLabels(fields)
     for rown in range(n):
         for coln in range(len(fields)):
             content = list(rst[rown].values())[coln]
