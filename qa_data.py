@@ -26,6 +26,7 @@ class AddDataForm(QtWidgets.QMainWindow, Ui_QAData):
         self.btn_search_need_modi.clicked.connect(self.test_search)
         self.test_data_view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.test_data_view.customContextMenuRequested.connect(self.rclick_test_data_view)
+
         self.test_data_view.setSelectionMode(QTableView.SingleSelection)
         self.test_data_view.setStyleSheet(
             "selection-color: rgb(255, 0, 127);\nselection-background-color: rgb(85, 255, 127);")
@@ -52,7 +53,6 @@ class AddDataForm(QtWidgets.QMainWindow, Ui_QAData):
 
     def processtrigger_rclick(self, act):
         row = self.test_data_view.currentIndex().row()
-        sql = ''
         if row != -1:
             try:
                 db = MysqlDb()
@@ -64,7 +64,7 @@ class AddDataForm(QtWidgets.QMainWindow, Ui_QAData):
                             field = self.model.horizontalHeaderItem(i).text()
                             v = self.model.item(row, i).text()
                             if field == '表面判定' or field == 'RoSH':
-                                v = 1 if v == 'PASS' else 0
+                                v = 1 if v.upper() == 'PASS' else 0
                             if v:
                                 field_v = "{}='{}'".format(field, v)
                                 trans.append(field_v)
@@ -72,17 +72,21 @@ class AddDataForm(QtWidgets.QMainWindow, Ui_QAData):
                         db.modify_db(sql)
                         QMessageBox.information(self, '提示', '操作已完成！')
                     elif act.text() == '删除':
-                        sql_1 = "DELETE FROM 常规性能 WHERE 批号='{}'".format(batch)
-                        sql_2 = "DELETE FROM 产品信息 WHERE 批号='{}'".format(batch)
-                        try:
-                            db._cursor.execute(sql_1)
-                            db._cursor.execute(sql_2)
-                            db._cnn.commit()
-                            QMessageBox.information(self, '提示', '操作已完成！')
-                        except Exception as e1:
-                            db._cnn.rollback()
-                            QMessageBox.warning(self, '错误', '操作失败')
-                            user_info.log2txt('删除检测数据时发生错误：{}'.format(e1))
+                        reply = QMessageBox.question(self, 'Message', '确认删除<{}>?'.format(batch),
+                                                     QMessageBox.Yes | QMessageBox.No,
+                                                     QMessageBox.No)
+                        if reply == QMessageBox.Yes:
+                            sql_1 = "DELETE FROM 常规性能 WHERE 批号='{}'".format(batch)
+                            sql_2 = "DELETE FROM 产品信息 WHERE 批号='{}'".format(batch)
+                            try:
+                                db._cursor.execute(sql_1)
+                                db._cursor.execute(sql_2)
+                                db._cnn.commit()
+                                QMessageBox.information(self, '提示', '操作已完成！')
+                            except Exception as e1:
+                                db._cnn.rollback()
+                                QMessageBox.warning(self, '错误', '删除失败')
+                                user_info.log2txt('删除检测数据时发生错误：{}'.format(e1))
                     self.test_search()
             except Exception as e2:
                 QMessageBox.warning(self, '错误', '操作失败')
@@ -119,7 +123,7 @@ class AddDataForm(QtWidgets.QMainWindow, Ui_QAData):
         sql = "SELECT a.批号,IF(表面判定=TRUE,'PASS',IF(表面判定 IS NULL,NULL,'UNPASS'))," \
               "IF(RoSH=TRUE,'PASS',IF(RoSH IS NULL,NULL,'UNPASS')),{} " \
               "FROM 产品信息 a INNER JOIN 常规性能 b ON a.批号=b.批号 " \
-              "WHERE CONCAT(a.批号,产品型号) like '%{}%'" .format(','.join(TEST_ITEMS[3:]), kw)
+              "WHERE a.批号 like '%{}%'" .format(','.join(TEST_ITEMS[3:]), kw)
         self.set_test_data_view(sql)
 
     def save_pro_info(self):
@@ -162,3 +166,4 @@ class AddDataForm(QtWidgets.QMainWindow, Ui_QAData):
             if v:
                 self.model.setItem(i, 10, QStandardItem('%.2e'%int(v)))
         self.test_data_view.setModel(self.model)
+        self.test_data_view.resizeColumnsToContents()

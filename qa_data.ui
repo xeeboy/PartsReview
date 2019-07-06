@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>1217</width>
     <height>479</height>
    </rect>
   </property>
@@ -97,6 +97,9 @@
            </property>
            <property name="placeholderText">
             <string>复测则添加后缀-F1,-F2,...</string>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -214,16 +217,13 @@
         </layout>
        </item>
        <item>
-        <spacer name="horizontalSpacer_2">
+        <spacer name="horizontalSpacer_3">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
-         </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>139</width>
+           <width>40</width>
            <height>20</height>
           </size>
          </property>
@@ -307,9 +307,41 @@
         </spacer>
        </item>
        <item>
+        <widget class="QLabel" name="label_8">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>TIPS：表面判定, RoSH, 性能判定 填 'pass'表示通过,'no'表示不通过,不区分大小写</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QLabel" name="label_7">
          <property name="text">
-          <string>批号或产品名称：</string>
+          <string>批号：</string>
          </property>
         </widget>
        </item>
@@ -326,6 +358,9 @@
            <width>200</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -344,7 +379,11 @@
      </widget>
     </item>
     <item>
-     <widget class="QTableView" name="test_data_view"/>
+     <widget class="QTableView" name="test_data_view">
+      <property name="statusTip">
+       <string>右键选择更新或者删除选中记录</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -353,7 +392,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1217</width>
      <height>23</height>
     </rect>
    </property>

@@ -1267,6 +1267,9 @@
              <property name="placeholderText">
               <string>批号或产品名称</string>
              </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -1321,6 +1324,9 @@
            </item>
            <item>
             <widget class="QPushButton" name="btn_to_spc">
+             <property name="toolTip">
+              <string>使用前请先对日期排序</string>
+             </property>
              <property name="text">
               <string>SPC</string>
              </property>

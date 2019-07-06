@@ -3,18 +3,20 @@ import user_info
 from getdb import *
 from ui_main import *
 from ui_part_need_review import *
+from ui_about import *
 from qa_data import AddDataForm, TEST_ITEMS
 from parts_idea import IdeaDialog
 from chgpwd import ChgPwd
 from chguser import ChgUser
 from add_mothod import AddMethod
 from new_unpass import NewUnpass
+from plot_item import PlotItem
 
 import xlsxwriter
 from os.path import join
 from datetime import datetime
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont, QCursor, QIcon, QBrush, QColor
+from PyQt5.QtGui import QFont, QCursor, QIcon, QBrush, QColor, QPalette
 from PyQt5.QtWidgets import QMainWindow, QTableView, QMenu, QAction, QMessageBox, QFileDialog
 
 # on tab1
@@ -55,6 +57,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.tabWidget.currentChanged.connect(self.tab_changed)
         self.act_chgpwd.triggered.connect(self.chgpwd)
         self.act_chguser.triggered.connect(self.chguser)
+        self.act_about.triggered.connect(self.show_about)
 
         # set tab1
         self.set_tbl_unpass(TBL_UNPASS_SQL)
@@ -79,10 +82,19 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.on_follow_view.customContextMenuRequested.connect(self.rclick_follow_view)
 
         # set tab4
+        self.test_result_view.setStyleSheet(
+            "selection-color: rgb(222, 12, 127);\nselection-background-color: rgb(85, 255, 127);")
         self.test_search.clicked.connect(self.search_test_result)
         self.btn_to_excel.clicked.connect(self.to_excel)
+        self.btn_to_spc.clicked.connect(self.show_chart_item)
+
+    def show_chart_item(self):
+        """show chart for items selected"""
+        plot_frm = PlotItem(self)
+        plot_frm.show()
 
     def to_excel(self):
+        """export to *.xls file"""
         try:
             row_count = self.test_result_model.rowCount()
             col_count = len(self.test_result_fields)
@@ -102,16 +114,20 @@ class MainForm(QMainWindow, Ui_MainWindow):
             print(e)
 
     def search_test_result(self):
+        """method in tab4"""
         keyword = self.test_sch_key.text()
         keyword = '' if keyword is None else keyword
         _pro_info_fields = ('客户', '产品型号', '颜色', '生产日期')
         self.test_result_fields = _pro_info_fields + TEST_ITEMS
+
         sql = "SELECT {0},a.批号,IF(表面判定=TRUE,'PASS',IF(表面判定 IS NULL,NULL,'UNPASS'))," \
               "IF(RoSH=TRUE,'PASS',IF(RoSH IS NULL,NULL,'UNPASS'))," \
               "{1} FROM 产品信息 a INNER JOIN 常规性能 b ON a.批号=b.批号 " \
               "WHERE CONCAT(b.批号,产品型号) like '%{2}%'" \
               "".format(','.join(_pro_info_fields), ','.join(TEST_ITEMS[3:]), keyword)
+
         self.test_result_model = get_model(self.test_result_fields, sql)
+        # deal with bigint value use 科学计数
         for i in range(self.test_result_model.rowCount()):
             v = self.test_result_model.item(i, 14).text()
             if v:
@@ -134,6 +150,16 @@ class MainForm(QMainWindow, Ui_MainWindow):
     def chguser(self):
         chg_user = ChgUser(self)
         chg_user.show()
+
+    def show_about(self):
+        about_frm = QDialog(self)
+        about_ui = Ui_about()
+        about_ui.setupUi(about_frm)
+        about_frm.setWindowOpacity(0.98)
+        pe = QPalette()
+        pe.setColor(QPalette.Window, Qt.green)  # 设置背景色
+        about_frm.setPalette(pe)
+        about_frm.show()
 
     def tab_changed(self, index):
         self.txt_pre_info.setPlainText('')
