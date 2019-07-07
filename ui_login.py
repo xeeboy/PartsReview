@@ -66,10 +66,10 @@ class Ui_Login(object):
         self.verticalLayout.addLayout(self.gridLayout)
         self.verticalLayout_2.addLayout(self.verticalLayout)
         self.splitter = QtWidgets.QSplitter(Form)
-        self.splitter.setGeometry(QtCore.QRect(145, 180, 150, 24))  # 调整button组的位置
+        self.splitter.setGeometry(QtCore.QRect(85, 180, 255, 24))  # 调整button组的位置
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
-        self.btn_login = QtWidgets.QPushButton(self.splitter)  # 在splitter里画button
 
+        self.btn_login = QtWidgets.QPushButton(self.splitter)  # 在splitter里画button
         font.setFamily("Arial Rounded MT Bold")
         font.setBold(True)
         font.setWeight(75)
@@ -79,14 +79,22 @@ class Ui_Login(object):
         icon1.addPixmap(QtGui.QPixmap("icons/confirm128px.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_login.setIcon(icon1)
         self.btn_login.setObjectName("btn_login")
-        self.btn_quit = QtWidgets.QPushButton(self.splitter)
 
+        self.btn_quit = QtWidgets.QPushButton(self.splitter)
         self.btn_quit.setFont(font)
         self.btn_quit.setCursor(QtGui.QCursor(QtCore.Qt.OpenHandCursor))
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap("icons/quit128px.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_quit.setIcon(icon2)
         self.btn_quit.setObjectName("btn_quit")
+
+        self.btn_save_pwd = QtWidgets.QPushButton(self.splitter)
+        self.btn_save_pwd.setFont(font)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("icons/Save_32px.ico"), QtGui.QIcon.Normal,
+                        QtGui.QIcon.Off)
+        self.btn_save_pwd.setIcon(icon3)
+        self.btn_save_pwd.setObjectName("btn_save_pwd")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -99,3 +107,4 @@ class Ui_Login(object):
         self.btn_login.setText(_translate("Form", "登录"))
         self.btn_login.setShortcut(_translate("Form", "Return"))
         self.btn_quit.setText(_translate("Form", "关闭"))
+        self.btn_save_pwd.setText(_translate("Form", "保存登录"))

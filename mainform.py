@@ -15,9 +15,11 @@ from plot_item import PlotItem
 import xlsxwriter
 from os.path import join
 from datetime import datetime
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont, QCursor, QIcon, QBrush, QColor, QPalette
+from PyQt5.QtCore import Qt, QRect, QSize, QPoint
+from PyQt5.QtPrintSupport import *
+from PyQt5.QtGui import QFont, QCursor, QIcon, QBrush, QColor, QPalette, QTextDocument, QTextCursor, QPixmap, QPainter
 from PyQt5.QtWidgets import QMainWindow, QTableView, QMenu, QAction, QMessageBox, QFileDialog
+
 
 # on tab1
 FIELDS_UNPASS = ['ID', '客户', '批号', '不良品名称', '责任部门', '送部门评审', '技术部意见', '工艺部意见',
@@ -47,6 +49,8 @@ FIELDS_IN_TAB2 = {'pre_describle': '不合格描述', 'pre_result': '原因分�
                   'pre_info_general': '总经办评审信息', 'lbl_rev_parts_need': 'part_need_review'}
 # on tab3
 FIELDS_FOLLOW_VIEW = ['ID', 'CaseClosed', '批号', '不良品名称', '数量Kg', '处理次数', '不良剩余Kg', '客户']
+FIELDS_IN_TAB3 = {k+'_flw': v for k, v in FIELDS_IN_TAB2.items()}
+FIELDS_IN_TAB3.update({'batch_flw': '批号', 'prodate_flw': '生产日期', 'unpassname_flw': '不良品名称', 'unpassqty_flw': '数量Kg', 'unpasstype_flw': '不良品种类'})
 
 
 class MainForm(QMainWindow, Ui_MainWindow):
@@ -78,8 +82,10 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.btn_sign_pre.clicked.connect(self._pre_sign)
 
         # set tab3
+        self.on_follow_view.clicked.connect(self.show_follow_item)
         self.on_follow_view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.on_follow_view.customContextMenuRequested.connect(self.rclick_follow_view)
+        self.btn_print.clicked.connect(self.handlePrint)
 
         # set tab4
         self.test_result_view.setStyleSheet(
@@ -87,6 +93,31 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.test_search.clicked.connect(self.search_test_result)
         self.btn_to_excel.clicked.connect(self.to_excel)
         self.btn_to_spc.clicked.connect(self.show_chart_item)
+
+    def handlePaintRequest(self, printer):
+        # TODO PRINT CONTENTS
+        painter = QPainter(printer)
+        widget = self.print_frame
+        image = widget.grab(QRect(QPoint(0, 0),
+                                  QSize(widget.size().width(), widget.size().height())))  # /* 绘制窗口至画布 */
+        # QRect
+        rect = painter.viewport()
+        # QSize
+        size = image.size()
+        size.scale(rect.size(), Qt.KeepAspectRatio)  # //此处保证图片显示完整
+        painter.setViewport(rect.x(), rect.y(), size.width(), size.height())
+        painter.setWindow(image.rect())
+        painter.drawPixmap(0, 0, image)  # /* 数据显示至预览界面 */
+
+    def handlePrint(self):
+        dialog = QPrintDialog()
+        if dialog.exec_() == QDialog.Accepted:
+            self.handlePaintRequest(dialog.printer())
+
+    def handlePreview(self):
+        dialog = QPrintPreviewDialog()
+        dialog.paintRequested.connect(self.handlePaintRequest)
+        dialog.exec_()
 
     def show_chart_item(self):
         """show chart for items selected"""
@@ -123,7 +154,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
         sql = "SELECT {0},a.批号,IF(表面判定=TRUE,'PASS',IF(表面判定 IS NULL,NULL,'UNPASS'))," \
               "IF(RoSH=TRUE,'PASS',IF(RoSH IS NULL,NULL,'UNPASS'))," \
               "{1} FROM 产品信息 a INNER JOIN 常规性能 b ON a.批号=b.批号 " \
-              "WHERE CONCAT(b.批号,产品型号) like '%{2}%'" \
+              "WHERE CONCAT(客户,产品型号,颜色,b.批号) like '%{2}%'" \
               "".format(','.join(_pro_info_fields), ','.join(TEST_ITEMS[3:]), keyword)
 
         self.test_result_model = get_model(self.test_result_fields, sql)
@@ -497,7 +528,24 @@ class MainForm(QMainWindow, Ui_MainWindow):
                 eval("self.{}.setText(pre_rst[0]['{}'])"
                      "".format(obj_name, FIELDS_IN_TAB2[obj_name]))
             except Exception as e:
-                user_info.log2txt('单击显示待(已)评审项目<ID={}>时出现错误<show_unpass_item>：<{}>'.format(unpass_id, e))
+                print(e)
+                pass
+
+    def show_follow_item(self):
+        row = self.on_follow_view.currentIndex().row()
+        unpass_id = int(self.model_on_follow.item(row, 0).text())
+        _db = MysqlDb()
+        with _db:
+            fd = ','.join(FIELDS_IN_TAB3.values())
+            sql = "SELECT {} FROM 不合格品登记 a INNER JOIN 状态标记 b ON a.ID=b.ID WHERE a.ID={}" \
+                  "".format(fd, unpass_id)
+            pre_rst = _db.get_rst(sql)
+        for obj_name in FIELDS_IN_TAB3.keys():
+            try:
+                eval("self.{}.setText(str(pre_rst[0]['{}']))"
+                     "".format(obj_name, FIELDS_IN_TAB3[obj_name]))
+            except Exception as e:
+                print(e)
                 pass
 
     def show_deal_method(self):

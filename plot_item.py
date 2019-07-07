@@ -1,7 +1,7 @@
 from ui_plot_item import *
 
 import pyqtgraph as pg
-from datetime import datetime
+import numpy as np
 from PyQt5.QtWidgets import QRadioButton
 
 
@@ -27,10 +27,17 @@ class PlotItem(QtWidgets.QDialog, Ui_plot_item):
                 v = model.item(i, col_n).text()
                 if v:
                     values.append(abs(float(v)))
-                    print(model.item(i, 3).text())
+            avg = np.average(values[-25:])  # I will use 25 samples latest, and ± 3*σ
+            std = np.std(values[-25:])
+            R = max(values[-25:]) - min(values[-25:])
+            ucl = avg + 3*std
+            lcl = avg - 3*std
+            # above sometimes use ± 1.88*R(bar) when large number
             pg.setConfigOptions(antialias=True)
-            # TODO Show SPC chart
-            pg.plot(values, pen=(255, 0, 0), name="Red curve", title=title)
+            Plot = pg.plot(title=title)
+            Plot.plot([ucl]*len(values), pen=(255, 0, 0), name='Red curve')
+            Plot.plot(values, pen=(0, 255, 0), name="Green curve")
+            Plot.plot([lcl] * len(values), pen=(0, 0, 255), name='Blue curve')
         except Exception as e:
             print(e)
 

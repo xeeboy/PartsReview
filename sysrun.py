@@ -2,6 +2,7 @@ from mainform import *
 from ui_login import Ui_Login
 
 import sys
+import shelve
 
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QPalette
@@ -11,10 +12,18 @@ class Login(QMainWindow, Ui_Login):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.line_password.setText('123')
-        self.line_username.setText('余西保')
+        try:
+            with shelve.open('passwd') as passwd:
+                u_name = passwd['username']
+                u_pwd = passwd['password']
+        except KeyError:
+            u_name = ''
+            u_pwd = ''
+        self.line_password.setText(u_pwd)
+        self.line_username.setText(u_name)
         self.btn_login.clicked.connect(self.login)
         self.btn_quit.clicked.connect(sys.exit)
+        self.btn_save_pwd.clicked.connect(self.save_pwd)
         self.show()
 
     def login(self):
@@ -48,14 +57,20 @@ class Login(QMainWindow, Ui_Login):
     def show_msg(self, level, win_title, text):
         eval('QMessageBox.%s(self, win_title, text)' % level)
 
+    def save_pwd(self):
+        with shelve.open('passwd') as passwd:
+            passwd['username'] = self.line_username.text()
+            passwd['password'] = self.line_password.text()
+        QMessageBox.information(self, 'Information', '已保存！')
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     main_win = MainForm()
-    # main_win.setWindowOpacity(0.99)  # 透明度
+    main_win.setWindowOpacity(0.99)  # 透明度
     # main_win.setWindowFlag(QtCore.Qt.FramelessWindowHint)  # 无边框
     pe = QPalette()
-    pe.setColor(QPalette.Window, Qt.darkYellow)  # 设置背景色
+    pe.setColor(QPalette.Window, Qt.white)  # 设置背景色
     main_win.setPalette(pe)
     login = Login()
     sys.exit(app.exec_())
