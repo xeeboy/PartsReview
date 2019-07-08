@@ -6,7 +6,7 @@ from getdb import MysqlDb, get_model, QStandardItem
 
 from PyQt5.QtCore import QDate, Qt
 from PyQt5.QtGui import QIcon, QCursor
-from PyQt5.QtWidgets import QMessageBox, QComboBox, QTableView, QMenu, QAction
+from PyQt5.QtWidgets import QMessageBox, QTableView, QMenu, QAction
 
 TEST_ITEMS = (
     '批号', '表面判定', 'RoSH', '性能判定', '密度', '拉伸强度', '断裂伸长率', '低冲温度',

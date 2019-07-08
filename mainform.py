@@ -17,7 +17,7 @@ from os.path import join
 from datetime import datetime
 from PyQt5.QtCore import Qt, QRect, QSize, QPoint
 from PyQt5.QtPrintSupport import *
-from PyQt5.QtGui import QFont, QCursor, QIcon, QBrush, QColor, QPalette, QTextDocument, QTextCursor, QPixmap, QPainter
+from PyQt5.QtGui import QFont, QCursor, QIcon, QBrush, QColor, QPalette, QPainter
 from PyQt5.QtWidgets import QMainWindow, QTableView, QMenu, QAction, QMessageBox, QFileDialog
 
 
@@ -51,6 +51,7 @@ FIELDS_IN_TAB2 = {'pre_describle': '不合格描述', 'pre_result': '原因分�
 FIELDS_FOLLOW_VIEW = ['ID', 'CaseClosed', '批号', '不良品名称', '数量Kg', '处理次数', '不良剩余Kg', '客户']
 FIELDS_IN_TAB3 = {k+'_flw': v for k, v in FIELDS_IN_TAB2.items()}
 FIELDS_IN_TAB3.update({'batch_flw': '批号', 'prodate_flw': '生产日期', 'unpassname_flw': '不良品名称', 'unpassqty_flw': '数量Kg', 'unpasstype_flw': '不良品种类'})
+FIELDS_IN_TAB3.pop('lbl_rev_parts_need_flw')
 
 
 class MainForm(QMainWindow, Ui_MainWindow):
@@ -82,7 +83,6 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.btn_sign_pre.clicked.connect(self._pre_sign)
 
         # set tab3
-        self.on_follow_view.clicked.connect(self.show_follow_item)
         self.on_follow_view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.on_follow_view.customContextMenuRequested.connect(self.rclick_follow_view)
         self.btn_print.clicked.connect(self.handlePrint)
@@ -115,6 +115,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
             self.handlePaintRequest(dialog.printer())
 
     def handlePreview(self):
+        """don't use now"""
         dialog = QPrintPreviewDialog()
         dialog.paintRequested.connect(self.handlePaintRequest)
         dialog.exec_()
@@ -134,7 +135,6 @@ class MainForm(QMainWindow, Ui_MainWindow):
                 filename = join(directory, 'test_result.xlsx')
                 wkb = xlsxwriter.Workbook(filename)
                 sht = wkb.add_worksheet("test_result")
-                # todo write to excel
                 sht.write_row('A1', self.test_result_fields)
                 for r in range(row_count):
                     for c in range(col_count):
@@ -231,12 +231,19 @@ class MainForm(QMainWindow, Ui_MainWindow):
         current_part = user_info.get_value('PART')
         other_fields = ','.join(FIELDS_PRE[2:-2])
         # fields will be ['ID', '本部评审', '批号', '不良品名称', '客户', '生产日期', '数量Kg', '不良品种类', 'Review Finish', 'To_General']
-        if current_part != '总经办':
+        if current_part != '总经办' and current_part != '质量部':
             pre_info_sql = "SELECT a.ID,IF({2}评审=TRUE,'完成','未完成'),{0},IF(review_finish=TRUE,'YES','NO'),IF(g_m_rev=TRUE,'YES','NO') " \
                            "FROM 不合格品登记 a INNER JOIN 状态标记 b ON a.ID=b.ID " \
                            "WHERE b_m_rev=TRUE " \
                            "AND case_closed_flag=False " \
                            "AND FIND_IN_SET('{1}',part_need_review)" \
+                           "".format(other_fields, current_part, current_part)
+            self.set_tbl_pre(FIELDS_PRE, pre_info_sql)
+        elif current_part == '质量部':
+            pre_info_sql = "SELECT a.ID,IF({2}评审=TRUE,'完成','未完成'),{0},IF(review_finish=TRUE,'YES','NO'),IF(g_m_rev=TRUE,'YES','NO') " \
+                           "FROM 不合格品登记 a INNER JOIN 状态标记 b ON a.ID=b.ID " \
+                           "WHERE b_m_rev=TRUE " \
+                           "AND case_closed_flag=False " \
                            "".format(other_fields, current_part, current_part)
             self.set_tbl_pre(FIELDS_PRE, pre_info_sql)
         elif current_part == '总经办':
@@ -531,31 +538,39 @@ class MainForm(QMainWindow, Ui_MainWindow):
                 print(e)
                 pass
 
-    def show_follow_item(self):
+    def show_deal_method(self):
+        """also show other information"""
         row = self.on_follow_view.currentIndex().row()
         unpass_id = int(self.model_on_follow.item(row, 0).text())
+        # start show other information
         _db = MysqlDb()
         with _db:
             fd = ','.join(FIELDS_IN_TAB3.values())
             sql = "SELECT {} FROM 不合格品登记 a INNER JOIN 状态标记 b ON a.ID=b.ID WHERE a.ID={}" \
                   "".format(fd, unpass_id)
             pre_rst = _db.get_rst(sql)
-        for obj_name in FIELDS_IN_TAB3.keys():
-            try:
-                eval("self.{}.setText(str(pre_rst[0]['{}']))"
-                     "".format(obj_name, FIELDS_IN_TAB3[obj_name]))
-            except Exception as e:
-                print(e)
-                pass
-
-    def show_deal_method(self):
-        row = self.on_follow_view.currentIndex().row()
-        unpass_id = int(self.model_on_follow.item(row, 0).text())
-        fields_handle_view = ['序号', '填写人', '处理数量Kg', '处理日期', '处理措施']
-        sql = "SELECT deal_id,填写人,处理数量Kg,处理日期,处理措施 FROM fcase_deallog WHERE ID={}".format(unpass_id)
-        model = get_model(fields_handle_view, sql)
-        self.handle_view.setModel(model)
-        self.set_tbl_format('handle_view')
+            for obj_name in FIELDS_IN_TAB3.keys():
+                try:
+                    cont = pre_rst[0][FIELDS_IN_TAB3[obj_name]]
+                    cont = '' if cont is None else cont
+                    eval("self.{}.setText(str(cont))".format(obj_name))
+                except Exception as e:
+                    print(e)
+                    pass
+            fields_handle_view = ['序号', '填写人', '处理数量Kg', '处理日期', '处理措施']
+            sql = "SELECT deal_id,填写人,处理数量Kg,处理日期,处理措施 FROM fcase_deallog WHERE ID={}".format(unpass_id)
+            model = QStandardItemModel()
+            rst = _db.get_rst(sql)
+            n = len(rst)
+            model.setHorizontalHeaderLabels(fields_handle_view)
+            for rown in range(n):
+                for coln in range(len(fields_handle_view)):
+                    content = list(rst[rown].values())[coln]
+                    content = '' if content is None else content
+                    item = QStandardItem(str(content))
+                    model.setItem(rown, coln, item)
+            self.handle_view.setModel(model)
+            self.set_tbl_format('handle_view')
 
     def save(self):
         if self.ID.text():
