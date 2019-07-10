@@ -11,6 +11,7 @@ from chguser import ChgUser
 from add_mothod import AddMethod
 from new_unpass import NewUnpass
 from plot_item import PlotItem
+from report import write2pdf
 
 import xlsxwriter
 from os.path import join
@@ -49,8 +50,8 @@ FIELDS_IN_TAB2 = {'pre_describle': '不合格描述', 'pre_result': '原因分�
                   'pre_info_general': '总经办评审信息', 'lbl_rev_parts_need': 'part_need_review'}
 # on tab3
 FIELDS_FOLLOW_VIEW = ['ID', 'CaseClosed', '批号', '不良品名称', '数量Kg', '处理次数', '不良剩余Kg', '客户']
-FIELDS_IN_TAB3 = {k+'_flw': v for k, v in FIELDS_IN_TAB2.items()}
-FIELDS_IN_TAB3.update({'batch_flw': '批号', 'prodate_flw': '生产日期', 'unpassname_flw': '不良品名称', 'unpassqty_flw': '数量Kg', 'unpasstype_flw': '不良品种类'})
+FIELDS_IN_TAB3 = {'batch_flw': '批号', 'prodate_flw': '生产日期', 'unpassname_flw': '不良品名称', 'unpassqty_flw': '数量Kg', 'unpasstype_flw': '不良品种类'}
+FIELDS_IN_TAB3.update({k+'_flw': v for k, v in FIELDS_IN_TAB2.items()})
 FIELDS_IN_TAB3.pop('lbl_rev_parts_need_flw')
 
 
@@ -85,7 +86,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
         # set tab3
         self.on_follow_view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.on_follow_view.customContextMenuRequested.connect(self.rclick_follow_view)
-        self.btn_print.clicked.connect(self.handlePrint)
+        self.btn_print.clicked.connect(self.to_pdf)
 
         # set tab4
         self.test_result_view.setStyleSheet(
@@ -94,31 +95,50 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.btn_to_excel.clicked.connect(self.to_excel)
         self.btn_to_spc.clicked.connect(self.show_chart_item)
 
-    def handlePaintRequest(self, printer):
-        # TODO PRINT CONTENTS
-        painter = QPainter(printer)
-        widget = self.print_frame
-        image = widget.grab(QRect(QPoint(0, 0),
-                                  QSize(widget.size().width(), widget.size().height())))  # /* 绘制窗口至画布 */
-        # QRect
-        rect = painter.viewport()
-        # QSize
-        size = image.size()
-        size.scale(rect.size(), Qt.KeepAspectRatio)  # //此处保证图片显示完整
-        painter.setViewport(rect.x(), rect.y(), size.width(), size.height())
-        painter.setWindow(image.rect())
-        painter.drawPixmap(0, 0, image)  # /* 数据显示至预览界面 */
+    # def handlePaintRequest(self, printer):
+    #     painter = QPainter(printer)
+    #     widget = self.print_frame
+    #     image = widget.grab(QRect(QPoint(0, 0),
+    #                               QSize(widget.size().width(), widget.size().height())))  # /* 绘制窗口至画布 */
+    #     # QRect
+    #     rect = painter.viewport()
+    #     # QSize
+    #     size = image.size()
+    #     size.scale(rect.size(), Qt.KeepAspectRatio)  # //此处保证图片显示完整
+    #     painter.setViewport(rect.x(), rect.y(), size.width(), size.height())
+    #     painter.setWindow(image.rect())
+    #     painter.drawPixmap(0, 0, image)  # /* 数据显示至预览界面 */
 
-    def handlePrint(self):
-        dialog = QPrintDialog()
-        if dialog.exec_() == QDialog.Accepted:
-            self.handlePaintRequest(dialog.printer())
+    # def handlePrint(self):
+    #     dialog = QPrintDialog()
+    #     if dialog.exec_() == QDialog.Accepted:
+    #         self.handlePaintRequest(dialog.printer())
 
-    def handlePreview(self):
-        """don't use now"""
-        dialog = QPrintPreviewDialog()
-        dialog.paintRequested.connect(self.handlePaintRequest)
-        dialog.exec_()
+    # def handlePreview(self):
+    #     """don't use now"""
+    #     dialog = QPrintPreviewDialog()
+    #     dialog.paintRequested.connect(self.handlePaintRequest)
+    #     dialog.exec_()
+
+    def to_pdf(self):
+        fields = list(FIELDS_IN_TAB3.values())[:5]
+        info = []
+        row = self.on_follow_view.currentIndex().row()
+        unpass_id = int(self.model_on_follow.item(row, 0).text())
+        _db = MysqlDb()
+        with _db:
+            fd = ','.join(FIELDS_IN_TAB3.values())
+            sql = "SELECT {} FROM 不合格品登记 a INNER JOIN 状态标记 b ON a.ID=b.ID WHERE a.ID={}" \
+                  "".format(fd, unpass_id)
+            pre_rst = _db.get_rst(sql)
+            d = pre_rst[0]
+            for k, v in d.items():
+                v = '' if v is None else v
+                d[k] = str(v)
+            for k in fields:
+                info.append(d.pop(k))
+        write2pdf(fields, info, d)
+        QMessageBox.information(self, '提示:', '已生成pdf文档至安装目录的output文件夹！')
 
     def show_chart_item(self):
         """show chart for items selected"""
