@@ -55,7 +55,7 @@ class IdeaDialog(QDialog, Ui_partidea):
         QMessageBox.information(self, 'Update success', '本次更新完成！')
 
     def sign(self):
-        sign_info = "\t>>>填写人:{}\n\t>>>填写日期：{}".format(self.username, datetime.now().strftime("%Y-%m-%d %H:%M"))
+        sign_info = "\t>>>{}\n\t>>>{}".format(self.username, datetime.now().strftime("%Y-%m-%d %H:%M"))
         self.ctl.append(sign_info)
 
     def add_methods(self):

@@ -31,7 +31,7 @@ class Graphs:
         style = getSampleStyleSheet()
         ct = style['Normal']
         ct.fontName = 'SimSun'
-        ct.fontSize = 14
+        ct.fontSize = 9
         ct.wordWrap = 'CJK'
         ct.alignment = 0
         ct.leading = 30
@@ -57,8 +57,8 @@ def write2pdf(fields, info, fields_contents):
     content = list()
 
     # add title
-    content.append(Graphs.draw_title('安徽滁州德威新材料有限公司', 16))
-    content.append(Graphs.draw_title('不合格品处理单', 18))
+    content.append(Graphs.draw_title('安徽滁州德威新材料有限公司', 12))
+    content.append(Graphs.draw_title('不合格品处理单', 14))
     data = [fields, info]
     content.append(Graphs.draw_table(*data))
 

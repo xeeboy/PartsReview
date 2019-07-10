@@ -124,21 +124,25 @@ class MainForm(QMainWindow, Ui_MainWindow):
         fields = list(FIELDS_IN_TAB3.values())[:5]
         info = []
         row = self.on_follow_view.currentIndex().row()
-        unpass_id = int(self.model_on_follow.item(row, 0).text())
-        _db = MysqlDb()
-        with _db:
-            fd = ','.join(FIELDS_IN_TAB3.values())
-            sql = "SELECT {} FROM 不合格品登记 a INNER JOIN 状态标记 b ON a.ID=b.ID WHERE a.ID={}" \
-                  "".format(fd, unpass_id)
-            pre_rst = _db.get_rst(sql)
-            d = pre_rst[0]
-            for k, v in d.items():
-                v = '' if v is None else v
-                d[k] = str(v)
-            for k in fields:
-                info.append(d.pop(k))
-        write2pdf(fields, info, d)
-        QMessageBox.information(self, '提示:', '已生成pdf文档至安装目录的output文件夹！')
+        if row != -1:
+            unpass_id = int(self.model_on_follow.item(row, 0).text())
+            _db = MysqlDb()
+            with _db:
+                fd = ','.join(FIELDS_IN_TAB3.values())
+                sql = "SELECT {} FROM 不合格品登记 a INNER JOIN 状态标记 b ON a.ID=b.ID WHERE a.ID={}" \
+                      "".format(fd, unpass_id)
+                pre_rst = _db.get_rst(sql)
+                d = pre_rst[0]
+                for k, v in d.items():
+                    v = '' if v is None else v
+                    d[k] = str(v)
+                for k in fields:
+                    info.append(d.pop(k))
+            write2pdf(fields, info, d)
+            QMessageBox.information(self, '提示:', '已生成pdf文档至安装目录的output文件夹！')
+        else:
+            QMessageBox.information(self, '未选择', '请先选择项目！')
+            pass
 
     def show_chart_item(self):
         """show chart for items selected"""
@@ -307,7 +311,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
     def _pre_sign(self):
         old_cont = self.txt_pre_info.toPlainText()
-        sign_info = "\t>>>评审人:{}\n\t>>>评审日期：{}" \
+        sign_info = "\t>>>{}\n\t>>>{}" \
                     "".format(user_info.get_value('USERNAME'),
                               datetime.now().strftime("%Y-%m-%d %H:%M"))
         self.txt_pre_info.setPlainText(old_cont + '\n' + sign_info)
