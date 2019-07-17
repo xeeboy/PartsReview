@@ -1131,7 +1131,7 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_7">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="4,5">
+         <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,1">
           <property name="spacing">
            <number>0</number>
           </property>

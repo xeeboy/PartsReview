@@ -16,9 +16,8 @@ from report import write2pdf
 import xlsxwriter
 from os.path import join
 from datetime import datetime
-from PyQt5.QtCore import Qt, QRect, QSize, QPoint
-from PyQt5.QtPrintSupport import *
-from PyQt5.QtGui import QFont, QCursor, QIcon, QBrush, QColor, QPalette, QPainter
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont, QCursor, QIcon, QBrush, QColor, QPalette
 from PyQt5.QtWidgets import QMainWindow, QTableView, QMenu, QAction, QMessageBox, QFileDialog
 
 

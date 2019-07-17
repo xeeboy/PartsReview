@@ -67,7 +67,7 @@ class Login(QMainWindow, Ui_Login):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     main_win = MainForm()
-    main_win.setWindowOpacity(0.99)  # 透明度
+    # main_win.setWindowOpacity(0.99)  # 透明度
     # main_win.setWindowFlag(QtCore.Qt.FramelessWindowHint)  # 无边框
     pe = QPalette()
     pe.setColor(QPalette.Window, Qt.white)  # 设置背景色
