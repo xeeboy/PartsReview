@@ -1,3 +1,4 @@
+# pragma execution_character_set("utf-8")
 import user_info
 
 from getdb import *
@@ -64,7 +65,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.act_chguser.triggered.connect(self.chguser)
         self.act_about.triggered.connect(self.show_about)
 
-        # set tab1
+        # set tab0
         self.set_tbl_unpass(TBL_UNPASS_SQL)
         self.show_test_win.clicked.connect(self.test_win)
         self.save_unpass.clicked.connect(self.type_new_unpass)
@@ -76,18 +77,18 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.tbl_unpass.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tbl_unpass.customContextMenuRequested.connect(self.rclick_tbl_unpass)
 
-        # set tab2
+        # set tab1
         self.pre_tbl_view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.pre_tbl_view.customContextMenuRequested.connect(self.rclick_tbl_pre)
         self.pre_tbl_view.clicked.connect(self.show_pre_item)  # self.pre_tbl_view.setMouseTracking(True)
         self.btn_sign_pre.clicked.connect(self._pre_sign)
 
-        # set tab3
+        # set tab2
         self.on_follow_view.setContextMenuPolicy(Qt.CustomContextMenu)
         self.on_follow_view.customContextMenuRequested.connect(self.rclick_follow_view)
         self.btn_print.clicked.connect(self.to_pdf)
 
-        # set tab4
+        # set tab3
         self.test_result_view.setStyleSheet(
             "selection-color: rgb(222, 12, 127);\nselection-background-color: rgb(85, 255, 127);")
         self.test_search.clicked.connect(self.search_test_result)
@@ -137,10 +138,14 @@ class MainForm(QMainWindow, Ui_MainWindow):
                     d[k] = str(v)
                 for k in fields:
                     info.append(d.pop(k))
-            write2pdf(fields, info, d)
-            QMessageBox.information(self, '提示:', '已生成pdf文档至安装目录的output文件夹！')
+            try:
+                write2pdf(fields, info, d)
+                QMessageBox.information(self, '提示:', '已生成pdf文档至安装目录的output文件夹！')
+            except Exception as e:
+                user_info.log2txt('生成pdf文档时发生错误：{}'.format(e))
+                QMessageBox.information(self, '提示:', '生成pdf文档时发生错误，请查看错误日志！')
         else:
-            QMessageBox.information(self, '未选择', '请先选择项目！')
+            QMessageBox.warning(self, '未选择', '请先选择项目！')
             pass
 
     def show_chart_item(self):
@@ -165,7 +170,8 @@ class MainForm(QMainWindow, Ui_MainWindow):
                 wkb.close()
                 QMessageBox.information(self, '完成', '文件地址：{}'.format(filename))
         except Exception as e:
-            print(e)
+            user_info.log2txt('导出成excel时发生错误：{}'.format(e))
+            pass
 
     def search_test_result(self):
         """method in tab4"""
@@ -209,14 +215,14 @@ class MainForm(QMainWindow, Ui_MainWindow):
         about_frm = QDialog(self)
         about_ui = Ui_about()
         about_ui.setupUi(about_frm)
-        about_frm.setWindowOpacity(0.98)
         pe = QPalette()
-        pe.setColor(QPalette.Window, Qt.green)  # 设置背景色
+        pe.setColor(QPalette.Window, Qt.white)  # 设置背景色
         about_frm.setPalette(pe)
         about_frm.show()
 
     def tab_changed(self, index):
         self.txt_pre_info.setPlainText('')
+        self.show_review_doc.clear()
         if index == 0:
             if user_info.get_value('PART') == '质量部':
                 self.save_unpass.setVisible(True)
@@ -482,7 +488,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
 
     def fuzzy_search(self):
         keyword = self.lineEdit_11.text()
-        search_str = " WHERE CONCAT(批号,不良品名称) LIKE '%{}%'".format(keyword) if keyword else ""
+        search_str = " AND CONCAT(批号,不良品名称) LIKE '%{}%'".format(keyword) if keyword else ""
         fuzzy_sql = TBL_UNPASS_SQL + search_str
         self.set_tbl_unpass(fuzzy_sql)
 
@@ -566,34 +572,26 @@ class MainForm(QMainWindow, Ui_MainWindow):
         row = self.on_follow_view.currentIndex().row()
         unpass_id = int(self.model_on_follow.item(row, 0).text())
         # start show other information
+        fields_handle_view = ['序号', '填写人', '处理数量Kg', '处理日期', '处理措施']
+        sql = "SELECT deal_id,填写人,处理数量Kg,处理日期,处理措施 FROM fcase_deallog WHERE ID={}".format(unpass_id)
+        model = get_model(fields_handle_view, sql)
+        self.handle_view.setModel(model)
+        self.set_tbl_format('handle_view')
+
+        fields = list(FIELDS_IN_TAB3.values())[5:]
+        self.show_review_doc.clear()
         _db = MysqlDb()
         with _db:
-            fd = ','.join(FIELDS_IN_TAB3.values())
+            fd = ','.join(fields)
             sql = "SELECT {} FROM 不合格品登记 a INNER JOIN 状态标记 b ON a.ID=b.ID WHERE a.ID={}" \
                   "".format(fd, unpass_id)
             pre_rst = _db.get_rst(sql)
-            for obj_name in FIELDS_IN_TAB3.keys():
-                try:
-                    cont = pre_rst[0][FIELDS_IN_TAB3[obj_name]]
-                    cont = '' if cont is None else cont
-                    eval("self.{}.setText(str(cont))".format(obj_name))
-                except Exception as e:
-                    print(e)
-                    pass
-            fields_handle_view = ['序号', '填写人', '处理数量Kg', '处理日期', '处理措施']
-            sql = "SELECT deal_id,填写人,处理数量Kg,处理日期,处理措施 FROM fcase_deallog WHERE ID={}".format(unpass_id)
-            model = QStandardItemModel()
-            rst = _db.get_rst(sql)
-            n = len(rst)
-            model.setHorizontalHeaderLabels(fields_handle_view)
-            for rown in range(n):
-                for coln in range(len(fields_handle_view)):
-                    content = list(rst[rown].values())[coln]
-                    content = '' if content is None else content
-                    item = QStandardItem(str(content))
-                    model.setItem(rown, coln, item)
-            self.handle_view.setModel(model)
-            self.set_tbl_format('handle_view')
+        d = pre_rst[0]
+        for k in fields:
+            con = d[k]
+            con = '' if con is None else con
+            line = '<font size=5 color=blue>{}<font size=3 color=green> : {}</font></font>'.format(k, con)
+            self.show_review_doc.append(line)
 
     def save(self):
         if self.ID.text():
