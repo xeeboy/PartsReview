@@ -29,15 +29,20 @@ class PlotItem(QtWidgets.QDialog, Ui_plot_item):
                     values.append(abs(float(v)))
             avg = np.average(values[-25:])  # I will use 25 samples latest, and ± 3*σ
             std = np.std(values[-25:])
-            R = max(values[-25:]) - min(values[-25:])
+            # R = max(values[-25:]) - min(values[-25:])
             ucl = avg + 3*std
             lcl = avg - 3*std
+            _max = max(values)
+            _min = min(values)
             # above sometimes use ± 1.88*R(bar) when large number
             pg.setConfigOptions(antialias=True)
             Plot = pg.plot(title=title)
-            Plot.plot([ucl]*len(values), pen=(255, 0, 0), name='Red curve')
+            # Plot.plot([ucl] * len(values), pen=(255, 0, 0), name='Red curve')
             Plot.plot(values, pen=(0, 255, 0), name="Green curve")
-            Plot.plot([lcl] * len(values), pen=(0, 0, 255), name='Blue curve')
+            Plot.plot([avg] * len(values), pen=(255, 255, 255), name='Yellow curve')
+            # Plot.plot([lcl] * len(values), pen=(0, 0, 255), name='Blue curve')
+            Plot.plot([_max] * len(values), pen=(100, 0, 255), name='max curve')
+            Plot.plot([_min] * len(values), pen=(0, 100, 255), name='min curve')
         except Exception as e:
             print(e)
 
