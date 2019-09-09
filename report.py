@@ -14,11 +14,11 @@ class Graphs:
         pass
 
     @staticmethod
-    def draw_title(title, fontsize):
+    def draw_title(title, font_size):
         style = getSampleStyleSheet()
         ct = style['Normal']
         ct.fontName = 'SimSun'
-        ct.fontSize = fontsize
+        ct.fontSize = font_size
         # 行距
         ct.leading = 40
         ct.textColor = colors.green

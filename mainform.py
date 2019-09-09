@@ -95,31 +95,6 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.btn_to_excel.clicked.connect(self.to_excel)
         self.btn_to_spc.clicked.connect(self.show_chart_item)
 
-    # def handlePaintRequest(self, printer):
-    #     painter = QPainter(printer)
-    #     widget = self.print_frame
-    #     image = widget.grab(QRect(QPoint(0, 0),
-    #                               QSize(widget.size().width(), widget.size().height())))  # /* 绘制窗口至画布 */
-    #     # QRect
-    #     rect = painter.viewport()
-    #     # QSize
-    #     size = image.size()
-    #     size.scale(rect.size(), Qt.KeepAspectRatio)  # //此处保证图片显示完整
-    #     painter.setViewport(rect.x(), rect.y(), size.width(), size.height())
-    #     painter.setWindow(image.rect())
-    #     painter.drawPixmap(0, 0, image)  # /* 数据显示至预览界面 */
-
-    # def handlePrint(self):
-    #     dialog = QPrintDialog()
-    #     if dialog.exec_() == QDialog.Accepted:
-    #         self.handlePaintRequest(dialog.printer())
-
-    # def handlePreview(self):
-    #     """don't use now"""
-    #     dialog = QPrintPreviewDialog()
-    #     dialog.paintRequested.connect(self.handlePaintRequest)
-    #     dialog.exec_()
-
     def to_pdf(self):
         fields = list(FIELDS_IN_TAB3.values())[:5]
         info = []
@@ -191,7 +166,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
         for i in range(self.test_result_model.rowCount()):
             v = self.test_result_model.item(i, 14).text()
             if v:
-                self.test_result_model.setItem(i, 14, QStandardItem('%.2e'%int(v)))
+                self.test_result_model.setItem(i, 14, QStandardItem('%.2e' % int(v)))
         self.test_result_view.setModel(self.test_result_model)
         self.set_tbl_format('test_result_view')
 
@@ -342,17 +317,17 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.set_tbl_format('on_follow_view')
 
     def set_tbl_format(self, tbl_name):
-        _tbl_view = self.findChild(QTableView, tbl_name)
+        tbl_view = self.findChild(QTableView, tbl_name)
         font = QFont("Consolas", 9)
-        _tbl_view.setFont(font)  # set font
-        _tbl_view.resizeColumnsToContents()  # set column width to fit contents (set font first!)
-        _tbl_view.setSortingEnabled(True)  # enable sorting
-        _tbl_view.verticalHeader().hide()  # hide vertical Header
-        _tbl_view.setEditTriggers(QTableView.NoEditTriggers)  # set table ReadOnly
+        tbl_view.setFont(font)  # set font
+        tbl_view.resizeColumnsToContents()  # set column width to fit contents (set font first!)
+        tbl_view.setSortingEnabled(True)  # enable sorting
+        tbl_view.verticalHeader().hide()  # hide vertical Header
+        tbl_view.setEditTriggers(QTableView.NoEditTriggers)  # set table ReadOnly
         # self.tbl_unpass.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        _tbl_view.horizontalHeader().setStretchLastSection(True)  # last column stretch to full
-        _tbl_view.setSelectionBehavior(QTableView.SelectRows)  # set select entire row
-        _tbl_view.setSelectionMode(QTableView.SingleSelection)  # select only one
+        tbl_view.horizontalHeader().setStretchLastSection(True)  # last column stretch to full
+        tbl_view.setSelectionBehavior(QTableView.SelectRows)  # set select entire row
+        tbl_view.setSelectionMode(QTableView.SingleSelection)  # select only one
 
     def rclick_tbl_unpass(self):
         popMenu = QMenu()
@@ -578,7 +553,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
         self.handle_view.setModel(model)
         self.set_tbl_format('handle_view')
 
-        fields = list(FIELDS_IN_TAB3.values())[5:]
+        fields = ['不良品种类'] + list(FIELDS_IN_TAB3.values())[5:]
         self.show_review_doc.clear()
         _db = MysqlDb()
         with _db:

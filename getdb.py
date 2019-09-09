@@ -3,6 +3,7 @@
 import pymysql
 from configparser import ConfigParser
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
+from PyQt5.QtCore import QVariant, Qt
 
 #  for using when pymysql connect Access
 config = ConfigParser()
@@ -13,7 +14,7 @@ DB_NAME = config.get('DBInfo', 'db_name')
 
 
 class MysqlDb:
-    """conncet to Mysql server"""
+    """Connect to Mysql server"""
     def __init__(self, user='root', password='123456',
                  cursor_type=pymysql.cursors.DictCursor):
         self._cnn = pymysql.connect(host=HOST, port=PORT, user=user, password=password,
@@ -41,7 +42,7 @@ class MysqlDb:
 
 
 def get_model(fields, sql):
-    """set and return a QstandItemModel"""
+    """set and return a QStandItemModel"""
     db = MysqlDb()
     model = QStandardItemModel()
     with db:
@@ -52,7 +53,11 @@ def get_model(fields, sql):
         for coln in range(len(fields)):
             content = list(rst[rown].values())[coln]
             content = '' if content is None else content
-            item = QStandardItem(str(content))
+            item = QStandardItem()
+            if isinstance(content, int):
+                item.setData(QVariant(content), Qt.EditRole)
+            else:
+                item.setText(str(content))
             model.setItem(rown, coln, item)
     return model
 
