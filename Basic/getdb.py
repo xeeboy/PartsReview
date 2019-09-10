@@ -7,7 +7,7 @@ from PyQt5.QtCore import QVariant, Qt
 
 #  for using when pymysql connect Access
 config = ConfigParser()
-config.read('config.ini')
+config.read(r'Configration\config.ini')
 HOST = config.get('DBInfo', 'host')
 PORT = config.getint('DBInfo', 'port')  # port must be type int
 DB_NAME = config.get('DBInfo', 'db_name')

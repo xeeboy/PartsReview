@@ -2,7 +2,7 @@
 import user_info
 
 from getdb import *
-from ui_main import *
+from ui_mainwindow import *
 from ui_part_need_review import *
 from ui_about import *
 from qa_data import AddDataForm, TEST_ITEMS

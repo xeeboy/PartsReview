@@ -1,5 +1,5 @@
 import user_info
-import mainform
+import mainwindow
 
 from ui_new_unpass import *
 from getdb import MysqlDb
@@ -56,7 +56,7 @@ class NewUnpass(QDialog, Ui_new_unpass):
                     _db.modify_db(sql)
                     _db.modify_db("INSERT INTO 状态标记 SET ID={}".format(new_id))
                     self.new_id.setText(str(int(self.new_id.text()) + 1))
-                    self.parent.set_tbl_unpass(mainform.TBL_UNPASS_SQL)
+                    self.parent.set_tbl_unpass(mainwindow.TBL_UNPASS_SQL)
                     QMessageBox.information(self, '操作提示', '插入成功')
                     self.clear_unpass_info()
                 except Exception as e:

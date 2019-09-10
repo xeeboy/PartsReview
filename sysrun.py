@@ -1,11 +1,10 @@
-from mainform import *
+from mainwindow import *
 from ui_login import Ui_Login
 
 import sys
 import shelve
 
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtGui import QPalette
 
 
 class Login(QMainWindow, Ui_Login):
@@ -13,7 +12,7 @@ class Login(QMainWindow, Ui_Login):
         super().__init__()
         self.setupUi(self)
         try:
-            with shelve.open('passwd') as passwd:
+            with shelve.open(r'Configration\passwd') as passwd:
                 u_name = passwd['username']
                 u_pwd = passwd['password']
         except KeyError:
@@ -58,7 +57,7 @@ class Login(QMainWindow, Ui_Login):
         eval('QMessageBox.%s(self, win_title, text)' % level)
 
     def save_pwd(self):
-        with shelve.open('passwd') as passwd:
+        with shelve.open(r'Configration\passwd') as passwd:
             passwd['username'] = self.line_username.text()
             passwd['password'] = self.line_password.text()
         QMessageBox.information(self, 'Information', '已保存！')
