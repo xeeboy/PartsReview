@@ -1,7 +1,9 @@
+import sys
+sys.path.extend(['Basic', 'UIForms', 'UserInterface'])
+
 from mainwindow import *
 from ui_login import Ui_Login
 
-import sys
 import shelve
 
 from PyQt5.QtWidgets import QApplication

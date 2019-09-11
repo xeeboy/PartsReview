@@ -9,7 +9,7 @@ from qa_data import AddDataForm, TEST_ITEMS
 from parts_idea import IdeaDialog
 from chgpwd import ChgPwd
 from chguser import ChgUser
-from add_mothod import AddMethod
+from add_method import AddMethod
 from new_unpass import NewUnpass
 from plot_item import PlotItem
 from report import write2pdf
