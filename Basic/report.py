@@ -6,7 +6,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 
 # register the font
-pdfmetrics.registerFont(TTFont('SimSun', 'SimSun.ttf'))
+pdfmetrics.registerFont(TTFont('SimSun', 'fonts/simsun.ttf'))
 
 
 class Graphs:

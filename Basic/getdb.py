@@ -1,6 +1,6 @@
 """Connect database and generate model for tbl_view"""
 
-import pymysql
+from pymysql import cursors, connect
 from configparser import ConfigParser
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from PyQt5.QtCore import QVariant, Qt
@@ -16,9 +16,9 @@ DB_NAME = config.get('DBInfo', 'db_name')
 class MysqlDb:
     """Connect to Mysql server"""
     def __init__(self, user='root', password='123456',
-                 cursor_type=pymysql.cursors.DictCursor):
-        self._cnn = pymysql.connect(host=HOST, port=PORT, user=user, password=password,
-                                    charset='utf8', cursorclass=cursor_type)
+                 cursor_type=cursors.DictCursor):
+        self._cnn = connect(host=HOST, port=PORT, user=user, password=password,
+                            charset='utf8', cursorclass=cursor_type)
         self._cursor = self._cnn.cursor()
         self._con_db(DB_NAME)
 
@@ -41,6 +41,14 @@ class MysqlDb:
         return self._cursor.fetchall()
 
 
+def is_number(obj):
+    try:
+        float(obj)
+        return True
+    except ValueError:
+        return False
+
+
 def get_model(fields, sql):
     """set and return a QStandItemModel"""
     db = MysqlDb()
@@ -54,10 +62,11 @@ def get_model(fields, sql):
             content = list(rst[rown].values())[coln]
             content = '' if content is None else content
             item = QStandardItem()
-            if isinstance(content, int):
-                item.setData(QVariant(content), Qt.EditRole)
+            v = str(content)
+            if is_number(v):
+                item.setData(content, Qt.EditRole)
             else:
-                item.setText(str(content))
+                item.setText(v)
             model.setItem(rown, coln, item)
     return model
 

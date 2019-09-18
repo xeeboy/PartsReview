@@ -14,7 +14,7 @@ from new_unpass import NewUnpass
 from plot_item import PlotItem
 from report import write2pdf
 
-import xlsxwriter
+from xlsxwriter import Workbook
 from os.path import join
 from datetime import datetime
 from PyQt5.QtCore import Qt
@@ -136,7 +136,7 @@ class MainForm(QMainWindow, Ui_MainWindow):
             directory = QFileDialog.getExistingDirectory(self, "选择存放的位置")
             if directory:
                 filename = join(directory, 'test_result.xlsx')
-                wkb = xlsxwriter.Workbook(filename)
+                wkb = Workbook(filename)
                 sht = wkb.add_worksheet("test_result")
                 sht.write_row('A1', self.test_result_fields)
                 for r in range(row_count):
