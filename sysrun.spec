@@ -3,8 +3,7 @@
 block_cipher = None
 
 
-a = Analysis([
-'sysrun.py',
+a = Analysis(['sysrun.py',
 'UIForms\\ui_about.py',
 'UIForms\\ui_add_method.py',
 'UIForms\\ui_chgpwd.py',
@@ -26,16 +25,10 @@ a = Analysis([
 'UserInterface\\new_unpass.py',
 'UserInterface\\parts_idea.py',
 'UserInterface\\plot_item.py',
-'UserInterface\\qa_data.py'
-],
+'UserInterface\\qa_data.py'],
              pathex=['F:\\python_work\\PartsReview'],
              binaries=[],
-             datas=[
-             (r'F:\python_work\PartsReview\icons', 'icons'),
-             (r'F:\python_work\PartsReview\Configration', 'Configration'),
-             (r'F:\python_work\PartsReview\output', 'output'),
-             (r'F:\python_work\PartsReview\fonts', 'fonts')
-             ],
+             datas=[],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -48,19 +41,15 @@ pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 exe = EXE(pyz,
           a.scripts,
+          a.binaries,
+          a.zipfiles,
+          a.datas,
           [],
-          exclude_binaries=True,
           name='GotoReview',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
+          runtime_tmpdir=None,
           icon='icons\\Quality_Control_72px.ico',
           console=False)
-coll = COLLECT(exe,
-               a.binaries,
-               a.zipfiles,
-               a.datas,
-               strip=False,
-               upx=True,
-               name='GotoReview')
