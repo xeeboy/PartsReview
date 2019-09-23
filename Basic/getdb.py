@@ -3,7 +3,7 @@
 from pymysql import cursors, connect
 from configparser import ConfigParser
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
-from PyQt5.QtCore import QVariant, Qt
+from PyQt5.QtCore import Qt
 
 #  for using when pymysql connect Access
 config = ConfigParser()
@@ -11,6 +11,10 @@ config.read(r'Configration\config.ini')
 HOST = config.get('DBInfo', 'host')
 PORT = config.getint('DBInfo', 'port')  # port must be type int
 DB_NAME = config.get('DBInfo', 'db_name')
+
+CORPID = config.get('TokenInfo', 'corpid')
+SECRET = config.get('TokenInfo', 'secret')
+AGENTID = config.get('TokenInfo', 'agentid')
 
 
 class MysqlDb:

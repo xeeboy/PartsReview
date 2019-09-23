@@ -1,6 +1,7 @@
 import user_info
 import mainwindow
 
+from sms_wechat import SmsWechat
 from ui_new_unpass import *
 from getdb import MysqlDb
 
@@ -59,7 +60,12 @@ class NewUnpass(QDialog, Ui_new_unpass):
                     self.parent.set_tbl_unpass(mainwindow.TBL_UNPASS_SQL)
                     QMessageBox.information(self, '操作提示', '插入成功')
                     self.clear_unpass_info()
+                    msg = r'新增不合格品信息如下：\n种类：{}\n客户：{}\n牌号：{}\n数量：{}Kg\n生产日期：{}\n不合格描述：{}' \
+                          ''.format(unpasstype, customer, unpassname, unpassqty, prodate, describe)
+                    wechat = SmsWechat()
+                    wechat.send_message(msg_type='text', contents=msg)
                 except Exception as e:
                     user_info.log2txt('登记新不合格品时发生错误：{}'.format(e))
+
         else:
             QMessageBox.warning(self, '警告', '缺少必要信息,请完善后保存！')
