@@ -75,8 +75,8 @@ class IdeaDialog(QDialog, Ui_partidea):
             batch, _, pro_name, _, _ = info
             filename = pro_name + '-' + batch + '.pdf'
             wechat = SmsWechat()
-            wechat.send_message(msg_type='text', contents='{} {}更新不良品评审单(ID={})了,请点击查看!'
-                                                          ''.format(self.department, self.username, self.deal_id))
+            wechat.send_message(msg_type='text', contents='{} {}更新不良品评审单(批号:{})了,请查看PDF!'
+                                                          ''.format(self.department, self.username, batch))
             wechat.send_message(msg_type='file', file_obj=open('output/{}'.format(filename), 'rb'))
 
             self.parent.fuzzy_search()
